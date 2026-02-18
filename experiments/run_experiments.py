@@ -428,11 +428,29 @@ def main():
         for a in ['v_guided_greedy', 'beam_search', 'mcts']
     )
     if needs_model:
+        # Preflight: check that checkpoint files exist
+        checkpoint_path = os.path.join(PROJECT_ROOT, model_cfg['checkpoint'])
+        stats_path = os.path.join(PROJECT_ROOT, model_cfg['feature_stats'])
+        missing = []
+        if not os.path.exists(checkpoint_path):
+            missing.append(model_cfg['checkpoint'])
+        if not os.path.exists(stats_path):
+            missing.append(model_cfg['feature_stats'])
+        if missing:
+            print("\nERROR: Required model files not found:")
+            for f in missing:
+                print(f"  - {f}")
+            print("\nTo generate them, run these two commands:")
+            print("  python value_search/data_extraction.py")
+            print("  python value_search/train_value_net.py --architecture both")
+            print("\nOr disable V-guided methods in config.yaml and run baselines only.")
+            sys.exit(1)
+
         print(f"Loading model ({model_cfg['architecture']})...")
         model, feat_mean, feat_std = load_model(
-            os.path.join(PROJECT_ROOT, model_cfg['checkpoint']),
+            checkpoint_path,
             model_cfg['architecture'],
-            os.path.join(PROJECT_ROOT, model_cfg['feature_stats']),
+            stats_path,
             device,
         )
         print("  Model loaded.")
