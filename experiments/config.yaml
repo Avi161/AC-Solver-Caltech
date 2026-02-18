@@ -1,0 +1,52 @@
+# ============================================================
+# AC-Solver Experiment Configuration
+# ============================================================
+#
+# Run:  python experiments/run_experiments.py
+# Test: python experiments/run_experiments.py --max-nodes 10000
+#
+# Results saved to: experiments/results/<timestamp>/
+# ============================================================
+
+# --- Output ---
+output_dir: "experiments/results"
+save_incremental: true          # Save after each algorithm (crash-safe for overnight runs)
+
+# --- Device ---
+device: "auto"                  # "auto" (detect GPU), "cpu", or "cuda"
+
+# --- Model (for V-guided methods) ---
+model:
+  architecture: "mlp"           # "mlp" or "seq"
+  checkpoint: "value_search/checkpoints/best_mlp.pt"
+  feature_stats: "value_search/checkpoints/feature_stats.json"
+
+# --- Algorithms ---
+# Set enabled: false to skip any algorithm.
+# Paper reference: greedy solves 533/1190, BFS solves 278/1190 at 1M nodes.
+
+algorithms:
+
+  # ---- Paper baselines ----
+  greedy:
+    enabled: true
+    max_nodes: 1_000_000        # Paper uses 1M
+
+  bfs:
+    enabled: true
+    max_nodes: 1_000_000        # Paper uses 1M
+
+  # ---- Our methods ----
+  v_guided_greedy:
+    enabled: true
+    max_nodes: 1_000_000        # Same budget for fair comparison
+
+  beam_search:
+    enabled: true
+    max_nodes: 1_000_000
+    beam_widths: [10, 50, 100]
+
+  mcts:
+    enabled: false              # Very slow -- enable only if you have 8+ hours
+    max_nodes: 100_000
+    c_explore: 1.41
