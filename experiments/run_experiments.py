@@ -51,7 +51,7 @@ DEFAULTS = {
     },
     'algorithms': {
         'greedy': {'enabled': True, 'max_nodes': 1_000_000},
-        'bfs': {'enabled': True, 'max_nodes': 1_000_000},
+        'bfs': {'enabled': True, 'max_nodes': 100_000},
         'v_guided_greedy': {'enabled': True, 'max_nodes': 1_000_000},
         'beam_search': {'enabled': True, 'max_nodes': 1_000_000, 'beam_widths': [10, 50, 100]},
         'mcts': {'enabled': False, 'max_nodes': 100_000, 'c_explore': 1.41},
