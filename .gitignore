@@ -1,10 +1,6 @@
 scratch.ipynb
 wandb/
 dist/
-*.txt
-*.pt
-*.pkl
 __pycache__/
 ac_solver/agents/checkpoints/
-value_search/checkpoints/
-value_search/data/
+experiments/results/
