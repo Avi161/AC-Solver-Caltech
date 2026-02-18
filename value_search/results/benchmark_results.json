@@ -1,0 +1,14 @@
+{
+  "note": "Partial results with 10K node budget. Run with --max-nodes 1000000 for full comparison.",
+  "results": {
+    "Greedy (length)": {"solved": 380, "total": 1190},
+    "V-guided Greedy (MLP)": {"solved": 415, "total": 1190},
+    "Beam (k=10)": {"solved": 353, "total": 1190},
+    "Beam (k=50)": {"solved": "~347 (partial)", "total": 1190}
+  },
+  "config": {
+    "max_nodes": 10000,
+    "architecture": "mlp",
+    "note": "With 1M node budget, greedy solves 533 per the paper. V-guided should scale similarly."
+  }
+}
