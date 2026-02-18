@@ -129,10 +129,15 @@ def run_greedy(presentations, max_nodes):
         solved, path = greedy_search(pres, max_nodes_to_explore=max_nodes)
         elapsed = time.time() - t0
         path_len = len(path) - 1 if solved and path else 0  # remove sentinel
-        results.append({
+        result = {
             'idx': i, 'solved': solved,
             'path_length': path_len, 'time': elapsed,
-        })
+        }
+        if solved and path:
+            # Store full move sequence: list of [action_id, length_after] pairs
+            # Skip sentinel (-1, initial_length) at index 0
+            result['path'] = [list(step) for step in path[1:]]
+        results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -154,10 +159,15 @@ def run_bfs_search(presentations, max_nodes):
         elapsed = time.time() - t0
         # BFS path includes sentinel (-1, initial_length) at index 0 when solved
         path_len = len(path) - 1 if solved and path else 0
-        results.append({
+        result = {
             'idx': i, 'solved': solved,
             'path_length': path_len, 'time': elapsed,
-        })
+        }
+        if solved and path:
+            # Store full move sequence: list of [action_id, length_after] pairs
+            # Skip sentinel (-1, initial_length) at index 0
+            result['path'] = [list(step) for step in path[1:]]
+        results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -182,12 +192,15 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             max_nodes_to_explore=max_nodes, device=device,
         )
         elapsed = time.time() - t0
-        results.append({
+        result = {
             'idx': i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
-        })
+        }
+        if solved and path:
+            result['path'] = [list(step) for step in path]
+        results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -212,12 +225,15 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             beam_width=beam_width, max_nodes_to_explore=max_nodes, device=device,
         )
         elapsed = time.time() - t0
-        results.append({
+        result = {
             'idx': i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
-        })
+        }
+        if solved and path:
+            result['path'] = [list(step) for step in path]
+        results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -242,12 +258,15 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
             max_nodes_to_explore=max_nodes, c_explore=c_explore, device=device,
         )
         elapsed = time.time() - t0
-        results.append({
+        result = {
             'idx': i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
-        })
+        }
+        if solved and path:
+            result['path'] = [list(step) for step in path]
+        results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
