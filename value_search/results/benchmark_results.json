@@ -1,14 +1,15 @@
 {
-  "note": "Partial results with 10K node budget. Run with --max-nodes 1000000 for full comparison.",
+  "note": "Complete results for greedy/V-guided/beam(k=10) with 10K node budget. Beam(k=50) partial (timed out at 1000/1190). Run with --max-nodes 1000000 for paper-comparable results.",
   "results": {
-    "Greedy (length)": {"solved": 380, "total": 1190},
-    "V-guided Greedy (MLP)": {"solved": 415, "total": 1190},
-    "Beam (k=10)": {"solved": 353, "total": 1190},
-    "Beam (k=50)": {"solved": "~347 (partial)", "total": 1190}
+    "Greedy (length)": {"solved": 380, "total": 1190, "status": "complete"},
+    "V-guided Greedy (MLP)": {"solved": 415, "total": 1190, "status": "complete"},
+    "Beam (k=10)": {"solved": 353, "total": 1190, "status": "complete"},
+    "Beam (k=50)": {"solved": 347, "total": 1190, "status": "partial (1000/1190 evaluated)"}
   },
   "config": {
     "max_nodes": 10000,
     "architecture": "mlp",
     "note": "With 1M node budget, greedy solves 533 per the paper. V-guided should scale similarly."
-  }
+  },
+  "key_finding": "V-guided greedy solves 35 more presentations than length-based greedy at 10K node budget (+9.2%). At 100K budget partial run (400/1190): greedy=360, V-guided=391."
 }
