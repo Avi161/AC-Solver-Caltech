@@ -17,8 +17,8 @@ device: "auto"                  # "auto" (detect GPU), "cpu", or "cuda"
 
 # --- Model (for V-guided methods) ---
 model:
-  architecture: "mlp"           # "mlp" or "seq"
-  checkpoint: "value_search/checkpoints/best_mlp.pt"
+  architecture: "seq"           # "mlp" or "seq"
+  checkpoint: "value_search/checkpoints/best_seq.pt"
   feature_stats: "value_search/checkpoints/feature_stats.json"
 
 # --- Algorithms ---
@@ -29,11 +29,11 @@ algorithms:
 
   # ---- Paper baselines ----
   greedy:
-    enabled: true
+    enabled: false
     max_nodes: 1_000_000        # Paper uses 1M
 
   bfs:
-    enabled: true
+    enabled: false
     max_nodes: 1_000_000        # Paper uses 1M
 
   # ---- Our methods ----
@@ -42,7 +42,7 @@ algorithms:
     max_nodes: 1_000_000        # Same budget for fair comparison
 
   beam_search:
-    enabled: true
+    enabled: false
     max_nodes: 1_000_000
     beam_widths: [10, 50, 100]
 
