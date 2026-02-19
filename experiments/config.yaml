@@ -40,7 +40,7 @@ algorithms:
   # ---- Our methods ----
   v_guided_greedy:
     enabled: true
-    max_nodes: 1000        # Same budget for fair comparison
+    max_nodes: 1_000_000        # Same budget for fair comparison
 
   beam_search:
     enabled: false
