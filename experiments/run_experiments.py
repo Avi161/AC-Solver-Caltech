@@ -18,6 +18,8 @@ import sys
 import json
 import time
 import pickle
+import signal
+import atexit
 import argparse
 import datetime
 import numpy as np
@@ -556,6 +558,18 @@ def main():
     # Populated by solved presentations, enables cross-search memoization.
     # Loaded from disk if available (persists across runs).
     solution_cache = load_solution_cache(cache_path)
+
+    # Register emergency save on Ctrl+C / SIGTERM so cache is never lost
+    def _emergency_save(signum, frame):
+        if solution_cache:
+            print(f"\n  [interrupted] Saving solution cache ({len(solution_cache)} entries)...")
+            save_solution_cache(solution_cache, cache_path)
+            print(f"  [cache saved to {cache_path}]")
+        sys.exit(1)
+
+    signal.signal(signal.SIGINT, _emergency_save)
+    signal.signal(signal.SIGTERM, _emergency_save)
+    atexit.register(lambda: save_solution_cache(solution_cache, cache_path) if solution_cache else None)
 
     # ---- 1. Greedy (paper baseline) ----
     if algos['greedy']['enabled']:
