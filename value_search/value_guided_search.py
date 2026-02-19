@@ -82,6 +82,19 @@ def _score_states_seq(states_list, model, device, max_state_dim=72):
     return preds.cpu().numpy().tolist()
 
 
+def _reconstruct_path(parent_map, node_id):
+    """Trace parent pointers back to root and return path."""
+    path = []
+    while node_id is not None:
+        action, length, parent_id = parent_map[node_id]
+        if parent_id is None:
+            break  # root node, no action
+        path.append((action, length))
+        node_id = parent_id
+    path.reverse()
+    return path
+
+
 def value_guided_greedy_search(
     presentation,
     model=None,
@@ -138,16 +151,24 @@ def value_guided_greedy_search(
             scores = _score_states_seq([presentation], model, device, max_state_dim)
         init_priority = scores[0]
 
-    # Priority queue: (priority, path_length, state_tuple, word_lengths_tuple, path)
-    to_explore = [(init_priority, 0, tuple(presentation), tuple(word_lengths), [])]
+    # Parent-pointer tree: node_id -> (action, total_length, parent_id)
+    # Root has parent_id=None
+    parent_map = {0: (None, total_initial_length, None)}
+    next_node_id = 1
+
+    # Map state tuples to node IDs for dedup
+    state_to_id = {}
+    root_tup = tuple(presentation)
+    state_to_id[root_tup] = 0
+
+    # Priority queue: (priority, path_length, node_id, state_tuple, word_lengths_tuple)
+    to_explore = [(init_priority, 0, 0, root_tup, tuple(word_lengths))]
     heapq.heapify(to_explore)
 
-    tree_nodes = set()
-    tree_nodes.add(tuple(presentation))
     min_length = total_initial_length
 
     while to_explore:
-        _, path_length, state_tuple, wl_tuple, path = heapq.heappop(to_explore)
+        _, path_length, cur_node_id, state_tuple, wl_tuple = heapq.heappop(to_explore)
         state = np.array(state_tuple, dtype=np.int8)
         word_lengths = list(wl_tuple)
 
@@ -164,15 +185,17 @@ def value_guided_greedy_search(
             if new_length < min_length:
                 min_length = new_length
                 if verbose:
-                    print(f"New min length: {min_length} (nodes: {len(tree_nodes)})")
+                    print(f"New min length: {min_length} (nodes: {len(state_to_id)})")
 
             # Check for trivial
             if new_length == 2:
-                final_path = path + [(action, new_length)]
-                stats = {'nodes_explored': len(tree_nodes), 'min_length': min_length}
-                return True, final_path, stats
+                # Build path: parent chain + this final action
+                path = _reconstruct_path(parent_map, cur_node_id)
+                path.append((action, new_length))
+                stats = {'nodes_explored': len(state_to_id), 'min_length': min_length}
+                return True, path, stats
 
-            if state_tup not in tree_nodes:
+            if state_tup not in state_to_id:
                 children.append((new_state, new_lengths, action, new_length, state_tup))
 
         # Score all children in a batch
@@ -189,19 +212,21 @@ def value_guided_greedy_search(
 
         # Push children to heap
         for (new_state, new_lengths, action, new_length, state_tup), score in zip(children, scores):
-            tree_nodes.add(state_tup)
-            new_path = path + [(action, new_length)]
+            node_id = next_node_id
+            next_node_id += 1
+            parent_map[node_id] = (action, new_length, cur_node_id)
+            state_to_id[state_tup] = node_id
             heapq.heappush(
                 to_explore,
-                (score, path_length + 1, state_tup, tuple(new_lengths), new_path),
+                (score, path_length + 1, node_id, state_tup, tuple(new_lengths)),
             )
 
-        if len(tree_nodes) >= max_nodes_to_explore:
+        if len(state_to_id) >= max_nodes_to_explore:
             if verbose:
-                print(f"Budget exhausted: {len(tree_nodes)} nodes explored")
+                print(f"Budget exhausted: {len(state_to_id)} nodes explored")
             break
 
-    stats = {'nodes_explored': len(tree_nodes), 'min_length': min_length}
+    stats = {'nodes_explored': len(state_to_id), 'min_length': min_length}
     return False, [], stats
 
 
@@ -239,11 +264,15 @@ def beam_search(
     max_state_dim = len(presentation)
 
     # Initialize beam with the starting presentation
-    # Each candidate: (state, word_lengths, path)
     len_r1 = int(np.count_nonzero(presentation[:max_relator_length]))
     len_r2 = int(np.count_nonzero(presentation[max_relator_length:]))
 
-    beam = [(presentation.copy(), [len_r1, len_r2], [])]
+    # Parent-pointer tree: node_id -> (action, total_length, parent_id)
+    parent_map = {0: (None, len_r1 + len_r2, None)}
+    next_node_id = 1
+
+    # Each beam candidate: (state, word_lengths, node_id)
+    beam = [(presentation.copy(), [len_r1, len_r2], 0)]
     visited = set()
     visited.add(tuple(presentation))
     total_nodes = 1
@@ -252,8 +281,8 @@ def beam_search(
     while beam and total_nodes < max_nodes_to_explore:
         step += 1
         # Expand all candidates
-        all_children = []
-        for state, wl, path in beam:
+        all_children = []  # (state, word_lengths, node_id)
+        for state, wl, parent_node_id in beam:
             for action in range(12):
                 new_state, new_lengths = ACMove(
                     action, state, max_relator_length, wl,
@@ -264,16 +293,18 @@ def beam_search(
 
                 # Check trivial
                 if new_length == 2:
-                    final_path = path + [(action, new_length)]
+                    path = _reconstruct_path(parent_map, parent_node_id)
+                    path.append((action, new_length))
                     stats = {'nodes_explored': total_nodes, 'steps': step}
-                    return True, final_path, stats
+                    return True, path, stats
 
                 if state_tup not in visited:
                     visited.add(state_tup)
                     total_nodes += 1
-                    all_children.append(
-                        (new_state, new_lengths, path + [(action, new_length)])
-                    )
+                    node_id = next_node_id
+                    next_node_id += 1
+                    parent_map[node_id] = (action, new_length, parent_node_id)
+                    all_children.append((new_state, new_lengths, node_id))
 
                     if total_nodes >= max_nodes_to_explore:
                         break
@@ -296,6 +327,17 @@ def beam_search(
         scored = list(zip(scores, all_children))
         scored.sort(key=lambda x: x[0])
         beam = [(c[0], c[1], c[2]) for _, c in scored[:beam_width]]
+
+        # Prune parent_map: only keep ancestors of beam nodes
+        # (prevents unbounded memory growth across steps)
+        if step % 50 == 0 and len(parent_map) > total_nodes // 2:
+            keep = set()
+            for _, _, node_id in beam:
+                nid = node_id
+                while nid is not None and nid not in keep:
+                    keep.add(nid)
+                    _, _, nid = parent_map[nid]
+            parent_map = {k: v for k, v in parent_map.items() if k in keep}
 
         if verbose and step % 10 == 0:
             best_score = scored[0][0] if scored else float('inf')
