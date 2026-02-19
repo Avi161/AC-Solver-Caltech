@@ -95,6 +95,61 @@ def _reconstruct_path(parent_map, node_id):
     return path
 
 
+def _check_cache_with_rotations(state_tup, mrl, solution_cache):
+    """
+    Check if this state or any cyclic rotation of its relators is in the cache.
+
+    For relator r = a₁a₂...aₙ, cyclic rotation a₂...aₙa₁ is equivalent to
+    conjugating by a₁⁻¹. So if we find a rotated version in the cache, we
+    can solve the original by prepending the conjugation undo moves.
+
+    Returns the path to trivial if found (including undo moves), or None.
+    """
+    # Direct check first
+    if state_tup in solution_cache:
+        return list(solution_cache[state_tup])
+
+    state = np.array(state_tup, dtype=np.int8)
+    total_length = int(np.count_nonzero(state[:mrl])) + int(np.count_nonzero(state[mrl:]))
+
+    # Conjugation move lookup: (rel_idx, generator) -> move_id
+    # These conjugate r_i by g: r_i → g * r_i * g⁻¹
+    CONJ_MOVE = {
+        (0, 1): 7, (0, -1): 11, (0, 2): 9, (0, -2): 5,
+        (1, 1): 8, (1, -1): 4, (1, 2): 10, (1, -2): 6,
+    }
+
+    for rel_idx in range(2):
+        offset = rel_idx * mrl
+        relator = state[offset:offset + mrl]
+        nz = relator[relator != 0]
+        L = len(nz)
+        if L <= 1:
+            continue
+        # Skip if first and last letters cancel (rotation won't be free-reduced)
+        if nz[-1] + nz[0] == 0:
+            continue
+
+        undo_moves = []
+        for k in range(1, L):
+            gen = int(nz[k - 1])
+            move_key = (rel_idx, gen)
+            if move_key not in CONJ_MOVE:
+                break
+            undo_moves.append((CONJ_MOVE[move_key], total_length))
+
+            # Build rotated state via numpy slicing
+            rotated_state = state.copy()
+            rotated_state[offset:offset + L] = np.concatenate([nz[k:], nz[:k]])
+            rot_tup = tuple(rotated_state)
+
+            if rot_tup in solution_cache:
+                # Undo rotation: conjugate by a_k, a_{k-1}, ..., a_1 then follow cached path
+                return list(reversed(undo_moves)) + list(solution_cache[rot_tup])
+
+    return None
+
+
 def _expand_cache_with_rotations(cache, state_tup, suffix_path, mrl, cyclically_reduce):
     """
     Expand cache with all cyclic rotations of both relators.
@@ -261,11 +316,12 @@ def value_guided_greedy_search(
     root_tup = tuple(presentation)
     state_to_id[root_tup] = 0
 
-    # Check if starting state is already in the solution cache
-    if solution_cache is not None and root_tup in solution_cache:
-        cached_path = solution_cache[root_tup]
-        stats = {'nodes_explored': 1, 'min_length': 2, 'cache_hit': True}
-        return True, list(cached_path), stats
+    # Check if starting state (or any cyclic rotation) is in the solution cache
+    if solution_cache is not None:
+        cached_path = _check_cache_with_rotations(root_tup, max_relator_length, solution_cache)
+        if cached_path is not None:
+            stats = {'nodes_explored': 1, 'min_length': 2, 'cache_hit': True}
+            return True, cached_path, stats
 
     # Priority queue: (priority, path_length, node_id, state_tuple, word_lengths_tuple)
     to_explore = [(init_priority, 0, 0, root_tup, tuple(word_lengths))]
@@ -301,14 +357,16 @@ def value_guided_greedy_search(
                 stats = {'nodes_explored': len(state_to_id), 'min_length': min_length}
                 return True, path, stats
 
-            # Check solution cache for this child state
-            if solution_cache is not None and state_tup in solution_cache:
-                path = _reconstruct_path(parent_map, cur_node_id)
-                path.append((action, new_length))
-                path.extend(solution_cache[state_tup])
-                stats = {'nodes_explored': len(state_to_id), 'min_length': 2,
-                         'cache_hit': True}
-                return True, path, stats
+            # Check solution cache (with rotation variants) for this child state
+            if solution_cache is not None:
+                cached = _check_cache_with_rotations(state_tup, max_relator_length, solution_cache)
+                if cached is not None:
+                    path = _reconstruct_path(parent_map, cur_node_id)
+                    path.append((action, new_length))
+                    path.extend(cached)
+                    stats = {'nodes_explored': len(state_to_id), 'min_length': 2,
+                             'cache_hit': True}
+                    return True, path, stats
 
             if state_tup not in state_to_id:
                 children.append((new_state, new_lengths, action, new_length, state_tup))
@@ -384,12 +442,13 @@ def beam_search(
     len_r1 = int(np.count_nonzero(presentation[:max_relator_length]))
     len_r2 = int(np.count_nonzero(presentation[max_relator_length:]))
 
-    # Check if starting state is already in the solution cache
+    # Check if starting state (or any cyclic rotation) is in the solution cache
     root_tup = tuple(presentation)
-    if solution_cache is not None and root_tup in solution_cache:
-        cached_path = solution_cache[root_tup]
-        stats = {'nodes_explored': 1, 'steps': 0, 'cache_hit': True}
-        return True, list(cached_path), stats
+    if solution_cache is not None:
+        cached_path = _check_cache_with_rotations(root_tup, max_relator_length, solution_cache)
+        if cached_path is not None:
+            stats = {'nodes_explored': 1, 'steps': 0, 'cache_hit': True}
+            return True, cached_path, stats
 
     # Parent-pointer tree: node_id -> (action, total_length, parent_id)
     parent_map = {0: (None, len_r1 + len_r2, None)}
@@ -422,14 +481,16 @@ def beam_search(
                     stats = {'nodes_explored': total_nodes, 'steps': step}
                     return True, path, stats
 
-                # Check solution cache
-                if solution_cache is not None and state_tup in solution_cache:
-                    path = _reconstruct_path(parent_map, parent_node_id)
-                    path.append((action, new_length))
-                    path.extend(solution_cache[state_tup])
-                    stats = {'nodes_explored': total_nodes, 'steps': step,
-                             'cache_hit': True}
-                    return True, path, stats
+                # Check solution cache (with rotation variants)
+                if solution_cache is not None:
+                    cached = _check_cache_with_rotations(state_tup, max_relator_length, solution_cache)
+                    if cached is not None:
+                        path = _reconstruct_path(parent_map, parent_node_id)
+                        path.append((action, new_length))
+                        path.extend(cached)
+                        stats = {'nodes_explored': total_nodes, 'steps': step,
+                                 'cache_hit': True}
+                        return True, path, stats
 
                 if state_tup not in visited:
                     visited.add(state_tup)

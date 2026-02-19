@@ -11,6 +11,7 @@
 # --- Output ---
 output_dir: "experiments/results"
 save_incremental: true          # Save after each algorithm (crash-safe for overnight runs)
+solution_cache_path: "experiments/solution_cache.pkl"  # Persistent memo across runs (set to "" to disable)
 
 # --- Device ---
 device: "auto"                  # "auto" (detect GPU), "cpu", or "cuda"

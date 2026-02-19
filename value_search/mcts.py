@@ -12,6 +12,7 @@ from typing import Optional, Dict, List
 
 from ac_solver.envs.ac_moves import ACMove
 from value_search.feature_extraction import compute_features
+from value_search.value_guided_search import _check_cache_with_rotations
 
 
 @dataclass
@@ -179,6 +180,7 @@ def mcts_search(
     device='cpu',
     cyclically_reduce_after_moves=False,
     verbose=False,
+    solution_cache=None,
 ):
     """
     Simplified MCTS for AC trivialization.
@@ -193,6 +195,7 @@ def mcts_search(
         device: 'cpu' or 'cuda'
         cyclically_reduce_after_moves: cyclic reduction flag
         verbose: print progress
+        solution_cache: optional dict mapping state_tuple -> path_to_trivial
 
     Returns:
         (solved, path, stats)
@@ -209,6 +212,14 @@ def mcts_search(
         word_lengths=(len_r1, len_r2),
         max_relator_length=max_relator_length,
     )
+
+    # Check if starting state (or any rotation) is already in solution cache
+    if solution_cache is not None:
+        cached_path = _check_cache_with_rotations(
+            tuple(presentation), max_relator_length, solution_cache)
+        if cached_path is not None:
+            stats = {'nodes_explored': 1, 'iterations': 0, 'cache_hit': True}
+            return True, cached_path, stats
 
     # Evaluate root
     evaluate_leaves([root], model, architecture, feat_mean, feat_std,
@@ -244,14 +255,31 @@ def mcts_search(
             continue
         stale_count = 0
 
-        # Check for terminal children
+        # Check for terminal children or cache hits
+        cache_hit_path = None
         for child in new_children:
             if child.is_terminal:
                 found_terminal = child
                 break
+            # Check solution cache (with rotation variants)
+            if solution_cache is not None:
+                cached = _check_cache_with_rotations(
+                    child.state, max_relator_length, solution_cache)
+                if cached is not None:
+                    tree_path = extract_path(child)
+                    cache_hit_path = tree_path + cached
+                    break
 
         if found_terminal:
             break
+
+        if cache_hit_path is not None:
+            stats = {
+                'nodes_explored': len(visited_global),
+                'iterations': iterations,
+                'cache_hit': True,
+            }
+            return True, cache_hit_path, stats
 
         # EVALUATE
         evaluate_leaves(new_children, model, architecture, feat_mean, feat_std,
