@@ -95,7 +95,64 @@ def _reconstruct_path(parent_map, node_id):
     return path
 
 
-def backfill_solution_cache(cache, presentation, path, cyclically_reduce=False):
+def _expand_cache_with_rotations(cache, state_tup, suffix_path, mrl, cyclically_reduce):
+    """
+    Expand cache with all cyclic rotations of both relators.
+
+    For relator r = a₁a₂...aₙ, the rotation a₂...aₙa₁ is equivalent to
+    conjugating r by a₁⁻¹ (an AC move). So if we know how to solve a state,
+    we also know how to solve all its cyclic rotation variants — just prepend
+    the conjugation moves to undo the rotation.
+
+    Generates rotations via direct numpy array slicing (no ACMove calls)
+    for speed, then computes the appropriate undo conjugation move sequence.
+    """
+    state = np.array(state_tup, dtype=np.int8)
+    total_length = int(np.count_nonzero(state[:mrl])) + int(np.count_nonzero(state[mrl:]))
+
+    # Lookup: conjugation move that does r_i → g * r_i * g⁻¹
+    CONJ_MOVE = {
+        (0, 1): 7, (0, -1): 11, (0, 2): 9, (0, -2): 5,
+        (1, 1): 8, (1, -1): 4, (1, 2): 10, (1, -2): 6,
+    }
+
+    for rel_idx in range(2):
+        offset = rel_idx * mrl
+        relator = state[offset:offset + mrl]
+        nz = relator[relator != 0]
+        L = len(nz)
+        if L <= 1:
+            continue
+
+        # If first and last letters cancel (nz[-1] = -nz[0]), rotations
+        # won't be free-reduced — skip this relator entirely
+        if nz[-1] + nz[0] == 0:
+            continue
+
+        # Generate all L-1 cyclic left rotations.
+        # Rotation by k: [a_{k+1}, ..., a_n, a_1, ..., a_k]
+        # Undo: conjugate by a_k (restores a_k to front, removes from back),
+        #   then by a_{k-1}, ..., then by a_1.
+        undo_moves = []
+        for k in range(1, L):
+            gen = int(nz[k - 1])
+            move_key = (rel_idx, gen)
+            if move_key not in CONJ_MOVE:
+                break
+            undo_moves.append((CONJ_MOVE[move_key], total_length))
+
+            # Build rotated state directly via numpy slicing
+            rotated_state = state.copy()
+            rotated_state[offset:offset + L] = np.concatenate([nz[k:], nz[:k]])
+            rot_tup = tuple(rotated_state)
+
+            if rot_tup not in cache:
+                # Undo path: conjugate by a_k, a_{k-1}, ..., a_1 then follow suffix
+                cache[rot_tup] = list(reversed(undo_moves)) + suffix_path
+
+
+def backfill_solution_cache(cache, presentation, path, cyclically_reduce=False,
+                            expand_rotations=True):
     """
     Replay a solved path and cache every intermediate state's suffix.
 
@@ -105,8 +162,11 @@ def backfill_solution_cache(cache, presentation, path, cyclically_reduce=False):
         cache[S1] = [(m1, l1), ..., (mn, ln)]
         ...etc
 
-    States with the same tuple representation across different presentations
-    will get instant cache hits in future searches.
+    When expand_rotations=True (default), also caches all cyclic rotation
+    variants of each intermediate state's relators. If r0 = aAbbB is cached,
+    then AbbBa, bbBaA, etc. are also cached with the appropriate conjugation
+    moves prepended. This exploits the fact that cyclic rotation of a relator
+    is equivalent to conjugation by one of its letters.
     """
     state = np.array(presentation, dtype=np.int8)
     mrl = len(state) // 2
@@ -117,8 +177,14 @@ def backfill_solution_cache(cache, presentation, path, cyclically_reduce=False):
     # Cache every intermediate state → remaining suffix
     for i in range(len(path)):
         state_tup = tuple(state)
+        suffix = list(path[i:])
+
         if state_tup not in cache:
-            cache[state_tup] = list(path[i:])
+            cache[state_tup] = suffix
+
+        # Expand with cyclic rotation variants
+        if expand_rotations:
+            _expand_cache_with_rotations(cache, state_tup, suffix, mrl, cyclically_reduce)
 
         action, _ = path[i]
         state, wl = ACMove(action, state, mrl, wl, cyclical=cyclically_reduce)

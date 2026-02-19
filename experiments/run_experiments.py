@@ -137,7 +137,7 @@ def run_greedy(presentations, max_nodes):
         if solved and path:
             # Store full move sequence: list of [action_id, length_after] pairs
             # Skip sentinel (-1, initial_length) at index 0
-            result['path'] = [list(step) for step in path[1:]]
+            result['path'] = [[int(a), int(l)] for a, l in path[1:]]
         results.append(result)
         if solved:
             solved_count += 1
@@ -167,7 +167,7 @@ def run_bfs_search(presentations, max_nodes):
         if solved and path:
             # Store full move sequence: list of [action_id, length_after] pairs
             # Skip sentinel (-1, initial_length) at index 0
-            result['path'] = [list(step) for step in path[1:]]
+            result['path'] = [[int(a), int(l)] for a, l in path[1:]]
         results.append(result)
         if solved:
             solved_count += 1
@@ -202,7 +202,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             'time': elapsed,
         }
         if solved and path:
-            result['path'] = [list(step) for step in path]
+            result['path'] = [[int(a), int(l)] for a, l in path]
             # Backfill cache with all intermediate states from this solution
             if solution_cache is not None:
                 backfill_solution_cache(solution_cache, pres, path)
@@ -243,7 +243,7 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             'time': elapsed,
         }
         if solved and path:
-            result['path'] = [list(step) for step in path]
+            result['path'] = [[int(a), int(l)] for a, l in path]
             if solution_cache is not None:
                 backfill_solution_cache(solution_cache, pres, path)
             if stats.get('cache_hit'):
@@ -281,7 +281,7 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
             'time': elapsed,
         }
         if solved and path:
-            result['path'] = [list(step) for step in path]
+            result['path'] = [[int(a), int(l)] for a, l in path]
             # Backfill shared cache so other algorithms benefit
             if solution_cache is not None:
                 backfill_solution_cache(solution_cache, pres, path)
