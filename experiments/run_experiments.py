@@ -32,6 +32,7 @@ from ac_solver.search.greedy import greedy_search
 from ac_solver.search.breadth_first import bfs
 from value_search.value_guided_search import (
     value_guided_greedy_search, beam_search, load_model,
+    backfill_solution_cache,
 )
 from value_search.mcts import mcts_search
 from value_search.benchmark import load_all_presentations, load_greedy_solved_set
@@ -179,10 +180,11 @@ def run_bfs_search(presentations, max_nodes):
 
 
 def run_vguided(presentations, model, architecture, feat_mean, feat_std,
-                max_nodes, device):
+                max_nodes, device, solution_cache=None):
     """Run our V-guided greedy search."""
     results = []
     solved_count = 0
+    cache_hits = 0
     t_start = time.time()
     for i, pres in enumerate(presentations):
         t0 = time.time()
@@ -190,6 +192,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             pres, model=model, architecture=architecture,
             feat_mean=feat_mean, feat_std=feat_std,
             max_nodes_to_explore=max_nodes, device=device,
+            solution_cache=solution_cache,
         )
         elapsed = time.time() - t0
         result = {
@@ -200,22 +203,29 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
         }
         if solved and path:
             result['path'] = [list(step) for step in path]
+            # Backfill cache with all intermediate states from this solution
+            if solution_cache is not None:
+                backfill_solution_cache(solution_cache, pres, path)
+            if stats.get('cache_hit'):
+                cache_hits += 1
         results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
             total_elapsed = time.time() - t_start
+            cache_str = f", cache_hits={cache_hits}" if solution_cache is not None else ""
             print(f"    V-Greedy: {i+1}/{len(presentations)}, "
-                  f"solved={solved_count}, "
+                  f"solved={solved_count}{cache_str}, "
                   f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
     return results
 
 
 def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
-                    beam_width, max_nodes, device):
+                    beam_width, max_nodes, device, solution_cache=None):
     """Run our beam search."""
     results = []
     solved_count = 0
+    cache_hits = 0
     t_start = time.time()
     for i, pres in enumerate(presentations):
         t0 = time.time()
@@ -223,6 +233,7 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             pres, model=model, architecture=architecture,
             feat_mean=feat_mean, feat_std=feat_std,
             beam_width=beam_width, max_nodes_to_explore=max_nodes, device=device,
+            solution_cache=solution_cache,
         )
         elapsed = time.time() - t0
         result = {
@@ -233,19 +244,24 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
         }
         if solved and path:
             result['path'] = [list(step) for step in path]
+            if solution_cache is not None:
+                backfill_solution_cache(solution_cache, pres, path)
+            if stats.get('cache_hit'):
+                cache_hits += 1
         results.append(result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
             total_elapsed = time.time() - t_start
+            cache_str = f", cache_hits={cache_hits}" if solution_cache is not None else ""
             print(f"    Beam(k={beam_width}): {i+1}/{len(presentations)}, "
-                  f"solved={solved_count}, "
+                  f"solved={solved_count}{cache_str}, "
                   f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
     return results
 
 
 def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
-                    max_nodes, c_explore, device):
+                    max_nodes, c_explore, device, solution_cache=None):
     """Run our MCTS search."""
     results = []
     solved_count = 0
@@ -266,6 +282,9 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
         }
         if solved and path:
             result['path'] = [list(step) for step in path]
+            # Backfill shared cache so other algorithms benefit
+            if solution_cache is not None:
+                backfill_solution_cache(solution_cache, pres, path)
         results.append(result)
         if solved:
             solved_count += 1
@@ -479,6 +498,10 @@ def main():
     algos = cfg['algorithms']
     experiment_start = time.time()
 
+    # Shared solution cache: state_tuple -> path_to_trivial
+    # Populated by solved presentations, enables cross-search memoization
+    solution_cache = {}
+
     # ---- 1. Greedy (paper baseline) ----
     if algos['greedy']['enabled']:
         max_n = algos['greedy']['max_nodes']
@@ -521,7 +544,8 @@ def main():
         print(f"  [3] V-GUIDED GREEDY (ours, {arch}) — {max_n:,} nodes")
         print(f"{'='*60}")
         results = run_vguided(
-            presentations, model, arch, feat_mean, feat_std, max_n, device
+            presentations, model, arch, feat_mean, feat_std, max_n, device,
+            solution_cache=solution_cache,
         )
         metrics = compute_metrics(results)
         name = f"V-Greedy (ours, {max_n//1000}K)"
@@ -543,7 +567,8 @@ def main():
             print(f"  [4.{bi+1}] BEAM SEARCH k={k} (ours, {arch}) — {max_n:,} nodes")
             print(f"{'='*60}")
             results = run_beam_search(
-                presentations, model, arch, feat_mean, feat_std, k, max_n, device
+                presentations, model, arch, feat_mean, feat_std, k, max_n, device,
+                solution_cache=solution_cache,
             )
             metrics = compute_metrics(results)
             name = f"Beam k={k} (ours, {max_n//1000}K)"
@@ -564,7 +589,8 @@ def main():
         print(f"  [5] MCTS c={c_exp} (ours, {arch}) — {max_n:,} nodes")
         print(f"{'='*60}")
         results = run_mcts_search(
-            presentations, model, arch, feat_mean, feat_std, max_n, c_exp, device
+            presentations, model, arch, feat_mean, feat_std, max_n, c_exp, device,
+            solution_cache=solution_cache,
         )
         metrics = compute_metrics(results)
         name = f"MCTS c={c_exp} (ours, {max_n//1000}K)"
@@ -579,6 +605,7 @@ def main():
     # ---- Final output ----
     total_time = time.time() - experiment_start
     print(f"\n\nAll experiments completed in {fmt_time(total_time)}.")
+    print(f"  Solution cache: {len(solution_cache)} states memoized")
 
     # Comparison table
     print_comparison_table(all_metrics, greedy_solved_set, presentations)

@@ -95,6 +95,37 @@ def _reconstruct_path(parent_map, node_id):
     return path
 
 
+def backfill_solution_cache(cache, presentation, path, cyclically_reduce=False):
+    """
+    Replay a solved path and cache every intermediate state's suffix.
+
+    After solving presentation P via path [m0, m1, ..., mn], this replays the
+    moves to recover intermediate states S0, S1, ..., Sn and caches:
+        cache[S0] = [(m0, l0), (m1, l1), ..., (mn, ln)]
+        cache[S1] = [(m1, l1), ..., (mn, ln)]
+        ...etc
+
+    States with the same tuple representation across different presentations
+    will get instant cache hits in future searches.
+    """
+    state = np.array(presentation, dtype=np.int8)
+    mrl = len(state) // 2
+    len_r1 = int(np.count_nonzero(state[:mrl]))
+    len_r2 = int(np.count_nonzero(state[mrl:]))
+    wl = [len_r1, len_r2]
+
+    # Cache every intermediate state → remaining suffix
+    for i in range(len(path)):
+        state_tup = tuple(state)
+        if state_tup not in cache:
+            cache[state_tup] = list(path[i:])
+
+        action, _ = path[i]
+        state, wl = ACMove(action, state, mrl, wl, cyclical=cyclically_reduce)
+
+    return cache
+
+
 def value_guided_greedy_search(
     presentation,
     model=None,
@@ -106,6 +137,7 @@ def value_guided_greedy_search(
     use_length_priority=False,
     cyclically_reduce_after_moves=False,
     verbose=False,
+    solution_cache=None,
 ):
     """
     Greedy search with value network priority.
@@ -123,6 +155,8 @@ def value_guided_greedy_search(
         use_length_priority: if True, use length as priority (baseline)
         cyclically_reduce_after_moves: apply cyclic reduction after moves
         verbose: print progress
+        solution_cache: optional dict mapping state_tuple -> path_to_trivial,
+            shared across searches to enable cross-presentation memoization
 
     Returns:
         (solved, path, stats) where:
@@ -161,6 +195,12 @@ def value_guided_greedy_search(
     root_tup = tuple(presentation)
     state_to_id[root_tup] = 0
 
+    # Check if starting state is already in the solution cache
+    if solution_cache is not None and root_tup in solution_cache:
+        cached_path = solution_cache[root_tup]
+        stats = {'nodes_explored': 1, 'min_length': 2, 'cache_hit': True}
+        return True, list(cached_path), stats
+
     # Priority queue: (priority, path_length, node_id, state_tuple, word_lengths_tuple)
     to_explore = [(init_priority, 0, 0, root_tup, tuple(word_lengths))]
     heapq.heapify(to_explore)
@@ -193,6 +233,15 @@ def value_guided_greedy_search(
                 path = _reconstruct_path(parent_map, cur_node_id)
                 path.append((action, new_length))
                 stats = {'nodes_explored': len(state_to_id), 'min_length': min_length}
+                return True, path, stats
+
+            # Check solution cache for this child state
+            if solution_cache is not None and state_tup in solution_cache:
+                path = _reconstruct_path(parent_map, cur_node_id)
+                path.append((action, new_length))
+                path.extend(solution_cache[state_tup])
+                stats = {'nodes_explored': len(state_to_id), 'min_length': 2,
+                         'cache_hit': True}
                 return True, path, stats
 
             if state_tup not in state_to_id:
@@ -241,6 +290,7 @@ def beam_search(
     device='cpu',
     cyclically_reduce_after_moves=False,
     verbose=False,
+    solution_cache=None,
 ):
     """
     Beam search: maintain top-k candidates, expand all, score, keep top-k.
@@ -255,6 +305,7 @@ def beam_search(
         device: 'cpu' or 'cuda'
         cyclically_reduce_after_moves: apply cyclic reduction
         verbose: print progress
+        solution_cache: optional dict mapping state_tuple -> path_to_trivial
 
     Returns:
         (solved, path, stats)
@@ -267,6 +318,13 @@ def beam_search(
     len_r1 = int(np.count_nonzero(presentation[:max_relator_length]))
     len_r2 = int(np.count_nonzero(presentation[max_relator_length:]))
 
+    # Check if starting state is already in the solution cache
+    root_tup = tuple(presentation)
+    if solution_cache is not None and root_tup in solution_cache:
+        cached_path = solution_cache[root_tup]
+        stats = {'nodes_explored': 1, 'steps': 0, 'cache_hit': True}
+        return True, list(cached_path), stats
+
     # Parent-pointer tree: node_id -> (action, total_length, parent_id)
     parent_map = {0: (None, len_r1 + len_r2, None)}
     next_node_id = 1
@@ -274,7 +332,7 @@ def beam_search(
     # Each beam candidate: (state, word_lengths, node_id)
     beam = [(presentation.copy(), [len_r1, len_r2], 0)]
     visited = set()
-    visited.add(tuple(presentation))
+    visited.add(root_tup)
     total_nodes = 1
 
     step = 0
@@ -296,6 +354,15 @@ def beam_search(
                     path = _reconstruct_path(parent_map, parent_node_id)
                     path.append((action, new_length))
                     stats = {'nodes_explored': total_nodes, 'steps': step}
+                    return True, path, stats
+
+                # Check solution cache
+                if solution_cache is not None and state_tup in solution_cache:
+                    path = _reconstruct_path(parent_map, parent_node_id)
+                    path.append((action, new_length))
+                    path.extend(solution_cache[state_tup])
+                    stats = {'nodes_explored': total_nodes, 'steps': step,
+                             'cache_hit': True}
                     return True, path, stats
 
                 if state_tup not in visited:
