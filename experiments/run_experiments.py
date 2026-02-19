@@ -17,6 +17,7 @@ import os
 import sys
 import json
 import time
+import pickle
 import argparse
 import datetime
 import numpy as np
@@ -44,6 +45,7 @@ from value_search.benchmark import load_all_presentations, load_greedy_solved_se
 DEFAULTS = {
     'output_dir': 'experiments/results',
     'save_incremental': True,
+    'solution_cache_path': 'experiments/solution_cache.pkl',
     'device': 'auto',
     'model': {
         'architecture': 'mlp',
@@ -117,10 +119,43 @@ def eta_str(elapsed, done, total):
 
 
 # ---------------------------------------------------------------------------
+# Persistent solution cache
+# ---------------------------------------------------------------------------
+
+def load_solution_cache(path):
+    """Load solution cache from pickle file. Returns empty dict if not found."""
+    if path and os.path.exists(path):
+        with open(path, 'rb') as f:
+            cache = pickle.load(f)
+        print(f"  Loaded solution cache: {len(cache)} entries from {path}")
+        return cache
+    return {}
+
+
+def save_solution_cache(cache, path):
+    """Save solution cache to pickle file."""
+    if not path:
+        return
+    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+    with open(path, 'wb') as f:
+        pickle.dump(cache, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+# ---------------------------------------------------------------------------
+# .jsonl progress writer
+# ---------------------------------------------------------------------------
+
+def write_jsonl_line(fh, record):
+    """Write a single JSON record to a .jsonl file handle and flush."""
+    fh.write(json.dumps(record) + '\n')
+    fh.flush()
+
+
+# ---------------------------------------------------------------------------
 # Algorithm runners
 # ---------------------------------------------------------------------------
 
-def run_greedy(presentations, max_nodes):
+def run_greedy(presentations, max_nodes, progress_fh=None):
     """Run paper's length-based greedy search."""
     results = []
     solved_count = 0
@@ -139,6 +174,8 @@ def run_greedy(presentations, max_nodes):
             # Skip sentinel (-1, initial_length) at index 0
             result['path'] = [[int(a), int(l)] for a, l in path[1:]]
         results.append(result)
+        if progress_fh:
+            write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -149,7 +186,7 @@ def run_greedy(presentations, max_nodes):
     return results
 
 
-def run_bfs_search(presentations, max_nodes):
+def run_bfs_search(presentations, max_nodes, progress_fh=None):
     """Run paper's BFS search."""
     results = []
     solved_count = 0
@@ -169,6 +206,8 @@ def run_bfs_search(presentations, max_nodes):
             # Skip sentinel (-1, initial_length) at index 0
             result['path'] = [[int(a), int(l)] for a, l in path[1:]]
         results.append(result)
+        if progress_fh:
+            write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -180,7 +219,7 @@ def run_bfs_search(presentations, max_nodes):
 
 
 def run_vguided(presentations, model, architecture, feat_mean, feat_std,
-                max_nodes, device, solution_cache=None):
+                max_nodes, device, solution_cache=None, progress_fh=None):
     """Run our V-guided greedy search."""
     results = []
     solved_count = 0
@@ -209,6 +248,8 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             if stats.get('cache_hit'):
                 cache_hits += 1
         results.append(result)
+        if progress_fh:
+            write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -221,7 +262,8 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
 
 
 def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
-                    beam_width, max_nodes, device, solution_cache=None):
+                    beam_width, max_nodes, device, solution_cache=None,
+                    progress_fh=None):
     """Run our beam search."""
     results = []
     solved_count = 0
@@ -249,6 +291,8 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             if stats.get('cache_hit'):
                 cache_hits += 1
         results.append(result)
+        if progress_fh:
+            write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -261,7 +305,8 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
 
 
 def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
-                    max_nodes, c_explore, device, solution_cache=None):
+                    max_nodes, c_explore, device, solution_cache=None,
+                    progress_fh=None):
     """Run our MCTS search."""
     results = []
     solved_count = 0
@@ -272,6 +317,7 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
             pres, model=model, architecture=architecture,
             feat_mean=feat_mean, feat_std=feat_std,
             max_nodes_to_explore=max_nodes, c_explore=c_explore, device=device,
+            solution_cache=solution_cache,
         )
         elapsed = time.time() - t0
         result = {
@@ -286,6 +332,8 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
             if solution_cache is not None:
                 backfill_solution_cache(solution_cache, pres, path)
         results.append(result)
+        if progress_fh:
+            write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
         if (i + 1) % 100 == 0:
@@ -439,6 +487,11 @@ def main():
     with open(config_copy_path, 'w') as f:
         yaml.dump(cfg, f, default_flow_style=False)
 
+    # Resolve solution cache path
+    cache_path = cfg.get('solution_cache_path', 'experiments/solution_cache.pkl')
+    if cache_path and not os.path.isabs(cache_path):
+        cache_path = os.path.join(PROJECT_ROOT, cache_path)
+
     # Header
     print()
     print("=" * 60)
@@ -447,6 +500,7 @@ def main():
     print(f"  Device:     {device}")
     print(f"  Config:     {args.config}")
     print(f"  Output:     {output_dir}")
+    print(f"  Cache:      {cache_path}")
     print(f"  Started:    {timestamp}")
     print("=" * 60)
     print()
@@ -499,8 +553,9 @@ def main():
     experiment_start = time.time()
 
     # Shared solution cache: state_tuple -> path_to_trivial
-    # Populated by solved presentations, enables cross-search memoization
-    solution_cache = {}
+    # Populated by solved presentations, enables cross-search memoization.
+    # Loaded from disk if available (persists across runs).
+    solution_cache = load_solution_cache(cache_path)
 
     # ---- 1. Greedy (paper baseline) ----
     if algos['greedy']['enabled']:
@@ -508,7 +563,9 @@ def main():
         print(f"\n{'='*60}")
         print(f"  [1] GREEDY (paper baseline) — {max_n:,} nodes")
         print(f"{'='*60}")
-        results = run_greedy(presentations, max_n)
+        progress_path = os.path.join(output_dir, 'greedy_progress.jsonl')
+        with open(progress_path, 'w') as pfh:
+            results = run_greedy(presentations, max_n, progress_fh=pfh)
         metrics = compute_metrics(results)
         name = f"Greedy (paper, {max_n//1000}K)"
         all_metrics[name] = metrics
@@ -525,7 +582,9 @@ def main():
         print(f"\n{'='*60}")
         print(f"  [2] BFS (paper baseline) — {max_n:,} nodes")
         print(f"{'='*60}")
-        results = run_bfs_search(presentations, max_n)
+        progress_path = os.path.join(output_dir, 'bfs_progress.jsonl')
+        with open(progress_path, 'w') as pfh:
+            results = run_bfs_search(presentations, max_n, progress_fh=pfh)
         metrics = compute_metrics(results)
         name = f"BFS (paper, {max_n//1000}K)"
         all_metrics[name] = metrics
@@ -543,16 +602,21 @@ def main():
         print(f"\n{'='*60}")
         print(f"  [3] V-GUIDED GREEDY (ours, {arch}) — {max_n:,} nodes")
         print(f"{'='*60}")
-        results = run_vguided(
-            presentations, model, arch, feat_mean, feat_std, max_n, device,
-            solution_cache=solution_cache,
-        )
+        progress_path = os.path.join(output_dir, 'v_guided_greedy_progress.jsonl')
+        with open(progress_path, 'w') as pfh:
+            results = run_vguided(
+                presentations, model, arch, feat_mean, feat_std, max_n, device,
+                solution_cache=solution_cache, progress_fh=pfh,
+            )
         metrics = compute_metrics(results)
         name = f"V-Greedy (ours, {max_n//1000}K)"
         all_metrics[name] = metrics
         all_details['v_guided_greedy'] = results
         print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
               f"in {fmt_time(metrics['total_time'])}")
+        # Save cache to disk after V-guided (typically finds most solutions)
+        save_solution_cache(solution_cache, cache_path)
+        print(f"  [cache saved: {len(solution_cache)} entries]")
         if cfg['save_incremental']:
             save_results(output_dir, all_metrics, all_details, cfg)
             print(f"  [saved incrementally]")
@@ -566,16 +630,20 @@ def main():
             print(f"\n{'='*60}")
             print(f"  [4.{bi+1}] BEAM SEARCH k={k} (ours, {arch}) — {max_n:,} nodes")
             print(f"{'='*60}")
-            results = run_beam_search(
-                presentations, model, arch, feat_mean, feat_std, k, max_n, device,
-                solution_cache=solution_cache,
-            )
+            progress_path = os.path.join(output_dir, f'beam_k{k}_progress.jsonl')
+            with open(progress_path, 'w') as pfh:
+                results = run_beam_search(
+                    presentations, model, arch, feat_mean, feat_std, k, max_n, device,
+                    solution_cache=solution_cache, progress_fh=pfh,
+                )
             metrics = compute_metrics(results)
             name = f"Beam k={k} (ours, {max_n//1000}K)"
             all_metrics[name] = metrics
             all_details[f'beam_k{k}'] = results
             print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
                   f"in {fmt_time(metrics['total_time'])}")
+            save_solution_cache(solution_cache, cache_path)
+            print(f"  [cache saved: {len(solution_cache)} entries]")
             if cfg['save_incremental']:
                 save_results(output_dir, all_metrics, all_details, cfg)
                 print(f"  [saved incrementally]")
@@ -588,16 +656,20 @@ def main():
         print(f"\n{'='*60}")
         print(f"  [5] MCTS c={c_exp} (ours, {arch}) — {max_n:,} nodes")
         print(f"{'='*60}")
-        results = run_mcts_search(
-            presentations, model, arch, feat_mean, feat_std, max_n, c_exp, device,
-            solution_cache=solution_cache,
-        )
+        progress_path = os.path.join(output_dir, 'mcts_progress.jsonl')
+        with open(progress_path, 'w') as pfh:
+            results = run_mcts_search(
+                presentations, model, arch, feat_mean, feat_std, max_n, c_exp, device,
+                solution_cache=solution_cache, progress_fh=pfh,
+            )
         metrics = compute_metrics(results)
         name = f"MCTS c={c_exp} (ours, {max_n//1000}K)"
         all_metrics[name] = metrics
         all_details['mcts'] = results
         print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
               f"in {fmt_time(metrics['total_time'])}")
+        save_solution_cache(solution_cache, cache_path)
+        print(f"  [cache saved: {len(solution_cache)} entries]")
         if cfg['save_incremental']:
             save_results(output_dir, all_metrics, all_details, cfg)
             print(f"  [saved incrementally]")
@@ -606,6 +678,9 @@ def main():
     total_time = time.time() - experiment_start
     print(f"\n\nAll experiments completed in {fmt_time(total_time)}.")
     print(f"  Solution cache: {len(solution_cache)} states memoized")
+
+    # Save cache one final time
+    save_solution_cache(solution_cache, cache_path)
 
     # Comparison table
     print_comparison_table(all_metrics, greedy_solved_set, presentations)
@@ -618,7 +693,9 @@ def main():
     print(f"\nResults saved to: {output_dir}/")
     print(f"  results.json        — summary metrics")
     print(f"  *_details.json      — per-presentation results")
+    print(f"  *_progress.jsonl    — per-presentation streaming progress")
     print(f"  config_used.yaml    — config snapshot")
+    print(f"  Solution cache:       {cache_path} ({len(solution_cache)} entries)")
 
 
 if __name__ == '__main__':

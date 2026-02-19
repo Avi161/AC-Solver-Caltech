@@ -4,3 +4,4 @@ dist/
 __pycache__/
 ac_solver/agents/checkpoints/
 experiments/results/
+experiments/solution_cache.pkl
