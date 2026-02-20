@@ -130,13 +130,14 @@ def _check_cache_with_rotations(state_tup, mrl, solution_cache):
         if nz[-1] + nz[0] == 0:
             continue
 
-        undo_moves = []
+        rotation_moves = []
         for k in range(1, L):
             gen = int(nz[k - 1])
-            move_key = (rel_idx, gen)
+            # To rotate original → rotated(k), conjugate by a_k^{-1}
+            move_key = (rel_idx, -gen)
             if move_key not in CONJ_MOVE:
                 break
-            undo_moves.append((CONJ_MOVE[move_key], total_length))
+            rotation_moves.append((CONJ_MOVE[move_key], total_length))
 
             # Build rotated state via numpy slicing
             rotated_state = state.copy()
@@ -144,8 +145,8 @@ def _check_cache_with_rotations(state_tup, mrl, solution_cache):
             rot_tup = tuple(rotated_state)
 
             if rot_tup in solution_cache:
-                # Undo rotation: conjugate by a_k, a_{k-1}, ..., a_1 then follow cached path
-                return list(reversed(undo_moves)) + list(solution_cache[rot_tup])
+                # Path: original → rotated(k) → trivial
+                return list(rotation_moves) + list(solution_cache[rot_tup])
 
     return None
 
