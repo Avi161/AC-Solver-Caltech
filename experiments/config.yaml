@@ -11,17 +11,17 @@
 
 # --- Output ---
 output_dir: "experiments/results"
-save_incremental: true       
+save_incremental: true
 
-solution_cache_path: "experiments/solution_cache.pkl"
-#   - Set to "" to disable caching entirely.
+solution_cache_path: ""
+#   - Set to "" to disable caching entirely or "experiments/solution_cache.pkl"
 
 # --- Device ---
 device: "auto"
 # ^ "auto" = use GPU if available, else CPU
 
 # --- Model (for V-guided, Beam, and MCTS only) ---
-# Greedy and BFS are model-free baselines; 
+# Greedy and BFS are model-free baselines;
 model:
   architecture: "seq"
   # ^ Which value network architecture to use:
@@ -42,7 +42,6 @@ model:
   #   Same file works for both mlp and seq. Don't change this.
 
 algorithms:
-
   # ---- Paper baselines (no ML model needed) ----
 
   greedy:
@@ -57,15 +56,14 @@ algorithms:
 
   v_guided_greedy:
     enabled: true
-    max_nodes: 1_000_000        # Same budget for fair comparison
+    max_nodes: 1_000_000 # Same budget for fair comparison
 
   beam_search:
     enabled: false
     max_nodes: 1_000_000
-    beam_widths: [10, 50]
+    beam_widths: [4]
 
   mcts:
-    enabled: false              # Very slow -- enable only if you have 8+ hours
+    enabled: false # Very slow -- enable only if you have 8+ hours
     max_nodes: 100_000
     c_explore: 1.41
-

@@ -558,6 +558,8 @@ def main():
     # Populated by solved presentations, enables cross-search memoization.
     # Loaded from disk if available (persists across runs).
     solution_cache = load_solution_cache(cache_path)
+    if not cache_path:
+        solution_cache = None  # Disable cache entirely when path 
 
     # Register emergency save on Ctrl+C / SIGTERM so cache is never lost
     def _emergency_save(signum, frame):
