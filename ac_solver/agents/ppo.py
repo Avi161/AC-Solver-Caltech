@@ -18,6 +18,7 @@ from ac_solver.agents.ppo_agent import Agent
 from ac_solver.agents.args import parse_args
 from ac_solver.agents.environment import get_env
 from ac_solver.agents.training import ppo_training_loop
+from ac_solver.agents.rnd import RNDModule
 
 
 def train_ppo():
@@ -42,6 +43,20 @@ def train_ppo():
     agent = Agent(envs, args.nodes_counts).to(device)
     optimizer = Adam(agent.parameters(), lr=args.learning_rate, eps=args.epsilon)
 
+    # Optionally create RND module for curiosity-driven exploration
+    rnd_module = None
+    if args.use_rnd:
+        input_dim = np.prod(envs.single_observation_space.shape)
+        rnd_module = RNDModule(
+            input_dim=input_dim,
+            hidden_dim=args.rnd_hidden_dim,
+            output_dim=args.rnd_output_dim,
+            learning_rate=args.rnd_lr,
+            device=device,
+        )
+        print(f"RND exploration enabled: coef={args.rnd_coef}, "
+              f"hidden={args.rnd_hidden_dim}, output={args.rnd_output_dim}")
+
     ppo_training_loop(
         envs,
         args,
@@ -53,6 +68,7 @@ def train_ppo():
         ACMoves_hist,
         states_processed,
         initial_states,
+        rnd_module=rnd_module,
     )
 
     envs.close()

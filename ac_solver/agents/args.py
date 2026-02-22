@@ -279,6 +279,40 @@ def parse_args():
         help="epsilon hyperparameter for PyTorch Adam Optimizer",
     )
 
+    # Curiosity-driven exploration (RND) arguments
+    parser.add_argument(
+        "--use-rnd",
+        type=lambda x: bool(strtobool(x)),
+        default=False,
+        nargs="?",
+        const=True,
+        help="if toggled, Random Network Distillation (RND) intrinsic rewards are added to encourage exploration",
+    )
+    parser.add_argument(
+        "--rnd-coef",
+        type=float,
+        default=1.0,
+        help="coefficient for intrinsic (RND) reward added to extrinsic reward",
+    )
+    parser.add_argument(
+        "--rnd-lr",
+        type=float,
+        default=1e-3,
+        help="learning rate for the RND predictor network",
+    )
+    parser.add_argument(
+        "--rnd-hidden-dim",
+        type=int,
+        default=256,
+        help="hidden layer dimension for RND target and predictor networks",
+    )
+    parser.add_argument(
+        "--rnd-output-dim",
+        type=int,
+        default=64,
+        help="output embedding dimension for RND networks",
+    )
+
     args = parser.parse_args()
     args.batch_size = int(args.num_envs * args.num_steps)
     args.minibatch_size = int(args.batch_size // args.num_minibatches)
