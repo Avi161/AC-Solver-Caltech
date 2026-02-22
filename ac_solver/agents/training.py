@@ -506,7 +506,7 @@ def ppo_training_loop(
                 "curr_states": curr_states,
                 "states_processed": states_processed,
                 "ACMoves_hist": ACMoves_hist,
-                "supermoves": envs.envs[0].supermoves,  # dict of supermoves or None
+                "supermoves": getattr(envs.envs[0].unwrapped, "supermoves", None),
                 **(
                     {"rnd_state": rnd_module.state_dict()}
                     if rnd_module is not None
