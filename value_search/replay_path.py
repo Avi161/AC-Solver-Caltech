@@ -355,7 +355,7 @@ AC Moves (from source code):
         '--algorithm', '-a',
         type=str,
         default='greedy',
-        choices=['greedy', 'bfs', 'v_guided_greedy', 'beam_k10', 'beam_k50', 'beam_k100', 'mcts'],
+        choices=['greedy', 'bfs', 'v_guided_greedy', 'beam_k10', 'beam_k50', 'beam_k100', 'mcts', 'ppo', 'ppo_rnd'],
         help='Which algorithm results to verify (default: greedy)'
     )
     parser.add_argument(
