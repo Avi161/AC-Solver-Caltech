@@ -76,6 +76,7 @@ def ppo_training_loop(
     ACMoves_hist,
     states_processed,
     initial_states,
+    rnd_module=None,
 ):
     obs = torch.zeros(
         (args.num_steps, args.num_envs) + envs.single_observation_space.shape
@@ -154,9 +155,20 @@ def ppo_training_loop(
             next_obs, reward, done, truncated, infos = envs.step(
                 action.cpu().numpy()
             )  # step is taken on cpu
-            rewards[step] = (
-                torch.tensor(reward).to(device).view(-1)
-            )  # r_0 is the reward from taking a_0 in s_0
+            extrinsic_reward = torch.tensor(reward).to(device).view(-1)
+
+            # Compute and add intrinsic curiosity reward (RND)
+            if rnd_module is not None:
+                intrinsic_reward = rnd_module.compute_intrinsic_reward(
+                    torch.Tensor(next_obs).to(device)
+                )
+                intrinsic_reward_tensor = (
+                    torch.tensor(intrinsic_reward, dtype=torch.float32).to(device)
+                )
+                rewards[step] = extrinsic_reward + args.rnd_coef * intrinsic_reward_tensor
+            else:
+                rewards[step] = extrinsic_reward
+
             episodic_return = episodic_return + reward
             episodic_length = episodic_length + 1
 
@@ -351,6 +363,11 @@ def ppo_training_loop(
                     else (beta * 2 if approx_kl > args.target_kl * 1.5 else beta)
                 )
 
+        # Train RND predictor on the collected observations
+        rnd_loss = 0.0
+        if rnd_module is not None:
+            rnd_loss = rnd_module.update(b_obs)
+
         y_pred, y_true = b_values.cpu().numpy(), b_returns.cpu().numpy()
         var_y = np.var(y_true)
         explained_var = np.nan if var_y == 0 else 1 - np.var(y_true - y_pred) / var_y
@@ -378,6 +395,16 @@ def ppo_training_loop(
                     "losses/clipfrac": np.mean(clipfracs),
                     "debug/advantages_mean": b_advantages.mean(),
                     "debug/advantages_std": b_advantages.std(),
+                    **(
+                        {
+                            "rnd/predictor_loss": rnd_loss,
+                            "rnd/reward_running_std": np.sqrt(
+                                rnd_module.reward_rms.var + 1e-8
+                            ),
+                        }
+                        if rnd_module is not None
+                        else {}
+                    ),
                 }
             )
 
@@ -403,6 +430,11 @@ def ppo_training_loop(
                 "states_processed": states_processed,
                 "ACMoves_hist": ACMoves_hist,
                 "supermoves": envs.envs[0].supermoves,  # dict of supermoves or None
+                **(
+                    {"rnd_state": rnd_module.state_dict()}
+                    if rnd_module is not None
+                    else {}
+                ),
             }
             print(f"saving checkpoint to {out_dir}")
             torch.save(checkpoint, join(out_dir, "ckpt.pt"))
