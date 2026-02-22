@@ -5,6 +5,9 @@ ppo_training_loop function implements the training loop logic of PPO.
 import math
 import random
 import uuid
+import json
+import time
+import datetime
 import wandb
 from collections import deque
 from tqdm import tqdm
@@ -13,6 +16,8 @@ from os.path import join
 import numpy as np
 import torch
 from torch import nn
+
+from ac_solver.envs.ac_moves import ACMove
 
 
 def get_curr_lr(n_update, lr_decay, warmup, max_lr, min_lr, total_updates):
@@ -65,6 +70,32 @@ def get_curr_lr(n_update, lr_decay, warmup, max_lr, min_lr, total_updates):
     return lrnow
 
 
+def actions_to_path(action_list, initial_state):
+    """
+    Replay a list of 0-indexed actions on an initial state to produce
+    the experiment-compatible path format: [[action_0idx, total_length_after], ...].
+
+    This format matches what run_experiments.py and replay_path.py expect,
+    enabling step-by-step verification of PPO-discovered solutions.
+    """
+    state = np.array(initial_state, dtype=np.int8)
+    max_relator_length = len(state) // 2
+    lengths = [
+        int(np.count_nonzero(state[i * max_relator_length : (i + 1) * max_relator_length]))
+        for i in range(2)
+    ]
+    path = []
+    for action in action_list:
+        state, lengths = ACMove(
+            move_id=int(action),
+            presentation=state,
+            max_relator_length=max_relator_length,
+            lengths=lengths,
+        )
+        path.append([int(action), int(sum(lengths))])
+    return path
+
+
 def ppo_training_loop(
     envs,
     args,
@@ -104,6 +135,19 @@ def ppo_training_loop(
     run_name = f"{args.exp_name}_ppo-ffn-nodes_{args.nodes_counts}_{uuid.uuid4()}"
     out_dir = f"out/{run_name}"
     makedirs(out_dir, exist_ok=True)
+
+    # Set up experiment results directory (compatible with run_experiments.py / replay_path.py)
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    rnd_tag = "_rnd" if rnd_module is not None else ""
+    results_dir = join("experiments", "results", f"{timestamp}_ppo{rnd_tag}")
+    makedirs(results_dir, exist_ok=True)
+    progress_path = join(results_dir, f"ppo{rnd_tag}_progress.jsonl")
+    progress_fh = open(progress_path, "w")
+    # Track best paths per presentation index for final details file
+    best_paths = {}  # idx -> {"path": [...], "path_length": int, "time": float}
+    training_start_time = time.time()
+    print(f"Results will be saved to: {results_dir}/")
+
     if args.wandb_log:
         run = wandb.init(
             project=args.wandb_project_name,
@@ -187,18 +231,49 @@ def ppo_training_loop(
                             success_record["unsolved"].remove(curr_states[i])
                             success_record["solved"].add(curr_states[i])
 
-                        # also if done, record the sequence of actions in ACMoves_hist
+                        # Extract action list from info (gymnasium >=1.0 format)
+                        # SyncVectorEnv puts keys directly in infos dict with _<key> mask
+                        if "final_info" in infos:
+                            # gymnasium < 1.0
+                            action_list = infos["final_info"][i]["actions"]
+                        else:
+                            # gymnasium >= 1.0
+                            action_list = list(infos["actions"][i])
+
+                        # Record the sequence of actions in ACMoves_hist
+                        is_new_best = False
                         if curr_states[i] not in ACMoves_hist:
-                            ACMoves_hist[curr_states[i]] = infos["final_info"][i][
-                                "actions"
-                            ]
+                            ACMoves_hist[curr_states[i]] = action_list
+                            is_new_best = True
                         else:
                             prev_path_length = len(ACMoves_hist[curr_states[i]])
-                            new_path_length = len(infos["final_info"][i]["actions"])
+                            new_path_length = len(action_list)
                             if new_path_length < prev_path_length:
-                                ACMoves_hist[curr_states[i]] = infos["final_info"][i][
-                                    "actions"
-                                ]
+                                ACMoves_hist[curr_states[i]] = action_list
+                                is_new_best = True
+
+                        # Save solution in experiment-compatible format
+                        if is_new_best:
+                            idx = curr_states[i]
+                            path_with_lengths = actions_to_path(
+                                action_list, initial_states[idx]
+                            )
+                            # Verify path actually reaches trivial state
+                            final_length = path_with_lengths[-1][1] if path_with_lengths else -1
+                            if final_length == 2:
+                                elapsed = time.time() - training_start_time
+                                record = {
+                                    "idx": idx,
+                                    "solved": True,
+                                    "path_length": len(path_with_lengths),
+                                    "time": elapsed,
+                                    "global_step": global_step,
+                                    "episode": episode,
+                                    "path": path_with_lengths,
+                                }
+                                progress_fh.write(json.dumps(record) + "\n")
+                                progress_fh.flush()
+                                best_paths[idx] = record
 
                     # record+reset episode data, reset ith initial state to the next state in init_states
                     if el:
@@ -242,8 +317,10 @@ def ppo_training_loop(
         if (
             not args.norm_rewards
         ):  # if not normalizing rewards through a NormalizeRewards Wrapper, rescale rewards manually.
-            rewards /= envs.envs[0].max_reward
-            normalized_returns = np.array(returns_queue) / envs.envs[0].max_reward
+            # Access max_reward from the unwrapped ACEnv (may be behind wrappers)
+            base_env = envs.envs[0].unwrapped if hasattr(envs.envs[0], 'unwrapped') else envs.envs[0]
+            rewards /= base_env.max_reward
+            normalized_returns = np.array(returns_queue) / base_env.max_reward
             normalized_lengths = np.array(lengths_queue) / args.horizon_length
         else:
             normalized_returns = np.array(returns_queue)
@@ -438,5 +515,63 @@ def ppo_training_loop(
             }
             print(f"saving checkpoint to {out_dir}")
             torch.save(checkpoint, join(out_dir, "ckpt.pt"))
+
+    # Save final experiment results (compatible with replay_path.py verification)
+    progress_fh.close()
+    total_time = time.time() - training_start_time
+
+    # Build details list: one entry per presentation (solved or not)
+    algo_name = f"ppo{rnd_tag}"
+    all_results = []
+    for idx in range(len(initial_states)):
+        if idx in best_paths:
+            all_results.append(best_paths[idx])
+        else:
+            all_results.append({
+                "idx": idx,
+                "solved": False,
+                "path_length": 0,
+                "time": total_time,
+            })
+
+    details_path = join(results_dir, f"{algo_name}_details.json")
+    with open(details_path, "w") as f:
+        json.dump(all_results, f, indent=2)
+
+    # Save summary
+    solved_indices = sorted(best_paths.keys())
+    path_lengths = [best_paths[i]["path_length"] for i in solved_indices]
+    summary = {
+        "timestamp": timestamp,
+        "algorithm": algo_name,
+        "config": {k: str(v) for k, v in vars(args).items()},
+        "total_time": total_time,
+        "metrics": {
+            "solved": len(solved_indices),
+            "total": len(initial_states),
+            "avg_path_length": float(np.mean(path_lengths)) if path_lengths else 0,
+            "median_path_length": float(np.median(path_lengths)) if path_lengths else 0,
+            "max_path_length": int(max(path_lengths)) if path_lengths else 0,
+            "solved_indices": solved_indices,
+        },
+    }
+    summary_path = join(results_dir, "results.json")
+    with open(summary_path, "w") as f:
+        json.dump(summary, f, indent=2)
+
+    print(f"\n{'='*60}")
+    print(f"PPO Training Complete")
+    print(f"{'='*60}")
+    print(f"  Total time: {total_time:.1f}s")
+    print(f"  Solved: {len(solved_indices)}/{len(initial_states)}")
+    if path_lengths:
+        print(f"  Avg path length: {np.mean(path_lengths):.1f}")
+    print(f"  Results: {results_dir}/")
+    print(f"    {algo_name}_progress.jsonl  — streaming solutions")
+    print(f"    {algo_name}_details.json    — all results (verify with replay_path.py)")
+    print(f"    results.json               — summary metrics")
+    print(f"\n  Verify solutions with:")
+    print(f"    python value_search/replay_path.py -r {results_dir} -a {algo_name}")
+    print(f"{'='*60}")
 
     return
