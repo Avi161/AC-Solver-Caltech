@@ -8,7 +8,7 @@ import numpy as np
 from gymnasium import Env
 from gymnasium.spaces import Discrete, Box
 from ac_solver.envs.ac_moves import ACMove
-from ac_solver.envs.utils import is_array_valid_presentation
+from ac_solver.envs.utils import is_array_valid_presentation, is_presentation_trivial
 
 
 @dataclass
@@ -33,10 +33,6 @@ class ACEnvConfig:
             raise ValueError("initial state must have even length")
         if not is_array_valid_presentation(self.initial_state):
             raise ValueError("initial state must be a valid presentation")
-
-    @property
-    def max_relator_length(self):
-        return len(self.initial_state) // 2
 
     @property
     def max_relator_length(self):
@@ -98,7 +94,9 @@ class ACEnv(Env):
             action, self.state, self.max_relator_length, self.lengths
         )
 
-        done = sum(self.lengths) == 2
+        # Use strict triviality check: both relators must be length 1 and
+        # correspond to distinct generators (not just sum(lengths)==2).
+        done = sum(self.lengths) == 2 and is_presentation_trivial(self.state)
         reward = self.max_reward * done - sum(self.lengths) * (1 - done)
 
         self.count_steps += 1

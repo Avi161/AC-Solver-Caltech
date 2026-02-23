@@ -135,9 +135,12 @@ def convert_relators_to_presentation(relator1, relator2, max_relator_length):
     assert max_relator_length >= max(
         len(relator1), len(relator2)
     ), "max_relator_length must be greater than or equal to the lengths of relator1 and rel2."
-    assert isinstance(relator1, list) and isinstance(
-        relator2, list
+    assert isinstance(relator1, (list, np.ndarray)) and isinstance(
+        relator2, (list, np.ndarray)
     ), f"got types {type(relator1)} for relator1 and {type(relator2)} for relator2"
+
+    relator1 = list(relator1) if isinstance(relator1, np.ndarray) else relator1
+    relator2 = list(relator2) if isinstance(relator2, np.ndarray) else relator2
 
     padded_relator1 = relator1 + [0] * (max_relator_length - len(relator1))
     padded_relator2 = relator2 + [0] * (max_relator_length - len(relator2))
