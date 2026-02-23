@@ -18,6 +18,7 @@ import torch
 from torch import nn
 
 from ac_solver.envs.ac_moves import ACMove
+from ac_solver.envs.utils import is_presentation_trivial
 
 
 def get_curr_lr(n_update, lr_decay, warmup, max_lr, min_lr, total_updates):
@@ -70,6 +71,24 @@ def get_curr_lr(n_update, lr_decay, warmup, max_lr, min_lr, total_updates):
     return lrnow
 
 
+def replay_final_state(action_list, initial_state):
+    """Replay actions and return the final state array for triviality verification."""
+    state = np.array(initial_state, dtype=np.int8)
+    max_relator_length = len(state) // 2
+    lengths = [
+        int(np.count_nonzero(state[i * max_relator_length : (i + 1) * max_relator_length]))
+        for i in range(2)
+    ]
+    for action in action_list:
+        state, lengths = ACMove(
+            move_id=int(action),
+            presentation=state,
+            max_relator_length=max_relator_length,
+            lengths=lengths,
+        )
+    return state
+
+
 def actions_to_path(action_list, initial_state):
     """
     Replay a list of 0-indexed actions on an initial state to produce
@@ -77,6 +96,17 @@ def actions_to_path(action_list, initial_state):
 
     This format matches what run_experiments.py and replay_path.py expect,
     enabling step-by-step verification of PPO-discovered solutions.
+
+    Also returns a detailed_path that records the full relator states after
+    each move (including the effects of free and cyclic reductions), so that
+    every intermediate presentation can be retraced.
+
+    Returns:
+        (path, detailed_path) where
+        - path: [[action_id, total_length], ...]
+        - detailed_path: list of dicts with keys:
+            "action": int, "r0": list[int], "r1": list[int],
+            "lengths": [int, int]
     """
     state = np.array(initial_state, dtype=np.int8)
     max_relator_length = len(state) // 2
@@ -85,6 +115,7 @@ def actions_to_path(action_list, initial_state):
         for i in range(2)
     ]
     path = []
+    detailed_path = []
     for action in action_list:
         state, lengths = ACMove(
             move_id=int(action),
@@ -93,7 +124,15 @@ def actions_to_path(action_list, initial_state):
             lengths=lengths,
         )
         path.append([int(action), int(sum(lengths))])
-    return path
+        r0 = [int(x) for x in state[:max_relator_length] if x != 0]
+        r1 = [int(x) for x in state[max_relator_length:] if x != 0]
+        detailed_path.append({
+            "action": int(action),
+            "r0": r0,
+            "r1": r1,
+            "lengths": [int(lengths[0]), int(lengths[1])],
+        })
+    return path, detailed_path
 
 
 def ppo_training_loop(
@@ -255,12 +294,13 @@ def ppo_training_loop(
                         # Save solution in experiment-compatible format
                         if is_new_best:
                             idx = curr_states[i]
-                            path_with_lengths = actions_to_path(
+                            path_with_lengths, detailed = actions_to_path(
                                 action_list, initial_states[idx]
                             )
                             # Verify path actually reaches trivial state
                             final_length = path_with_lengths[-1][1] if path_with_lengths else -1
-                            if final_length == 2:
+                            final_state = replay_final_state(action_list, initial_states[idx])
+                            if final_length == 2 and is_presentation_trivial(final_state):
                                 elapsed = time.time() - training_start_time
                                 record = {
                                     "idx": idx,
@@ -270,6 +310,7 @@ def ppo_training_loop(
                                     "global_step": global_step,
                                     "episode": episode,
                                     "path": path_with_lengths,
+                                    "detailed_path": detailed,
                                 }
                                 progress_fh.write(json.dumps(record) + "\n")
                                 progress_fh.flush()
