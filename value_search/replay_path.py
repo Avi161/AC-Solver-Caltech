@@ -1,5 +1,35 @@
 """
 Replay and verify solution paths from experiment results.
+
+Example Use:
+
+# See what's available
+python value_search/replay_path.py --list
+
+# Then verify one presentation from v_guided_greedy
+python value_search/replay_path.py -r experiments/results/2026-02-18_20-48-41 -a v_guided_greedy -i 12
+
+# Verify all and get summary
+python value_search/replay_path.py -r experiments/results/2026-02-18_20-48-41 -a v_guided_greedy -q
+
+1. Verify a specific presentation index
+python value_search/replay_path.py -r experiments/results/2026-02-18_20-48-41 -a v_guided_greedy -i 12
+
+2. Verify multiple indices
+python value_search/replay_path.py -r experiments/results/2026-02-18_20-48-41 -a v_guided_greedy -i 8 9 12 15
+
+3. Verify all solved presentations (verbose)
+python value_search/replay_path.py -r experiments/results/2026-02-18_20-48-41 -a v_guided_greedy
+
+4. Verify all solved presentations (summary only)
+python value_search/replay_path.py -r experiments/results/2026-02-18_20-48-41 -a v_guided_greedy -q
+
+5. Use latest results automatically
+python value_search/replay_path.py --latest -a v_guided_greedy -i 12
+
+6. List all available results
+python value_search/replay_path.py --list
+
 """
 
 import os

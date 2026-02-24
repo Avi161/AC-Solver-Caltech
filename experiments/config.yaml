@@ -7,36 +7,21 @@
 #   python experiments/run_experiments.py --max-nodes 10000  # quick test (overrides ALL algorithms)
 #   python experiments/run_experiments.py --config my.yaml   # use a different config file
 #
-# Results saved to: experiments/results/<timestamp>/
-#
-# TIP: For a quick sanity check, use --max-nodes 10000 to run everything
-#      with a tiny budget. Good for verifying the pipeline works.
 # ============================================================
 
 # --- Output ---
 output_dir: "experiments/results"
-save_incremental: true          # Save after each algorithm finishes (crash-safe)
-                                # If true, you get partial results even if the run crashes midway.
+save_incremental: true
 
-solution_cache_path: "experiments/solution_cache.pkl"
-# ^ Persistent memo: maps states -> solution paths across runs.
-#   - Accumulates across runs (new entries added, old ones never deleted).
-#   - Speeds up subsequent runs by skipping already-solved states.
-#   - Saved on Ctrl+C too, so you never lose progress.
-#   - Set to "" to disable caching entirely.
+solution_cache_path: ""
+#   - Set to "" to disable caching entirely or "experiments/solution_cache.pkl"
 
 # --- Device ---
 device: "auto"
 # ^ "auto" = use GPU if available, else CPU
-#   "cpu"  = force CPU (slower but always works)
-#   "cuda" = force GPU (will error if no GPU available)
-#
-#   GPU makes V-guided/beam/MCTS significantly faster since the value
-#   network runs on every expanded node. Greedy/BFS don't use a model
-#   so device doesn't affect them.
 
 # --- Model (for V-guided, Beam, and MCTS only) ---
-# Greedy and BFS are model-free baselines; they ignore this section.
+# Greedy and BFS are model-free baselines;
 model:
   architecture: "seq"
   # ^ Which value network architecture to use:
@@ -46,9 +31,6 @@ model:
   #   "seq" = Sequence Conv1D model (slower per inference, more accurate)
   #           - Reads raw relator tokens directly via 1D convolutions
   #           - Checkpoint: value_search/checkpoints/best_seq.pt
-  #
-  # IMPORTANT: architecture and checkpoint must match!
-  # If you switch architecture, you MUST switch the checkpoint too.
 
   checkpoint: "value_search/checkpoints/best_seq.pt"
   # ^ Path to the trained model weights. Available checkpoints:
@@ -59,114 +41,29 @@ model:
   # ^ Normalization stats (mean/std) computed from training data.
   #   Same file works for both mlp and seq. Don't change this.
 
-# --- Algorithms ---
-# Each algorithm can be independently enabled/disabled.
-# They run in order: greedy -> bfs -> v_guided_greedy -> beam_search -> mcts
-# Set enabled: false to skip any you don't want to run.
-#
-# WHAT EACH ALGORITHM DOES:
-#   greedy         = Paper baseline. Picks the child with shortest total length. No ML.
-#   bfs            = Paper baseline. Breadth-first search. No ML. Very slow.
-#   v_guided_greedy = OUR method. Like greedy but picks child with best V(state) from the model.
-#   beam_search    = OUR method. Keeps top-k candidates at each step using V(state).
-#   mcts           = OUR method. Monte Carlo Tree Search with V(state) as rollout value.
-#
-# BUDGET (max_nodes):
-#   This is the number of states the algorithm is allowed to explore per presentation.
-#   Higher = more likely to solve hard ones, but takes longer.
-#   - 10,000:    Quick test (~minutes total)
-#   - 100,000:   Medium run (~30min-1hr depending on algorithm)
-#   - 1,000,000: Full paper comparison (~hours, overnight for MCTS)
-#
-# The solution_cache is shared across ALL algorithms in a single run.
-# If greedy solves presentation #42, beam search will instantly find it
-# via cache lookup instead of re-solving it.
-
 algorithms:
-
   # ---- Paper baselines (no ML model needed) ----
 
   greedy:
     enabled: false
     max_nodes: 1_000_000
-    # Paper reports 533/1190 solved at 1M nodes.
-    # This is fast (~20 min at 1M). Good baseline to always run.
-    # TIP: Enable this first to populate the solution cache with easy solutions,
-    #      which then speeds up the V-guided methods.
 
   bfs:
     enabled: false
     max_nodes: 1_000_000
-    # Paper reports 278/1190 solved at 1M nodes.
-    # BFS is slow and solves fewer than greedy. Useful only for completeness
-    # in paper comparisons. You can usually skip this.
 
   # ---- Our methods (require a trained model) ----
 
   v_guided_greedy:
-    enabled: false
-    max_nodes: 1_000_000
-    # Our best "bang for buck" method. Same idea as greedy but uses the value
-    # network to pick the most promising child instead of the shortest.
-    # Typically solves 580-620+ out of 1190 at 1M nodes (vs greedy's 533).
-    # Fast because it only expands 1 child per step.
-    # RECOMMENDED: Start here when testing a new model.
+    enabled: true
+    max_nodes: 1_000_000 # Same budget for fair comparison
 
   beam_search:
     enabled: false
     max_nodes: 1_000_000
-    beam_widths: [10, 50, 100]
-    # Keeps top-k candidates at each depth level using V(state) scores.
-    # beam_widths is a list — it runs once for EACH width listed.
-    #   k=10:  Fast, narrow search. Slightly better than v_guided_greedy.
-    #   k=50:  Good balance of speed vs coverage.
-    #   k=100: Wider search, finds more solutions but slower.
-    #
-    # TIP: For quick experiments, try just [10] or [50].
-    # TIP: Beam search benefits most from the solution_cache since it
-    #      explores many parallel paths that may hit cached states.
+    beam_widths: [4]
 
   mcts:
-    enabled: true
+    enabled: false # Very slow -- enable only if you have 8+ hours
     max_nodes: 100_000
     c_explore: 1.41
-    # Monte Carlo Tree Search with UCB1 exploration.
-    # Most powerful but VERY slow (each node requires a model forward pass
-    # plus tree bookkeeping).
-    #
-    # max_nodes: 100K is reasonable for overnight. 1M would take days.
-    #
-    # c_explore: Controls exploration vs exploitation tradeoff.
-    #   1.41 (sqrt(2)) = standard UCB1, balanced (default, recommended)
-    #   0.5-1.0        = more exploitation, good if model is very accurate
-    #   2.0-3.0        = more exploration, good if model is uncertain
-    #
-    # TIP: MCTS shines on the hard presentations (500+) where greedy/beam
-    #      get stuck, because it can backtrack and try different branches.
-
-# ============================================================
-# RECOMMENDED EXPERIMENT RECIPES:
-# ============================================================
-#
-# 1. QUICK SANITY CHECK (5 min):
-#    Set v_guided_greedy enabled: true, everything else false.
-#    Run: python experiments/run_experiments.py --max-nodes 10000
-#
-# 2. COMPARE MLP vs SEQ MODEL:
-#    Run once with architecture: "mlp" + checkpoint: best_mlp.pt
-#    Run again with architecture: "seq" + checkpoint: best_seq.pt
-#    Compare solved counts in the output table.
-#
-# 3. FULL PAPER COMPARISON (2-4 hours):
-#    Enable greedy + v_guided_greedy + beam_search (widths: [10, 50]).
-#    All at max_nodes: 1_000_000. Leave bfs and mcts disabled.
-#
-# 4. MAX SOLVE ATTEMPT (overnight):
-#    Enable everything. Set mcts max_nodes: 100_000.
-#    The solution cache will accumulate across all methods.
-#
-# 5. FAST ITERATION ON HARD PRESENTATIONS:
-#    Enable only v_guided_greedy or beam at 100K nodes.
-#    The cache remembers previous solutions, so you only spend
-#    time on unsolved ones.
-# ============================================================
