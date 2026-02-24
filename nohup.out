@@ -1,0 +1,26 @@
+nohup: ignoring input
+
+============================================================
+  AC-Solver Experiment Runner
+============================================================
+  Device:     cpu
+  Config:     /root/AC-Solver-Caltech/experiments/config.yaml
+  Output:     /root/AC-Solver-Caltech/experiments/results/2026-02-24_03-32-02
+  Cache:      
+  Started:    2026-02-24_03-32-02
+============================================================
+
+Loading presentations...
+  Total presentations: 1190
+  Paper greedy solved: 533
+Loading model (seq)...
+  Model loaded.
+
+============================================================
+  [3] V-GUIDED GREEDY (ours, seq + cyclic reduce) — 1,000,000 nodes
+============================================================
+    V-Greedy: 100/1190, solved=100, ETA 2.5m
+    V-Greedy: 200/1190, solved=200, ETA 4.5m
+    V-Greedy: 300/1190, solved=300, ETA 5.6m
+    V-Greedy: 400/1190, solved=400, ETA 20.9m
+    V-Greedy: 500/1190, solved=500, ETA 1.2h
