@@ -35,7 +35,7 @@ from ac_solver.search.greedy import greedy_search
 from ac_solver.search.breadth_first import bfs
 from value_search.value_guided_search import (
     value_guided_greedy_search, beam_search, load_model,
-    backfill_solution_cache,
+    backfill_solution_cache, expand_path_with_cyclic_reductions,
 )
 from value_search.mcts import mcts_search
 from value_search.benchmark import load_all_presentations, load_greedy_solved_set
@@ -221,7 +221,8 @@ def run_bfs_search(presentations, max_nodes, progress_fh=None):
 
 
 def run_vguided(presentations, model, architecture, feat_mean, feat_std,
-                max_nodes, device, solution_cache=None, progress_fh=None):
+                max_nodes, device, solution_cache=None, progress_fh=None,
+                cyclically_reduce=False):
     """Run our V-guided greedy search."""
     results = []
     solved_count = 0
@@ -233,20 +234,31 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             pres, model=model, architecture=architecture,
             feat_mean=feat_mean, feat_std=feat_std,
             max_nodes_to_explore=max_nodes, device=device,
+            cyclically_reduce_after_moves=cyclically_reduce,
             solution_cache=solution_cache,
         )
         elapsed = time.time() - t0
+
+        # Expand path with explicit cyclic reduction steps for traceability
+        if solved and path and cyclically_reduce:
+            expanded_path = expand_path_with_cyclic_reductions(pres, path)
+        else:
+            expanded_path = path
+
         result = {
             'idx': i, 'solved': solved,
-            'path_length': len(path) if solved else 0,
+            'path_length': len(expanded_path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
         }
         if solved and path:
-            result['path'] = [[int(a), int(l)] for a, l in path]
-            # Backfill cache with all intermediate states from this solution
+            result['path'] = [[int(a), int(l)] for a, l in expanded_path]
+            # Backfill cache with compact path (no cyclic reduction entries)
             if solution_cache is not None:
-                backfill_solution_cache(solution_cache, pres, path)
+                backfill_solution_cache(
+                    solution_cache, pres, path,
+                    cyclically_reduce=cyclically_reduce,
+                )
             if stats.get('cache_hit'):
                 cache_hits += 1
         results.append(result)
@@ -615,14 +627,17 @@ def main():
     if algos['v_guided_greedy']['enabled']:
         max_n = algos['v_guided_greedy']['max_nodes']
         arch = model_cfg['architecture']
+        cyc_reduce = algos['v_guided_greedy'].get('cyclically_reduce', False)
+        cyc_str = " + cyclic reduce" if cyc_reduce else ""
         print(f"\n{'='*60}")
-        print(f"  [3] V-GUIDED GREEDY (ours, {arch}) — {max_n:,} nodes")
+        print(f"  [3] V-GUIDED GREEDY (ours, {arch}{cyc_str}) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'v_guided_greedy_progress.jsonl')
         with open(progress_path, 'w') as pfh:
             results = run_vguided(
                 presentations, model, arch, feat_mean, feat_std, max_n, device,
                 solution_cache=solution_cache, progress_fh=pfh,
+                cyclically_reduce=cyc_reduce,
             )
         metrics = compute_metrics(results)
         name = f"V-Greedy (ours, {max_n//1000}K)"
