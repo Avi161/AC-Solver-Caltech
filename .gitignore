@@ -7,3 +7,4 @@ experiments/solution_cache.pkl
 .DS_Store
 venv/
 out/
+*.log
