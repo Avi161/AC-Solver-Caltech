@@ -12,6 +12,7 @@ import heapq
 import torch
 
 from ac_solver.envs.ac_moves import ACMove
+from ac_solver.envs.utils import simplify_presentation
 from value_search.feature_extraction import compute_features
 from value_search.value_network import FeatureMLP, SequenceValueNet
 
@@ -542,3 +543,57 @@ def beam_search(
 
     stats = {'nodes_explored': total_nodes, 'steps': step}
     return False, [], stats
+
+
+def expand_path_with_cyclic_reductions(presentation, compact_path):
+    """
+    Replay a compact path (from search with cyclical=True) and insert explicit
+    cyclic reduction steps wherever cyclic reduction changes the state.
+
+    Each AC move is replayed in two phases:
+      1. Apply the move with cyclical=False (free reduction only)
+      2. Apply cyclic reduction separately
+    If cyclic reduction shortens the state, an extra entry (action=-2) is
+    inserted so the full path is retraceable step by step.
+
+    Args:
+        presentation: initial presentation (numpy array)
+        compact_path: list of (action, total_length) from the search
+
+    Returns:
+        expanded path: list of (action, total_length) where action=-2
+        denotes a cyclic reduction step.
+    """
+    if not compact_path:
+        return compact_path
+
+    state = np.array(presentation, dtype=np.int8)
+    max_relator_length = len(state) // 2
+    len_r1 = int(np.count_nonzero(state[:max_relator_length]))
+    len_r2 = int(np.count_nonzero(state[max_relator_length:]))
+    wl = [len_r1, len_r2]
+
+    expanded = []
+    for action, _ in compact_path:
+        # Phase 1: apply AC move with free reduction only
+        mid_state, mid_lengths = ACMove(
+            action, state, max_relator_length, wl, cyclical=False
+        )
+        mid_total = sum(mid_lengths)
+        expanded.append((action, mid_total))
+
+        # Phase 2: apply cyclic reduction
+        cyc_state, cyc_lengths = simplify_presentation(
+            mid_state.copy(), max_relator_length, list(mid_lengths), cyclical=True
+        )
+        cyc_total = sum(cyc_lengths)
+
+        if cyc_total < mid_total:
+            expanded.append((-2, cyc_total))
+            state = cyc_state
+            wl = cyc_lengths
+        else:
+            state = mid_state
+            wl = mid_lengths
+
+    return expanded
