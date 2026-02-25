@@ -1,0 +1,12 @@
+# Core (needed for experiments/run_experiments.py and value_search)
+numpy>=1.24,<2
+torch>=2.0
+gymnasium>=0.28
+PyYAML>=6.0
+
+# PPO / training (ac_solver.agents)
+wandb>=0.15
+tqdm>=4.65
+
+# Optional: for running tests
+pytest>=8.3

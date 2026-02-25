@@ -23,7 +23,7 @@ device: "auto"
 # --- Model (for V-guided, Beam, and MCTS only) ---
 # Greedy and BFS are model-free baselines;
 model:
-  architecture: "seq"
+  architecture: "mlp"
   # ^ Which value network architecture to use:
   #   "mlp" = Multi-Layer Perceptron (simple, fast, slightly less accurate)
   #           - Uses hand-crafted features (relator lengths, etc.)
@@ -32,7 +32,7 @@ model:
   #           - Reads raw relator tokens directly via 1D convolutions
   #           - Checkpoint: value_search/checkpoints/best_seq.pt
 
-  checkpoint: "value_search/checkpoints/best_seq.pt"
+  checkpoint: "value_search/checkpoints/best_mlp.pt"
   # ^ Path to the trained model weights. Available checkpoints:
   #   value_search/checkpoints/best_mlp.pt  (use with architecture: "mlp")
   #   value_search/checkpoints/best_seq.pt  (use with architecture: "seq")
@@ -57,7 +57,7 @@ algorithms:
   v_guided_greedy:
     enabled: true
     max_nodes: 1_000_000 # Same budget for fair comparison
-    cyclically_reduce: true  # Apply cyclic reduction after each AC move
+    cyclically_reduce: true # Apply cyclic reduction after each AC move
 
   beam_search:
     enabled: false
