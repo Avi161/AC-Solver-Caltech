@@ -545,24 +545,40 @@ def beam_search(
     return False, [], stats
 
 
+# Cyclic reduction = conjugation.  Removing the pair (g, g⁻¹) from opposite
+# ends of relator r_i is the same as conjugating r_i by g⁻¹.
+# This map gives the AC move id for each (relator_index, first_letter).
+_CYCLIC_REDUCE_MOVE = {
+    # r0 (index 0)
+    (0,  1): 11,  # r0 starts with x, ends with x⁻¹ → conj by x⁻¹ (h12)
+    (0, -1): 7,   # r0 starts with x⁻¹, ends with x → conj by x   (h8)
+    (0,  2): 5,   # r0 starts with y, ends with y⁻¹ → conj by y⁻¹ (h6)
+    (0, -2): 9,   # r0 starts with y⁻¹, ends with y → conj by y   (h10)
+    # r1 (index 1)
+    (1,  1): 4,   # r1 starts with x, ends with x⁻¹ → conj by x⁻¹ (h5)
+    (1, -1): 8,   # r1 starts with x⁻¹, ends with x → conj by x   (h9)
+    (1,  2): 6,   # r1 starts with y, ends with y⁻¹ → conj by y⁻¹ (h7)
+    (1, -2): 10,  # r1 starts with y⁻¹, ends with y → conj by y   (h11)
+}
+
+
 def expand_path_with_cyclic_reductions(presentation, compact_path):
     """
     Replay a compact path (from search with cyclical=True) and insert explicit
-    cyclic reduction steps wherever cyclic reduction changes the state.
+    conjugation AC moves wherever cyclic reduction shortened a relator.
 
-    Each AC move is replayed in two phases:
-      1. Apply the move with cyclical=False (free reduction only)
-      2. Apply cyclic reduction separately
-    If cyclic reduction shortens the state, an extra entry (action=-2) is
-    inserted so the full path is retraceable step by step.
+    Cyclic reduction of g·w·g⁻¹ → w is equivalent to conjugation by g⁻¹,
+    which is one of the 12 standard AC moves (h5-h12).  This function
+    replays each move with free reduction only, then emits the real
+    conjugation moves that replicate the cyclic reductions.
 
     Args:
         presentation: initial presentation (numpy array)
         compact_path: list of (action, total_length) from the search
 
     Returns:
-        expanded path: list of (action, total_length) where action=-2
-        denotes a cyclic reduction step.
+        expanded path: list of (action, total_length) using only the
+        12 standard AC moves (0-11), fully retraceable step by step.
     """
     if not compact_path:
         return compact_path
@@ -575,25 +591,29 @@ def expand_path_with_cyclic_reductions(presentation, compact_path):
 
     expanded = []
     for action, _ in compact_path:
-        # Phase 1: apply AC move with free reduction only
-        mid_state, mid_lengths = ACMove(
-            action, state, max_relator_length, wl, cyclical=False
-        )
-        mid_total = sum(mid_lengths)
-        expanded.append((action, mid_total))
+        # Apply the search's AC move with free reduction only
+        state, wl = ACMove(action, state, max_relator_length, wl, cyclical=False)
+        expanded.append((action, sum(wl)))
 
-        # Phase 2: apply cyclic reduction
-        cyc_state, cyc_lengths = simplify_presentation(
-            mid_state.copy(), max_relator_length, list(mid_lengths), cyclical=True
-        )
-        cyc_total = sum(cyc_lengths)
-
-        if cyc_total < mid_total:
-            expanded.append((-2, cyc_total))
-            state = cyc_state
-            wl = cyc_lengths
-        else:
-            state = mid_state
-            wl = mid_lengths
+        # Emit conjugation moves for every cyclic-reducible pair
+        while True:
+            found = False
+            for rel_idx in range(2):
+                length = wl[rel_idx]
+                if length <= 1:
+                    continue
+                offset = rel_idx * max_relator_length
+                first = int(state[offset])
+                last = int(state[offset + length - 1])
+                if first == -last:
+                    conj_move = _CYCLIC_REDUCE_MOVE[(rel_idx, first)]
+                    state, wl = ACMove(
+                        conj_move, state, max_relator_length, wl, cyclical=False
+                    )
+                    expanded.append((conj_move, sum(wl)))
+                    found = True
+                    break  # re-check both relators from scratch
+            if not found:
+                break
 
     return expanded
