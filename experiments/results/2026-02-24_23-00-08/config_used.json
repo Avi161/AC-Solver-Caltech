@@ -1,0 +1,11 @@
+{
+  "algorithm": "v_guided",
+  "max_nodes": 1000,
+  "workers": 2,
+  "device": "cpu",
+  "architecture": "mlp",
+  "beam_width": 50,
+  "c_explore": 1.41,
+  "cyclically_reduce": false,
+  "timestamp": "2026-02-24_23-00-08"
+}
