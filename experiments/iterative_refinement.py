@@ -93,7 +93,10 @@ def collect_paths_from_jsonl(jsonl_path, all_presentations,
             line = line.strip()
             if not line:
                 continue
-            record = json.loads(line)
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                continue  # skip partial/corrupt lines (e.g. from interrupted writes)
             if record.get('solved') and 'path' in record:
                 idx = record['idx']
                 if idx < len(all_presentations):

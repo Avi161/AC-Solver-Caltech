@@ -736,7 +736,7 @@ def main():
                     solution_cache=solution_cache, progress_fh=pfh,
                     cyclically_reduce=cyc_reduce, original_indices=algo_idx,
                 )
-            remap_indices(results, algo_idx)
+            # remap_indices not needed: run_vguided already sets global indices
             metrics = compute_metrics(results)
             name = f"V-Greedy (ours, {max_n//1000}K)"
             all_metrics[name] = metrics
@@ -775,7 +775,7 @@ def main():
                         solution_cache=solution_cache, progress_fh=pfh,
                         original_indices=algo_idx,
                     )
-                remap_indices(results, algo_idx)
+                # remap_indices not needed: run_beam_search already sets global indices
                 metrics = compute_metrics(results)
                 name = f"Beam k={k} (ours, {max_n//1000}K)"
                 all_metrics[name] = metrics
