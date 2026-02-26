@@ -276,7 +276,7 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
         'beam_search': {
             'enabled': True,
             'max_nodes': 1_000_000,
-            'beam_widths': [50],
+            'beam_widths': [10],
         },
         'mcts': {
             'enabled': enable_mcts,
