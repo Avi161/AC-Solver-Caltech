@@ -467,7 +467,7 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
     run_training(
         data_path=data_path,
         save_dir=checkpoint_dir,
-        architecture='mlp',
+        architecture='both',
         epochs=100,
     )
 
