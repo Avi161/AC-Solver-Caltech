@@ -1,8 +1,9 @@
 """
 Data extraction pipeline for value network training.
 
-Replays greedy search solution paths to collect intermediate states
-with distance-to-trivial labels, then builds a training dataset.
+Replays solution paths to collect intermediate states with distance-to-trivial
+labels, then builds a training dataset. Supports paths from greedy search
+(legacy 1-indexed format) and from experiment results (0-indexed format).
 """
 
 import os
@@ -11,7 +12,7 @@ import pickle
 from ast import literal_eval
 
 from ac_solver.envs.ac_moves import ACMove
-from ac_solver.envs.utils import is_presentation_trivial
+from ac_solver.envs.utils import is_presentation_trivial, simplify_presentation
 from value_search.feature_extraction import compute_features
 
 MAX_RELATOR_LENGTH = 18
@@ -121,6 +122,195 @@ def replay_path(presentation, path, source_idx=0):
     )
 
     return examples
+
+
+def replay_path_from_action_list(presentation, actions, source_idx=0):
+    """
+    Replay a solution path from experiment results format, collecting intermediate states.
+
+    Unlike replay_path() which handles the legacy 1-indexed greedy format with sentinel,
+    this accepts the 0-indexed format saved by run_experiments.py in .jsonl files.
+
+    Parameters:
+        presentation: initial presentation (int8 array or list)
+        actions: list of [action_id, total_length] pairs (0-indexed actions).
+                 action_id=-2 means cyclic reduction (from V-guided with cyclically_reduce).
+        source_idx: index identifying the source presentation
+
+    Returns:
+        list of dicts with same schema as replay_path output
+    """
+    state = np.array(presentation, dtype=np.int8)
+    max_relator_length = len(state) // 2
+    len_r1 = int(np.count_nonzero(state[:max_relator_length]))
+    len_r2 = int(np.count_nonzero(state[max_relator_length:]))
+    word_lengths = [len_r1, len_r2]
+
+    total_steps = len(actions)
+    examples = []
+
+    # Record initial state
+    examples.append({
+        'state': state.copy(),
+        'features': compute_features(state, max_relator_length),
+        'steps_remaining': total_steps,
+        'total_length': sum(word_lengths),
+        'source_idx': source_idx,
+    })
+
+    for step_idx, (action_id, expected_length) in enumerate(actions):
+        if action_id == -2:
+            # Cyclic reduction step
+            state, word_lengths = simplify_presentation(
+                state, max_relator_length, word_lengths, cyclical=True
+            )
+        else:
+            state, word_lengths = ACMove(
+                move_id=action_id,
+                presentation=state,
+                max_relator_length=max_relator_length,
+                lengths=word_lengths,
+                cyclical=False,
+            )
+
+        steps_remaining = total_steps - step_idx - 1
+        examples.append({
+            'state': state.copy(),
+            'features': compute_features(state, max_relator_length),
+            'steps_remaining': steps_remaining,
+            'total_length': sum(word_lengths),
+            'source_idx': source_idx,
+        })
+
+    # Verify final state is trivial
+    assert sum(word_lengths) == 2, (
+        f"Path replay for source_idx={source_idx} did not reach trivial state. "
+        f"Final length: {sum(word_lengths)}"
+    )
+
+    return examples
+
+
+def build_dataset_from_dict(solved_paths, all_presentations, output_path,
+                            negative_label=200.0, max_path_length=None):
+    """
+    Build training dataset from an arbitrary dict of solved paths.
+
+    This generalizes build_dataset() to work with paths from any source
+    (greedy, V-guided, beam, MCTS), not just greedy_search_paths.txt.
+
+    Parameters:
+        solved_paths: dict mapping presentation_tuple -> list of [action_id, total_length]
+                      pairs (0-indexed actions, as saved in experiment .jsonl files)
+        all_presentations: list of all 1190 presentations (np arrays)
+        output_path: where to save the pickle file
+        negative_label: pseudo-distance for unsolved presentations
+        max_path_length: if set, skip paths longer than this (filters noisy long paths)
+
+    Returns:
+        dict with keys: 'states', 'features', 'labels', 'source_idx', 'metadata'
+    """
+    print("Building dataset from solved paths dict...")
+    solved_set = set(solved_paths.keys())
+
+    # Replay all paths
+    print("Replaying solution paths...")
+    all_examples = []
+    path_lengths = []
+    skipped = 0
+    for i, (pres_tuple, actions) in enumerate(solved_paths.items()):
+        if max_path_length is not None and len(actions) > max_path_length:
+            skipped += 1
+            continue
+        pres_arr = np.array(pres_tuple, dtype=np.int8)
+        examples = replay_path_from_action_list(pres_arr, actions, source_idx=i)
+        all_examples.extend(examples)
+        path_lengths.append(len(actions))
+        if (i + 1) % 100 == 0:
+            print(f"  Replayed {i + 1}/{len(solved_paths)} paths "
+                  f"({len(all_examples)} examples so far)")
+
+    if skipped:
+        print(f"  Skipped {skipped} paths exceeding max_path_length={max_path_length}")
+
+    positive_count = len(all_examples)
+    print(f"  Total positive examples: {positive_count}")
+
+    # Add negative examples for unsolved presentations
+    print("Generating negative examples for unsolved presentations...")
+    neg_examples = generate_negative_examples(
+        all_presentations, solved_set, label_value=negative_label
+    )
+    all_examples.extend(neg_examples)
+    negative_count = len(neg_examples)
+    print(f"  Negative examples: {negative_count}")
+
+    # Convert to arrays
+    print("Converting to arrays...")
+    n = len(all_examples)
+    max_state_dim = max(len(ex['state']) for ex in all_examples)
+    feat_dim = len(all_examples[0]['features'])
+
+    states = np.zeros((n, max_state_dim), dtype=np.int8)
+    features = np.zeros((n, feat_dim), dtype=np.float32)
+    labels = np.zeros(n, dtype=np.float32)
+    source_idx = np.zeros(n, dtype=np.int32)
+    state_lengths = np.zeros(n, dtype=np.int32)
+
+    for i, ex in enumerate(all_examples):
+        s = ex['state']
+        state_lengths[i] = len(s)
+        states[i, :len(s)] = s
+        features[i] = ex['features']
+        labels[i] = ex['steps_remaining']
+        source_idx[i] = ex['source_idx']
+
+    metadata = {
+        'num_solved': len(solved_paths) - skipped,
+        'num_unsolved': len(all_presentations) - len(solved_set),
+        'num_all': len(all_presentations),
+        'positive_examples': positive_count,
+        'negative_examples': negative_count,
+        'total_examples': n,
+        'feature_dim': feat_dim,
+        'max_state_dim': max_state_dim,
+        'avg_path_length': float(np.mean(path_lengths)) if path_lengths else 0,
+        'max_path_length': int(np.max(path_lengths)) if path_lengths else 0,
+        'min_path_length': int(np.min(path_lengths)) if path_lengths else 0,
+        'median_path_length': float(np.median(path_lengths)) if path_lengths else 0,
+    }
+
+    dataset = {
+        'states': states,
+        'features': features,
+        'labels': labels,
+        'source_idx': source_idx,
+        'state_lengths': state_lengths,
+        'metadata': metadata,
+    }
+
+    # Save
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, 'wb') as f:
+        pickle.dump(dataset, f)
+
+    print(f"\nDataset saved to {output_path}")
+    print(f"\n{'='*50}")
+    print(f"Dataset Summary")
+    print(f"{'='*50}")
+    print(f"  Solved: {metadata['num_solved']}/{metadata['num_all']}")
+    print(f"  Total training examples: {metadata['total_examples']}")
+    print(f"    Positive (from paths): {metadata['positive_examples']}")
+    print(f"    Negative (unsolved):   {metadata['negative_examples']}")
+    print(f"  Feature dimensions: {metadata['feature_dim']}")
+    if path_lengths:
+        print(f"  Avg path length: {metadata['avg_path_length']:.1f}")
+        print(f"  Max path length: {metadata['max_path_length']}")
+        print(f"  Min path length: {metadata['min_path_length']}")
+        print(f"  Median path length: {metadata['median_path_length']:.1f}")
+    print(f"{'='*50}")
+
+    return dataset
 
 
 def generate_negative_examples(all_presentations, solved_set, label_value=200.0):

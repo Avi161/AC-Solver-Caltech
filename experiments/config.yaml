@@ -13,6 +13,11 @@
 output_dir: "experiments/results"
 save_incremental: true
 
+resume_dir: ""
+#   - Set to "" for a fresh run (creates new timestamped directory)
+#   - Set to a previous results dir to resume from where it left off, e.g.:
+#     resume_dir: ""
+
 solution_cache_path: ""
 #   - Set to "" to disable caching entirely or "experiments/solution_cache.pkl"
 
@@ -62,7 +67,7 @@ algorithms:
   beam_search:
     enabled: false
     max_nodes: 1_000_000
-    beam_widths: [4]
+    beam_widths: [10, 50]
 
   mcts:
     enabled: false # Very slow -- enable only if you have 8+ hours
