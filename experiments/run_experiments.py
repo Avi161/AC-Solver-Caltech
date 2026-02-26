@@ -31,7 +31,6 @@ sys.path.insert(0, PROJECT_ROOT)
 import yaml
 import torch
 
-torch.backends.nnpack.enabled = False  # avoid "Unsupported hardware" warnings on some CPUs
 
 from ac_solver.search.greedy import greedy_search
 from ac_solver.search.breadth_first import bfs

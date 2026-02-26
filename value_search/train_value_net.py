@@ -6,9 +6,13 @@ saves best checkpoints, and reports evaluation metrics.
 """
 
 import os
+import sys
 import json
 import pickle
 import argparse
+
+# Ensure project root is on path when run as subprocess
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import numpy as np
 import torch
