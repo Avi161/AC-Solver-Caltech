@@ -271,7 +271,7 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
             'cyclically_reduce': True,
         },
         'beam_search': {
-            'enabled': True,
+            'enabled': False,
             'max_nodes': 1_000_000,
             'beam_widths': [10, 50],
         },
