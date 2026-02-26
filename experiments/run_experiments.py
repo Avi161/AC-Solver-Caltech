@@ -267,12 +267,12 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
-        if (i + 1) % 100 == 0:
-            total_elapsed = time.time() - t_start
-            cache_str = f", cache_hits={cache_hits}" if solution_cache is not None else ""
-            print(f"    V-Greedy: {i+1}/{len(presentations)}, "
-                  f"solved={solved_count}{cache_str}, "
-                  f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
+        orig_idx = original_indices[i] if original_indices is not None else i
+        status = f"SOLVED path={result['path_length']}" if solved else "unsolved"
+        total_elapsed = time.time() - t_start
+        print(f"  [idx={orig_idx}] {status}, nodes={stats['nodes_explored']}, "
+              f"t={elapsed:.1f}s | {i+1}/{len(presentations)} solved={solved_count} "
+              f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
     return results
 
 
