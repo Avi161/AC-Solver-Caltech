@@ -232,13 +232,13 @@ def load_state():
 
 def run_search(model_checkpoint, results_dir, config_overrides=None,
                enable_mcts=False, max_nodes=None, indices_file=None,
-               resume_dir=None):
+               resume_dir=None, architecture='mlp'):
     """
     Run search experiments via subprocess.
 
     Parameters:
         model_checkpoint: path to value network checkpoint
-        results_dir: where to save results (overrides config output_dir)
+        results_dir: where to save results (written as output_dir in config)
         config_overrides: dict of config overrides
         enable_mcts: whether to enable MCTS search
         max_nodes: override max_nodes for all algorithms
@@ -255,14 +255,26 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
     # Override model checkpoint
     cfg.setdefault('model', {})
     cfg['model']['checkpoint'] = os.path.relpath(model_checkpoint, PROJECT_ROOT)
-    cfg['model']['architecture'] = 'mlp'
-    cfg['model']['feature_stats'] = 'value_search/checkpoints/feature_stats.json'
+    cfg['model']['architecture'] = architecture
+
+    # Use feature stats from the same checkpoint dir as the model (fallback to base)
+    if architecture == 'mlp':
+        checkpoint_dir = os.path.dirname(os.path.abspath(model_checkpoint))
+        feature_stats = os.path.join(checkpoint_dir, 'feature_stats.json')
+        if not os.path.exists(feature_stats):
+            feature_stats = os.path.join(PROJECT_ROOT, 'value_search', 'checkpoints', 'feature_stats.json')
+        cfg['model']['feature_stats'] = os.path.relpath(feature_stats, PROJECT_ROOT)
+    else:
+        cfg['model']['feature_stats'] = ''
 
     # Disable solution cache (we want the model to learn, not copy)
     cfg['solution_cache_path'] = ''
 
     # Clear resume_dir — iterative_refinement manages its own resume via --resume-dir flag
     cfg['resume_dir'] = ''
+
+    # Write results directly into results_dir (no shared experiments/results/ pool)
+    cfg['output_dir'] = os.path.relpath(results_dir, PROJECT_ROOT)
 
     # Configure algorithms
     cfg['algorithms'] = {
@@ -317,15 +329,14 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
     if result.returncode != 0:
         print(f"  WARNING: Search exited with code {result.returncode}")
 
-    # Find the actual results directory (timestamped subdirectory)
-    output_base = os.path.join(PROJECT_ROOT, cfg.get('output_dir', 'experiments/results'))
+    # Find the actual results directory (timestamped subdirectory inside results_dir)
     subdirs = sorted([
-        d for d in os.listdir(output_base)
-        if os.path.isdir(os.path.join(output_base, d))
-        and not d.startswith('refinement')
+        d for d in os.listdir(results_dir)
+        if os.path.isdir(os.path.join(results_dir, d))
+        and d[0].isdigit()  # timestamped dirs start with year (e.g. 2026-...)
     ])
     if subdirs:
-        return os.path.join(output_base, subdirs[-1])
+        return os.path.join(results_dir, subdirs[-1])
     return results_dir
 
 
@@ -402,31 +413,90 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
                 f.write(f"{idx}\n")
         print(f"  Searching {len(unsolved_indices)}/{len(all_presentations)} unsolved presentations")
 
-    # Check if a previous run for this iteration exists (for resume)
-    prev_results_dir = None
-    if state.get('results_dirs') and len(state['results_dirs']) > iteration:
-        candidate = state['results_dirs'][iteration]
-        if os.path.isdir(candidate):
-            prev_results_dir = candidate
-            print(f"  Resuming search from: {prev_results_dir}")
+    # Check if a previous MLP run for this iteration exists (for resume after crash)
+    mlp_prev_results = None
+    if os.path.isdir(iter_results_dir):
+        existing = sorted([
+            d for d in os.listdir(iter_results_dir)
+            if os.path.isdir(os.path.join(iter_results_dir, d))
+            and d[0].isdigit()
+        ])
+        if existing:
+            mlp_prev_results = os.path.join(iter_results_dir, existing[-1])
+            print(f"  Resuming MLP search from: {mlp_prev_results}")
 
-    actual_results_dir = run_search(
+    mlp_actual_dir = run_search(
         model_checkpoint=model_path,
         results_dir=iter_results_dir,
         enable_mcts=enable_mcts,
         max_nodes=max_nodes,
         indices_file=indices_file,
-        resume_dir=prev_results_dir,
+        resume_dir=mlp_prev_results,
+        architecture='mlp',
     )
-    state['results_dirs'].append(actual_results_dir)
+
+    # --- 1b. Seq second pass on still-unsolved ---
+    seq_model_path = model_path.replace('best_mlp.pt', 'best_seq.pt')
+    if os.path.exists(seq_model_path):
+        mlp_paths_quick = collect_paths_from_results_dir(
+            mlp_actual_dir, all_presentations, exclude_beam=False
+        )
+        solved_after_mlp = set(state['solved_paths'].keys()) | set(mlp_paths_quick.keys())
+        seq_unsolved = [
+            i for i, pres in enumerate(all_presentations)
+            if tuple(pres) not in solved_after_mlp
+            and i in set(unsolved_indices)
+        ]
+        print(f"\n  --- Step 1b: Seq second pass ({len(seq_unsolved)} still unsolved) ---")
+        if seq_unsolved:
+            seq_results_dir = os.path.join(REFINEMENT_DIR, f"iter_{iteration}_seq")
+            seq_indices_file = os.path.join(seq_results_dir, "seq_unsolved_indices.txt")
+            os.makedirs(seq_results_dir, exist_ok=True)
+            with open(seq_indices_file, 'w') as f:
+                for idx in seq_unsolved:
+                    f.write(f"{idx}\n")
+
+            seq_prev_results = None
+            if os.path.isdir(seq_results_dir):
+                seq_existing = sorted([
+                    d for d in os.listdir(seq_results_dir)
+                    if os.path.isdir(os.path.join(seq_results_dir, d))
+                    and d[0].isdigit()
+                ])
+                if seq_existing:
+                    seq_prev_results = os.path.join(seq_results_dir, seq_existing[-1])
+                    print(f"  Resuming seq search from: {seq_prev_results}")
+
+            seq_actual_dir = run_search(
+                model_checkpoint=seq_model_path,
+                results_dir=seq_results_dir,
+                enable_mcts=False,
+                max_nodes=max_nodes,
+                indices_file=seq_indices_file,
+                resume_dir=seq_prev_results,
+                architecture='seq',
+            )
+        else:
+            seq_actual_dir = None
+    else:
+        seq_actual_dir = None
 
     # --- 2. Collect paths ---
     print(f"\n  --- Step 2: Collect paths ---")
-    print(f"  Reading results from: {actual_results_dir}")
     new_paths = collect_paths_from_results_dir(
-        actual_results_dir, all_presentations, exclude_beam=False
+        mlp_actual_dir, all_presentations, exclude_beam=False
     )
-    print(f"  Found {len(new_paths)} solved paths this iteration")
+    print(f"  MLP pass: {len(new_paths)} solved paths")
+    if seq_actual_dir:
+        seq_paths = collect_paths_from_results_dir(
+            seq_actual_dir, all_presentations, exclude_beam=False
+        )
+        print(f"  Seq pass: {len(seq_paths)} solved paths")
+        # Merge seq paths, keeping shorter paths
+        for pres_tuple, actions in seq_paths.items():
+            if pres_tuple not in new_paths or len(actions) < len(new_paths[pres_tuple]):
+                new_paths[pres_tuple] = actions
+        print(f"  Combined: {len(new_paths)} solved paths this iteration")
 
     # --- 3. Merge paths ---
     print(f"\n  --- Step 3: Merge paths ---")
