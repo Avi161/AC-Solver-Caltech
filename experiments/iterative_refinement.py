@@ -271,9 +271,9 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
             'cyclically_reduce': True,
         },
         'beam_search': {
-            'enabled': False,
+            'enabled': True,
             'max_nodes': 1_000_000,
-            'beam_widths': [10, 50],
+            'beam_widths': [50],
         },
         'mcts': {
             'enabled': enable_mcts,
@@ -421,7 +421,7 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
     print(f"\n  --- Step 2: Collect paths ---")
     print(f"  Reading results from: {actual_results_dir}")
     new_paths = collect_paths_from_results_dir(
-        actual_results_dir, all_presentations, exclude_beam=True
+        actual_results_dir, all_presentations, exclude_beam=False
     )
     print(f"  Found {len(new_paths)} solved paths this iteration")
 
