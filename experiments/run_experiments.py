@@ -158,7 +158,7 @@ def write_jsonl_line(fh, record):
 # Algorithm runners
 # ---------------------------------------------------------------------------
 
-def run_greedy(presentations, max_nodes, progress_fh=None):
+def run_greedy(presentations, max_nodes, progress_fh=None, original_indices=None):
     """Run paper's length-based greedy search."""
     results = []
     solved_count = 0
@@ -169,7 +169,7 @@ def run_greedy(presentations, max_nodes, progress_fh=None):
         elapsed = time.time() - t0
         path_len = len(path) - 1 if solved and path else 0  # remove sentinel
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': path_len, 'time': elapsed,
         }
         if solved and path:
@@ -189,7 +189,7 @@ def run_greedy(presentations, max_nodes, progress_fh=None):
     return results
 
 
-def run_bfs_search(presentations, max_nodes, progress_fh=None):
+def run_bfs_search(presentations, max_nodes, progress_fh=None, original_indices=None):
     """Run paper's BFS search."""
     results = []
     solved_count = 0
@@ -201,7 +201,7 @@ def run_bfs_search(presentations, max_nodes, progress_fh=None):
         # BFS path includes sentinel (-1, initial_length) at index 0 when solved
         path_len = len(path) - 1 if solved and path else 0
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': path_len, 'time': elapsed,
         }
         if solved and path:
@@ -223,7 +223,7 @@ def run_bfs_search(presentations, max_nodes, progress_fh=None):
 
 def run_vguided(presentations, model, architecture, feat_mean, feat_std,
                 max_nodes, device, solution_cache=None, progress_fh=None,
-                cyclically_reduce=False):
+                cyclically_reduce=False, original_indices=None):
     """Run our V-guided greedy search."""
     results = []
     solved_count = 0
@@ -247,7 +247,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             expanded_path = path
 
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': len(expanded_path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
@@ -278,7 +278,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
 
 def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
                     beam_width, max_nodes, device, solution_cache=None,
-                    progress_fh=None):
+                    progress_fh=None, original_indices=None):
     """Run our beam search."""
     results = []
     solved_count = 0
@@ -294,7 +294,7 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
         )
         elapsed = time.time() - t0
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
@@ -321,7 +321,7 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
 
 def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
                     max_nodes, c_explore, device, solution_cache=None,
-                    progress_fh=None):
+                    progress_fh=None, original_indices=None):
     """Run our MCTS search."""
     results = []
     solved_count = 0
@@ -336,7 +336,7 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
         )
         elapsed = time.time() - t0
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
@@ -670,7 +670,8 @@ def main():
             algo_pres = presentations[skip:]
             algo_idx = original_indices[skip:]
             with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
-                results = run_greedy(algo_pres, max_n, progress_fh=pfh)
+                results = run_greedy(algo_pres, max_n, progress_fh=pfh,
+                                     original_indices=algo_idx)
             remap_indices(results, algo_idx)
             metrics = compute_metrics(results)
             name = f"Greedy (paper, {max_n//1000}K)"
@@ -698,7 +699,8 @@ def main():
             algo_pres = presentations[skip:]
             algo_idx = original_indices[skip:]
             with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
-                results = run_bfs_search(algo_pres, max_n, progress_fh=pfh)
+                results = run_bfs_search(algo_pres, max_n, progress_fh=pfh,
+                                         original_indices=algo_idx)
             remap_indices(results, algo_idx)
             metrics = compute_metrics(results)
             name = f"BFS (paper, {max_n//1000}K)"
@@ -732,7 +734,7 @@ def main():
                 results = run_vguided(
                     algo_pres, model, arch, feat_mean, feat_std, max_n, device,
                     solution_cache=solution_cache, progress_fh=pfh,
-                    cyclically_reduce=cyc_reduce,
+                    cyclically_reduce=cyc_reduce, original_indices=algo_idx,
                 )
             remap_indices(results, algo_idx)
             metrics = compute_metrics(results)
@@ -771,6 +773,7 @@ def main():
                     results = run_beam_search(
                         algo_pres, model, arch, feat_mean, feat_std, k, max_n, device,
                         solution_cache=solution_cache, progress_fh=pfh,
+                        original_indices=algo_idx,
                     )
                 remap_indices(results, algo_idx)
                 metrics = compute_metrics(results)
@@ -807,6 +810,7 @@ def main():
                 results = run_mcts_search(
                     algo_pres, model, arch, feat_mean, feat_std, max_n, c_exp, device,
                     solution_cache=solution_cache, progress_fh=pfh,
+                    original_indices=algo_idx,
                 )
             remap_indices(results, algo_idx)
             metrics = compute_metrics(results)
