@@ -223,7 +223,7 @@ def run_bfs_search(presentations, max_nodes, progress_fh=None, original_indices=
 
 def run_vguided(presentations, model, architecture, feat_mean, feat_std,
                 max_nodes, device, solution_cache=None, progress_fh=None,
-                cyclically_reduce=False, original_indices=None):
+                cyclically_reduce=False, original_indices=None, time_limit=None):
     """Run our V-guided greedy search."""
     results = []
     solved_count = 0
@@ -237,6 +237,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             max_nodes_to_explore=max_nodes, device=device,
             cyclically_reduce_after_moves=cyclically_reduce,
             solution_cache=solution_cache,
+            time_limit=time_limit,
         )
         elapsed = time.time() - t0
 
@@ -278,7 +279,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
 
 def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
                     beam_width, max_nodes, device, solution_cache=None,
-                    progress_fh=None, original_indices=None):
+                    progress_fh=None, original_indices=None, time_limit=None):
     """Run our beam search."""
     results = []
     solved_count = 0
@@ -291,6 +292,7 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             feat_mean=feat_mean, feat_std=feat_std,
             beam_width=beam_width, max_nodes_to_explore=max_nodes, device=device,
             solution_cache=solution_cache,
+            time_limit=time_limit,
         )
         elapsed = time.time() - t0
         result = {
@@ -321,7 +323,7 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
 
 def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
                     max_nodes, c_explore, device, solution_cache=None,
-                    progress_fh=None, original_indices=None):
+                    progress_fh=None, original_indices=None, time_limit=None):
     """Run our MCTS search."""
     results = []
     solved_count = 0
@@ -333,6 +335,7 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
             feat_mean=feat_mean, feat_std=feat_std,
             max_nodes_to_explore=max_nodes, c_explore=c_explore, device=device,
             solution_cache=solution_cache,
+            time_limit=time_limit,
         )
         elapsed = time.time() - t0
         result = {
@@ -717,9 +720,11 @@ def main():
         max_n = algos['v_guided_greedy']['max_nodes']
         arch = model_cfg['architecture']
         cyc_reduce = algos['v_guided_greedy'].get('cyclically_reduce', False)
+        time_limit = algos['v_guided_greedy'].get('time_limit_per_pres', None)
         cyc_str = " + cyclic reduce" if cyc_reduce else ""
+        tlim_str = f" + {time_limit}s/pres" if time_limit else ""
         print(f"\n{'='*60}")
-        print(f"  [3] V-GUIDED GREEDY (ours, {arch}{cyc_str}) — {max_n:,} nodes")
+        print(f"  [3] V-GUIDED GREEDY (ours, {arch}{cyc_str}{tlim_str}) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'v_guided_greedy_progress.jsonl')
         skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
@@ -735,6 +740,7 @@ def main():
                     algo_pres, model, arch, feat_mean, feat_std, max_n, device,
                     solution_cache=solution_cache, progress_fh=pfh,
                     cyclically_reduce=cyc_reduce, original_indices=algo_idx,
+                    time_limit=time_limit,
                 )
             # remap_indices not needed: run_vguided already sets global indices
             metrics = compute_metrics(results)
@@ -756,9 +762,11 @@ def main():
         max_n = algos['beam_search']['max_nodes']
         arch = model_cfg['architecture']
         beam_widths = algos['beam_search']['beam_widths']
+        beam_time_limit = algos['beam_search'].get('time_limit_per_pres', None)
         for bi, k in enumerate(beam_widths):
+            tlim_str = f" + {beam_time_limit}s/pres" if beam_time_limit else ""
             print(f"\n{'='*60}")
-            print(f"  [4.{bi+1}] BEAM SEARCH k={k} (ours, {arch}) — {max_n:,} nodes")
+            print(f"  [4.{bi+1}] BEAM SEARCH k={k} (ours, {arch}{tlim_str}) — {max_n:,} nodes")
             print(f"{'='*60}")
             progress_path = os.path.join(output_dir, f'beam_k{k}_progress.jsonl')
             skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
@@ -773,7 +781,7 @@ def main():
                     results = run_beam_search(
                         algo_pres, model, arch, feat_mean, feat_std, k, max_n, device,
                         solution_cache=solution_cache, progress_fh=pfh,
-                        original_indices=algo_idx,
+                        original_indices=algo_idx, time_limit=beam_time_limit,
                     )
                 # remap_indices not needed: run_beam_search already sets global indices
                 metrics = compute_metrics(results)
@@ -794,8 +802,10 @@ def main():
         max_n = algos['mcts']['max_nodes']
         c_exp = algos['mcts']['c_explore']
         arch = model_cfg['architecture']
+        mcts_time_limit = algos['mcts'].get('time_limit_per_pres', None)
+        tlim_str = f" + {mcts_time_limit}s/pres" if mcts_time_limit else ""
         print(f"\n{'='*60}")
-        print(f"  [5] MCTS c={c_exp} (ours, {arch}) — {max_n:,} nodes")
+        print(f"  [5] MCTS c={c_exp} (ours, {arch}{tlim_str}) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'mcts_progress.jsonl')
         skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
@@ -810,7 +820,7 @@ def main():
                 results = run_mcts_search(
                     algo_pres, model, arch, feat_mean, feat_std, max_n, c_exp, device,
                     solution_cache=solution_cache, progress_fh=pfh,
-                    original_indices=algo_idx,
+                    original_indices=algo_idx, time_limit=mcts_time_limit,
                 )
             remap_indices(results, algo_idx)
             metrics = compute_metrics(results)

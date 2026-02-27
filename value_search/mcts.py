@@ -5,6 +5,7 @@ No rollouts — the value network V(P) provides leaf evaluations directly.
 """
 
 import math
+import time
 import numpy as np
 import torch
 from dataclasses import dataclass, field
@@ -181,6 +182,7 @@ def mcts_search(
     cyclically_reduce_after_moves=False,
     verbose=False,
     solution_cache=None,
+    time_limit=None,
 ):
     """
     Simplified MCTS for AC trivialization.
@@ -196,6 +198,7 @@ def mcts_search(
         cyclically_reduce_after_moves: cyclic reduction flag
         verbose: print progress
         solution_cache: optional dict mapping state_tuple -> path_to_trivial
+        time_limit: optional float — stop if wall time exceeds this many seconds
 
     Returns:
         (solved, path, stats)
@@ -232,8 +235,11 @@ def mcts_search(
     found_terminal = None
     max_iterations = max_nodes_to_explore * 10  # Safety limit to prevent infinite loops
     stale_count = 0
+    t_start = time.time()
 
     while len(visited_global) < max_nodes_to_explore and iterations < max_iterations:
+        if time_limit is not None and (time.time() - t_start) > time_limit:
+            break
         iterations += 1
 
         # SELECT

@@ -284,6 +284,7 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
             'enabled': True,
             'max_nodes': 1_000_000,
             'cyclically_reduce': True,
+            'time_limit_per_pres': 45,
         },
         'beam_search': {
             'enabled': False,

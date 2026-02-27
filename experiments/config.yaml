@@ -63,13 +63,16 @@ algorithms:
     enabled: true
     max_nodes: 1_000_000 # Same budget for fair comparison
     cyclically_reduce: true # Apply cyclic reduction after each AC move
+    time_limit_per_pres: 45 # Max seconds per presentation (null = no limit)
 
   beam_search:
     enabled: false
     max_nodes: 1_000_000
     beam_widths: [10, 50]
+    time_limit_per_pres: 45
 
   mcts:
     enabled: false # Very slow -- enable only if you have 8+ hours
     max_nodes: 100_000
     c_explore: 1.41
+    time_limit_per_pres: 45

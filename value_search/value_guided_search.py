@@ -7,6 +7,7 @@ Implements:
 """
 
 import json
+import time
 import numpy as np
 import heapq
 import torch
@@ -261,6 +262,7 @@ def value_guided_greedy_search(
     cyclically_reduce_after_moves=False,
     verbose=False,
     solution_cache=None,
+    time_limit=None,
 ):
     """
     Greedy search with value network priority.
@@ -280,6 +282,8 @@ def value_guided_greedy_search(
         verbose: print progress
         solution_cache: optional dict mapping state_tuple -> path_to_trivial,
             shared across searches to enable cross-presentation memoization
+        time_limit: optional float — stop and return unsolved if wall time exceeds
+            this many seconds (None = no limit)
 
     Returns:
         (solved, path, stats) where:
@@ -330,8 +334,13 @@ def value_guided_greedy_search(
     heapq.heapify(to_explore)
 
     min_length = total_initial_length
+    t_start = time.time()
 
     while to_explore:
+        if time_limit is not None and (time.time() - t_start) > time_limit:
+            if verbose:
+                print(f"Time limit ({time_limit}s) exceeded")
+            break
         _, path_length, cur_node_id, state_tuple, wl_tuple = heapq.heappop(to_explore)
         state = np.array(state_tuple, dtype=np.int8)
         word_lengths = list(wl_tuple)
@@ -417,6 +426,7 @@ def beam_search(
     cyclically_reduce_after_moves=False,
     verbose=False,
     solution_cache=None,
+    time_limit=None,
 ):
     """
     Beam search: maintain top-k candidates, expand all, score, keep top-k.
@@ -432,6 +442,7 @@ def beam_search(
         cyclically_reduce_after_moves: apply cyclic reduction
         verbose: print progress
         solution_cache: optional dict mapping state_tuple -> path_to_trivial
+        time_limit: optional float — stop if wall time exceeds this many seconds
 
     Returns:
         (solved, path, stats)
@@ -463,7 +474,12 @@ def beam_search(
     total_nodes = 1
 
     step = 0
+    t_start = time.time()
     while beam and total_nodes < max_nodes_to_explore:
+        if time_limit is not None and (time.time() - t_start) > time_limit:
+            if verbose:
+                print(f"Time limit ({time_limit}s) exceeded")
+            break
         step += 1
         # Expand all candidates
         all_children = []  # (state, word_lengths, node_id)
