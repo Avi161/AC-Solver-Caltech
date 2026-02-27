@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, WeightedRandomSampler
 
 from value_search.value_network import FeatureMLP, SequenceValueNet
 
@@ -119,6 +119,7 @@ def train_model(model, train_loader, val_loader, model_type='mlp',
 
             optimizer.zero_grad()
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
 
             train_loss_sum += loss.item() * len(targets)
@@ -286,7 +287,17 @@ def main():
     train_subset = torch.utils.data.Subset(dataset, train_idx)
     val_subset = torch.utils.data.Subset(dataset, val_idx)
 
-    train_loader = DataLoader(train_subset, batch_size=args.batch_size, shuffle=True)
+    # Weighted sampler: balance positive (source_idx >= 0) vs negative (source_idx < 0)
+    # Negatives are outnumbered ~25:1; this ensures each batch sees ~50% negatives.
+    train_source = dataset.source_idx[train_idx]
+    is_neg = train_source < 0
+    n_pos = max(1, int((~is_neg).sum()))
+    n_neg = max(1, int(is_neg.sum()))
+    sample_weights = np.where(is_neg, 1.0 / n_neg, 1.0 / n_pos).astype(np.float64)
+    sampler = WeightedRandomSampler(sample_weights, num_samples=len(train_idx), replacement=True)
+    print(f"  Train positives: {n_pos}, negatives: {n_neg} (ratio {n_pos/n_neg:.1f}:1 → balanced via sampler)")
+
+    train_loader = DataLoader(train_subset, batch_size=args.batch_size, sampler=sampler)
     val_loader = DataLoader(val_subset, batch_size=args.batch_size, shuffle=False)
 
     # Compute feature normalization stats

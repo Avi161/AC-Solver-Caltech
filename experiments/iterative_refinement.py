@@ -528,7 +528,7 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
         solved_paths=state['solved_paths'],
         all_presentations=all_presentations,
         output_path=data_path,
-        negative_label=float(max_path_length * 2),
+        negative_label=float(max_path_length * 5),
         max_path_length=max_path_length,
     )
 
