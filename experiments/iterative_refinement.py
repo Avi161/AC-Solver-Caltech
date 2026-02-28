@@ -232,7 +232,8 @@ def load_state():
 
 def run_search(model_checkpoint, results_dir, config_overrides=None,
                enable_mcts=False, max_nodes=None, indices_file=None,
-               resume_dir=None, architecture='mlp'):
+               resume_dir=None, architecture='mlp', time_limit_per_pres=45,
+               enable_beam=False):
     """
     Run search experiments via subprocess.
 
@@ -284,10 +285,10 @@ def run_search(model_checkpoint, results_dir, config_overrides=None,
             'enabled': True,
             'max_nodes': 1_000_000,
             'cyclically_reduce': True,
-            'time_limit_per_pres': 45,
+            'time_limit_per_pres': time_limit_per_pres,
         },
         'beam_search': {
-            'enabled': False,
+            'enabled': enable_beam,
             'max_nodes': 1_000_000,
             'beam_widths': [10],
         },
@@ -370,18 +371,28 @@ def run_training(data_path, save_dir, architecture='mlp', epochs=100):
 # Main refinement loop
 # ---------------------------------------------------------------------------
 
-def run_iteration(iteration, state, all_presentations, enable_mcts=False,
-                  max_path_length=300, max_nodes=None):
+def run_iteration(iteration, state, all_presentations,
+                  max_path_length=300, max_nodes=None, time_limit_per_pres=45,
+                  run_mlp=False, run_seq=True, enable_beam=False):
     """
     Execute a single iteration of the refinement loop.
 
     Returns:
         int: number of newly solved presentations this iteration
     """
+    if not run_mlp and not run_seq:
+        raise ValueError("At least one of run_mlp or run_seq must be True")
+
+    search_label = ' + '.join(filter(None, [
+        'MLP' if run_mlp else '', 'Seq' if run_seq else '',
+        'Beam' if enable_beam else '',
+    ]))
+
     print(f"\n{'='*70}")
     print(f"  ITERATION {iteration}")
     print(f"{'='*70}")
     print(f"  Total solved so far: {len(state['solved_paths'])}/1190")
+    print(f"  Search:  {search_label}")
 
     # Determine which model to use
     if iteration == 0:
@@ -396,77 +407,92 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model not found: {model_path}")
 
-    # --- 1. Run search ---
-    print(f"\n  --- Step 1: Search ---")
+    # Compute unsolved indices (shared across MLP and seq passes)
     iter_results_dir = os.path.join(REFINEMENT_DIR, f"iter_{iteration}")
-
-    # Write indices file so we only search unsolved presentations
     unsolved_indices = [
         i for i, pres in enumerate(all_presentations)
         if tuple(pres) not in state['solved_paths']
     ]
-    indices_file = None
-    if unsolved_indices and len(unsolved_indices) < len(all_presentations):
-        indices_file = os.path.join(iter_results_dir, "unsolved_indices.txt")
-        os.makedirs(iter_results_dir, exist_ok=True)
-        with open(indices_file, 'w') as f:
-            for idx in unsolved_indices:
-                f.write(f"{idx}\n")
-        print(f"  Searching {len(unsolved_indices)}/{len(all_presentations)} unsolved presentations")
+    print(f"  Searching {len(unsolved_indices)}/{len(all_presentations)} unsolved presentations")
 
-    # Check if a previous MLP run for this iteration exists (for resume after crash)
-    mlp_prev_results = None
-    if os.path.isdir(iter_results_dir):
-        existing = sorted([
-            d for d in os.listdir(iter_results_dir)
-            if os.path.isdir(os.path.join(iter_results_dir, d))
-            and d[0].isdigit()
-        ])
-        if existing:
-            mlp_prev_results = os.path.join(iter_results_dir, existing[-1])
-            print(f"  Resuming MLP search from: {mlp_prev_results}")
+    mlp_actual_dir = None
+    seq_actual_dir = None
 
-    mlp_actual_dir = run_search(
-        model_checkpoint=model_path,
-        results_dir=iter_results_dir,
-        enable_mcts=enable_mcts,
-        max_nodes=max_nodes,
-        indices_file=indices_file,
-        resume_dir=mlp_prev_results,
-        architecture='mlp',
-    )
+    # --- 1a. MLP search ---
+    if run_mlp:
+        print(f"\n  --- Step 1a: MLP Search ({len(unsolved_indices)} unsolved) ---")
+        indices_file = None
+        if unsolved_indices and len(unsolved_indices) < len(all_presentations):
+            indices_file = os.path.join(iter_results_dir, "unsolved_indices.txt")
+            os.makedirs(iter_results_dir, exist_ok=True)
+            with open(indices_file, 'w') as f:
+                for idx in unsolved_indices:
+                    f.write(f"{idx}\n")
 
-    # --- 1b. Seq second pass on still-unsolved ---
-    seq_model_path = model_path.replace('best_mlp.pt', 'best_seq.pt')
-    if os.path.exists(seq_model_path):
-        mlp_paths_quick = collect_paths_from_results_dir(
-            mlp_actual_dir, all_presentations, exclude_beam=False
+        mlp_prev_results = None
+        if os.path.isdir(iter_results_dir):
+            existing = sorted([
+                d for d in os.listdir(iter_results_dir)
+                if os.path.isdir(os.path.join(iter_results_dir, d)) and d[0].isdigit()
+            ])
+            if existing:
+                mlp_prev_results = os.path.join(iter_results_dir, existing[-1])
+                print(f"  Resuming MLP search from: {mlp_prev_results}")
+
+        mlp_actual_dir = run_search(
+            model_checkpoint=model_path,
+            results_dir=iter_results_dir,
+            enable_mcts=False,
+            max_nodes=max_nodes,
+            indices_file=indices_file,
+            resume_dir=mlp_prev_results,
+            architecture='mlp',
+            time_limit_per_pres=time_limit_per_pres,
+            enable_beam=enable_beam,
         )
-        solved_after_mlp = set(state['solved_paths'].keys()) | set(mlp_paths_quick.keys())
-        seq_unsolved = [
-            i for i, pres in enumerate(all_presentations)
-            if tuple(pres) not in solved_after_mlp
-            and i in set(unsolved_indices)
-        ]
-        print(f"\n  --- Step 1b: Seq second pass ({len(seq_unsolved)} still unsolved) ---")
-        if seq_unsolved:
+
+    # --- 1b. Seq search ---
+    if run_seq:
+        # model_path may already be best_seq.pt (seq-only training)
+        if model_path.endswith('best_seq.pt'):
+            seq_model_path = model_path
+        else:
+            seq_model_path = model_path.replace('best_mlp.pt', 'best_seq.pt')
+        if not os.path.exists(seq_model_path):
+            raise FileNotFoundError(f"Seq model not found: {seq_model_path}")
+
+        # If MLP ran first, seq only covers still-unsolved presentations
+        if run_mlp and mlp_actual_dir:
+            mlp_paths_quick = collect_paths_from_results_dir(
+                mlp_actual_dir, all_presentations, exclude_beam=False
+            )
+            solved_after_mlp = set(state['solved_paths'].keys()) | set(mlp_paths_quick.keys())
+            seq_indices = [
+                i for i, pres in enumerate(all_presentations)
+                if tuple(pres) not in solved_after_mlp and i in set(unsolved_indices)
+            ]
+        else:
+            seq_indices = unsolved_indices
+
+        step_label = '1b' if run_mlp else '1'
+        print(f"\n  --- Step {step_label}: Seq Search ({len(seq_indices)} unsolved) ---")
+
+        if seq_indices:
             seq_results_dir = os.path.join(REFINEMENT_DIR, f"iter_{iteration}_seq")
             seq_indices_file = os.path.join(seq_results_dir, "seq_unsolved_indices.txt")
             os.makedirs(seq_results_dir, exist_ok=True)
             with open(seq_indices_file, 'w') as f:
-                for idx in seq_unsolved:
+                for idx in seq_indices:
                     f.write(f"{idx}\n")
 
             seq_prev_results = None
-            if os.path.isdir(seq_results_dir):
-                seq_existing = sorted([
-                    d for d in os.listdir(seq_results_dir)
-                    if os.path.isdir(os.path.join(seq_results_dir, d))
-                    and d[0].isdigit()
-                ])
-                if seq_existing:
-                    seq_prev_results = os.path.join(seq_results_dir, seq_existing[-1])
-                    print(f"  Resuming seq search from: {seq_prev_results}")
+            seq_existing = sorted([
+                d for d in os.listdir(seq_results_dir)
+                if os.path.isdir(os.path.join(seq_results_dir, d)) and d[0].isdigit()
+            ])
+            if seq_existing:
+                seq_prev_results = os.path.join(seq_results_dir, seq_existing[-1])
+                print(f"  Resuming seq search from: {seq_prev_results}")
 
             seq_actual_dir = run_search(
                 model_checkpoint=seq_model_path,
@@ -476,28 +502,29 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
                 indices_file=seq_indices_file,
                 resume_dir=seq_prev_results,
                 architecture='seq',
+                time_limit_per_pres=time_limit_per_pres,
+                enable_beam=enable_beam,
             )
-        else:
-            seq_actual_dir = None
-    else:
-        seq_actual_dir = None
 
     # --- 2. Collect paths ---
     print(f"\n  --- Step 2: Collect paths ---")
-    new_paths = collect_paths_from_results_dir(
-        mlp_actual_dir, all_presentations, exclude_beam=False
-    )
-    print(f"  MLP pass: {len(new_paths)} solved paths")
+    new_paths = {}
+    if mlp_actual_dir:
+        mlp_paths = collect_paths_from_results_dir(
+            mlp_actual_dir, all_presentations, exclude_beam=False
+        )
+        new_paths.update(mlp_paths)
+        print(f"  MLP search: {len(mlp_paths)} solved paths")
     if seq_actual_dir:
         seq_paths = collect_paths_from_results_dir(
             seq_actual_dir, all_presentations, exclude_beam=False
         )
-        print(f"  Seq pass: {len(seq_paths)} solved paths")
-        # Merge seq paths, keeping shorter paths
         for pres_tuple, actions in seq_paths.items():
             if pres_tuple not in new_paths or len(actions) < len(new_paths[pres_tuple]):
                 new_paths[pres_tuple] = actions
-        print(f"  Combined: {len(new_paths)} solved paths this iteration")
+        print(f"  Seq search: {len(seq_paths)} solved paths")
+    if mlp_actual_dir and seq_actual_dir:
+        print(f"  Combined:   {len(new_paths)} solved paths this iteration")
 
     # --- 3. Merge paths ---
     print(f"\n  --- Step 3: Merge paths ---")
@@ -535,16 +562,21 @@ def run_iteration(iteration, state, all_presentations, enable_mcts=False,
     # --- 5. Retrain value network ---
     print(f"\n  --- Step 5: Retrain value network ---")
     checkpoint_dir = os.path.join(REFINEMENT_DIR, f"checkpoints_iter_{iteration}")
+    train_arch = 'both' if (run_mlp and run_seq) else ('mlp' if run_mlp else 'seq')
     run_training(
         data_path=data_path,
         save_dir=checkpoint_dir,
-        architecture='both',
+        architecture=train_arch,
         epochs=100,
     )
 
+    # The stored model path always points to MLP if available, else seq
     new_model_path = os.path.join(checkpoint_dir, "best_mlp.pt")
     if not os.path.exists(new_model_path):
-        raise RuntimeError(f"Training did not produce checkpoint: {new_model_path}")
+        # seq-only training: derive seq model path using the same convention
+        new_model_path = os.path.join(checkpoint_dir, "best_seq.pt")
+        if not os.path.exists(new_model_path):
+            raise RuntimeError(f"Training did not produce any checkpoint in: {checkpoint_dir}")
     state['model_paths'].append(new_model_path)
 
     # --- 6. Save state ---
@@ -571,15 +603,33 @@ def main():
                         help='Reject paths longer than this from training data')
     parser.add_argument('--max-nodes', type=int, default=None,
                         help='Override max_nodes for all algorithms (quick smoke test)')
+    parser.add_argument('--time-limit-per-pres', type=int, default=45,
+                        help='Time limit in seconds per presentation for v-guided greedy')
+    parser.add_argument('--run-mlp', action='store_true', default=False,
+                        help='Include MLP in training and iterative search')
+    parser.add_argument('--no-seq', action='store_true', default=False,
+                        help='Disable seq from training and iterative search')
+    parser.add_argument('--enable-beam', action='store_true', default=False,
+                        help='Enable beam search (k=10) in addition to v-guided greedy')
     args = parser.parse_args()
 
     print()
     print("=" * 70)
     print("  AC-Solver Iterative Refinement Pipeline")
     print("=" * 70)
+    run_seq = not args.no_seq
+    if not args.run_mlp and not run_seq:
+        print("ERROR: --run-mlp and --no-seq cannot both be set (nothing to search).")
+        sys.exit(1)
+    search_label = ' + '.join(filter(None, [
+        'MLP' if args.run_mlp else '', 'Seq' if run_seq else '',
+        'Beam' if args.enable_beam else '',
+    ]))
+
     print(f"  Max iterations: {args.max_iterations}")
-    print(f"  MCTS enabled:   {args.enable_mcts}")
     print(f"  Max path length: {args.max_path_length}")
+    print(f"  Time limit:     {args.time_limit_per_pres}s/presentation")
+    print(f"  Search:         {search_label}")
     if args.max_nodes:
         print(f"  Max nodes:      {args.max_nodes:,} (override)")
     print(f"  State file:     {STATE_FILE}")
@@ -621,9 +671,12 @@ def main():
         try:
             new_count = run_iteration(
                 iteration, state, all_presentations,
-                enable_mcts=args.enable_mcts,
                 max_path_length=args.max_path_length,
                 max_nodes=args.max_nodes,
+                time_limit_per_pres=args.time_limit_per_pres,
+                run_mlp=args.run_mlp,
+                run_seq=run_seq,
+                enable_beam=args.enable_beam,
             )
         except KeyboardInterrupt:
             print(f"\n\n  Interrupted at iteration {iteration}. Saving state...")
