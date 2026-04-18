@@ -44,11 +44,15 @@ class MCTSNode:
 
     def best_child_ucb(self, c_explore=1.41):
         """Select child with highest UCB1 score (lower value = better)."""
+        # First, check for unvisited children — prefer the one with lowest
+        # prior_value (closest to trivial per value network)
+        unvisited = [c for c in self.children.values() if c.visit_count == 0]
+        if unvisited:
+            return min(unvisited, key=lambda c: c.prior_value)
+
         best_score = float('-inf')
         best_child = None
         for child in self.children.values():
-            if child.visit_count == 0:
-                return child  # Always explore unvisited children first
             exploitation = -child.mean_value  # Negate: lower distance = better
             exploration = c_explore * math.sqrt(
                 math.log(self.visit_count) / child.visit_count
@@ -230,8 +234,7 @@ def mcts_search(
     visited_global = {tuple(presentation)}
     iterations = 0
     found_terminal = None
-    max_iterations = max_nodes_to_explore * 10  # Safety limit to prevent infinite loops
-    stale_count = 0
+    max_iterations = max_nodes_to_explore * 50  # Safety limit to prevent infinite loops
 
     while len(visited_global) < max_nodes_to_explore and iterations < max_iterations:
         iterations += 1
@@ -248,12 +251,9 @@ def mcts_search(
 
         if not new_children:
             # No new states to explore from this leaf — backprop a high value
-            backpropagate(leaf, leaf.prior_value + 50)  # Penalize dead ends
-            stale_count += 1
-            if stale_count > 1000:
-                break  # All reachable states explored
+            # to steer future selection away from this dead-end branch
+            backpropagate(leaf, leaf.prior_value + 50)
             continue
-        stale_count = 0
 
         # Check for terminal children or cache hits
         cache_hit_path = None
@@ -285,9 +285,10 @@ def mcts_search(
         evaluate_leaves(new_children, model, architecture, feat_mean, feat_std,
                         device, max_state_dim)
 
-        # BACKPROPAGATE: use the best child's value
+        # BACKPROPAGATE: evaluate via the best child, but propagate
+        # through the selected leaf (standard MCTS semantics)
         best_child = min(new_children, key=lambda n: n.prior_value)
-        backpropagate(best_child, best_child.prior_value)
+        backpropagate(leaf, best_child.prior_value)
 
         if verbose and iterations % 1000 == 0:
             print(f"  MCTS iter {iterations}: nodes={len(visited_global)}, "

@@ -55,7 +55,7 @@ algorithms:
   # ---- Our methods (require a trained model) ----
 
   v_guided_greedy:
-    enabled: true
+    enabled: false
     max_nodes: 1_000_000 # Same budget for fair comparison
     cyclically_reduce: true # Apply cyclic reduction after each AC move
 
@@ -65,6 +65,6 @@ algorithms:
     beam_widths: [4]
 
   mcts:
-    enabled: false # Very slow -- enable only if you have 8+ hours
-    max_nodes: 100_000
+    enabled: true
+    max_nodes: 10_000
     c_explore: 1.41

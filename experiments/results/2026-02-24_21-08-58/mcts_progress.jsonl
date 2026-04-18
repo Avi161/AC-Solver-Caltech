@@ -1,0 +1,1059 @@
+{"idx": 0, "solved": true, "path_length": 6, "nodes_explored": 1421, "time": 0.0787808895111084, "path": [[7, 7], [5, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 1, "solved": true, "path_length": 4, "nodes_explored": 607, "time": 0.030598878860473633, "path": [[1, 7], [7, 5], [0, 4], [5, 2]]}
+{"idx": 2, "solved": true, "path_length": 5, "nodes_explored": 1021, "time": 0.05046796798706055, "path": [[8, 8], [3, 5], [6, 5], [2, 3], [1, 2]]}
+{"idx": 3, "solved": true, "path_length": 5, "nodes_explored": 599, "time": 0.029085159301757812, "path": [[1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 4, "solved": true, "path_length": 7, "nodes_explored": 3936, "time": 0.1959547996520996, "path": [[8, 9], [6, 9], [3, 7], [6, 7], [2, 4], [1, 3], [1, 2]]}
+{"idx": 5, "solved": true, "path_length": 7, "nodes_explored": 1515, "time": 0.07638978958129883, "path": [[1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 6, "solved": true, "path_length": 15, "nodes_explored": 7942, "time": 0.4021749496459961, "path": [[7, 10], [5, 10], [0, 11], [8, 11], [6, 11], [2, 12], [4, 10], [10, 8], [10, 8], [1, 7], [10, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 7, "solved": true, "path_length": 7, "nodes_explored": 3408, "time": 0.17494726181030273, "path": [[4, 10], [5, 10], [2, 7], [8, 7], [3, 5], [9, 3], [2, 2]]}
+{"idx": 8, "solved": true, "path_length": 11, "nodes_explored": 5408, "time": 0.3130199909210205, "path": [[7, 10], [5, 10], [8, 10], [0, 9], [1, 9], [10, 9], [0, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 9, "solved": true, "path_length": 8, "nodes_explored": 1711, "time": 0.08371186256408691, "path": [[10, 10], [0, 9], [7, 9], [6, 7], [6, 7], [1, 5], [5, 3], [0, 2]]}
+{"idx": 10, "solved": true, "path_length": 10, "nodes_explored": 2674, "time": 0.1343369483947754, "path": [[6, 10], [0, 9], [10, 9], [1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 11, "solved": true, "path_length": 8, "nodes_explored": 1906, "time": 0.09442377090454102, "path": [[1, 11], [7, 9], [5, 9], [8, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 12, "solved": true, "path_length": 9, "nodes_explored": 2059, "time": 0.10887408256530762, "path": [[7, 11], [5, 11], [0, 8], [8, 8], [0, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 13, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5223331451416016}
+{"idx": 14, "solved": true, "path_length": 12, "nodes_explored": 5725, "time": 0.2931990623474121, "path": [[7, 11], [0, 10], [8, 10], [6, 10], [5, 10], [2, 11], [4, 9], [10, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 15, "solved": true, "path_length": 9, "nodes_explored": 4604, "time": 0.22771501541137695, "path": [[10, 11], [4, 11], [5, 11], [2, 8], [10, 8], [3, 7], [9, 5], [2, 3], [1, 2]]}
+{"idx": 16, "solved": true, "path_length": 9, "nodes_explored": 3609, "time": 0.1800670623779297, "path": [[6, 11], [4, 11], [5, 11], [2, 6], [5, 6], [3, 5], [6, 7], [1, 4], [10, 2]]}
+{"idx": 17, "solved": true, "path_length": 8, "nodes_explored": 1577, "time": 0.07933616638183594, "path": [[4, 11], [2, 6], [5, 6], [5, 6], [3, 5], [6, 7], [1, 4], [10, 2]]}
+{"idx": 18, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5086941719055176}
+{"idx": 19, "solved": true, "path_length": 15, "nodes_explored": 5890, "time": 0.30910396575927734, "path": [[4, 11], [5, 11], [2, 10], [5, 10], [10, 10], [2, 9], [7, 9], [10, 9], [1, 9], [10, 9], [3, 7], [0, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 20, "solved": true, "path_length": 9, "nodes_explored": 5075, "time": 0.42241930961608887, "path": [[5, 11], [10, 11], [3, 13], [9, 11], [2, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 21, "solved": true, "path_length": 7, "nodes_explored": 1248, "time": 0.07062220573425293, "path": [[5, 11], [0, 6], [5, 6], [3, 5], [6, 7], [1, 4], [10, 2]]}
+{"idx": 22, "solved": true, "path_length": 8, "nodes_explored": 1923, "time": 0.10129380226135254, "path": [[6, 11], [0, 8], [10, 8], [1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 23, "solved": true, "path_length": 6, "nodes_explored": 998, "time": 0.07119631767272949, "path": [[5, 11], [5, 11], [0, 6], [3, 5], [9, 3], [1, 2]]}
+{"idx": 24, "solved": true, "path_length": 7, "nodes_explored": 987, "time": 0.048645973205566406, "path": [[2, 10], [8, 8], [1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 25, "solved": true, "path_length": 12, "nodes_explored": 4899, "time": 0.24372410774230957, "path": [[5, 11], [0, 10], [5, 10], [8, 10], [3, 9], [2, 9], [9, 9], [0, 7], [9, 7], [1, 4], [2, 3], [2, 2]]}
+{"idx": 26, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5069999694824219}
+{"idx": 27, "solved": true, "path_length": 10, "nodes_explored": 3598, "time": 0.18149113655090332, "path": [[5, 11], [5, 11], [3, 9], [2, 8], [5, 8], [0, 5], [6, 5], [1, 3], [4, 3], [2, 2]]}
+{"idx": 28, "solved": true, "path_length": 11, "nodes_explored": 2621, "time": 0.13143610954284668, "path": [[5, 11], [5, 11], [3, 11], [2, 10], [9, 10], [0, 9], [9, 9], [1, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 29, "solved": true, "path_length": 9, "nodes_explored": 4003, "time": 0.20976805686950684, "path": [[1, 13], [7, 11], [5, 11], [8, 11], [0, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 30, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.5362308025360107}
+{"idx": 31, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5279617309570312}
+{"idx": 32, "solved": true, "path_length": 17, "nodes_explored": 7123, "time": 0.41615796089172363, "path": [[7, 12], [5, 12], [0, 11], [8, 11], [6, 11], [2, 12], [4, 10], [10, 10], [10, 10], [1, 11], [10, 11], [0, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 33, "solved": true, "path_length": 12, "nodes_explored": 3302, "time": 0.16541695594787598, "path": [[7, 12], [5, 12], [10, 12], [0, 9], [10, 9], [1, 9], [10, 9], [3, 7], [0, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 34, "solved": true, "path_length": 7, "nodes_explored": 1300, "time": 0.06463980674743652, "path": [[7, 12], [0, 7], [5, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 35, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5115439891815186}
+{"idx": 36, "solved": true, "path_length": 14, "nodes_explored": 7522, "time": 0.38625001907348633, "path": [[6, 12], [7, 12], [0, 11], [10, 11], [8, 11], [2, 12], [6, 10], [4, 8], [10, 6], [1, 5], [10, 7], [0, 5], [5, 3], [1, 2]]}
+{"idx": 37, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5054500102996826}
+{"idx": 38, "solved": true, "path_length": 11, "nodes_explored": 3907, "time": 0.19747090339660645, "path": [[6, 12], [6, 12], [4, 12], [5, 12], [2, 7], [5, 7], [3, 5], [6, 5], [1, 3], [4, 3], [2, 2]]}
+{"idx": 39, "solved": true, "path_length": 7, "nodes_explored": 1100, "time": 0.055036067962646484, "path": [[7, 12], [5, 12], [2, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 40, "solved": true, "path_length": 7, "nodes_explored": 1663, "time": 0.08202910423278809, "path": [[6, 12], [4, 12], [2, 7], [1, 7], [7, 5], [0, 4], [5, 2]]}
+{"idx": 41, "solved": true, "path_length": 7, "nodes_explored": 1921, "time": 0.09590387344360352, "path": [[4, 12], [6, 12], [2, 7], [7, 7], [1, 5], [5, 3], [0, 2]]}
+{"idx": 42, "solved": true, "path_length": 10, "nodes_explored": 2220, "time": 0.11198163032531738, "path": [[7, 12], [5, 12], [0, 9], [11, 9], [3, 11], [9, 9], [1, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 43, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5738868713378906}
+{"idx": 44, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5087659358978271}
+{"idx": 45, "solved": true, "path_length": 14, "nodes_explored": 9212, "time": 0.4694328308105469, "path": [[10, 12], [4, 12], [5, 12], [2, 11], [5, 11], [10, 11], [2, 10], [9, 10], [3, 11], [9, 9], [2, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 46, "solved": true, "path_length": 14, "nodes_explored": 6810, "time": 0.34726500511169434, "path": [[6, 12], [4, 12], [5, 12], [2, 11], [5, 11], [10, 11], [2, 8], [7, 8], [1, 7], [10, 7], [0, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 47, "solved": true, "path_length": 7, "nodes_explored": 1135, "time": 0.05795788764953613, "path": [[7, 12], [2, 7], [5, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 48, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7104761600494385}
+{"idx": 49, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.564424991607666}
+{"idx": 50, "solved": true, "path_length": 10, "nodes_explored": 5900, "time": 0.32749176025390625, "path": [[5, 12], [10, 12], [3, 15], [9, 13], [2, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 51, "solved": true, "path_length": 8, "nodes_explored": 1749, "time": 0.08747696876525879, "path": [[10, 12], [0, 7], [7, 7], [1, 7], [5, 5], [0, 4], [1, 3], [1, 2]]}
+{"idx": 52, "solved": true, "path_length": 6, "nodes_explored": 1400, "time": 0.07177400588989258, "path": [[6, 12], [0, 7], [7, 7], [1, 5], [5, 3], [0, 2]]}
+{"idx": 53, "solved": true, "path_length": 6, "nodes_explored": 967, "time": 0.06849884986877441, "path": [[5, 12], [10, 12], [0, 7], [3, 5], [9, 3], [2, 2]]}
+{"idx": 54, "solved": true, "path_length": 7, "nodes_explored": 1368, "time": 0.13361310958862305, "path": [[2, 11], [8, 9], [6, 7], [1, 7], [7, 5], [0, 4], [5, 2]]}
+{"idx": 55, "solved": true, "path_length": 11, "nodes_explored": 2561, "time": 0.13076114654541016, "path": [[5, 12], [0, 11], [8, 11], [3, 9], [2, 8], [6, 8], [0, 5], [6, 5], [1, 3], [4, 3], [2, 2]]}
+{"idx": 56, "solved": true, "path_length": 16, "nodes_explored": 9709, "time": 0.5279607772827148, "path": [[6, 12], [8, 12], [6, 12], [7, 12], [0, 11], [10, 11], [0, 12], [4, 10], [10, 10], [8, 10], [1, 9], [5, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 57, "solved": true, "path_length": 16, "nodes_explored": 8119, "time": 0.41300225257873535, "path": [[10, 12], [8, 12], [0, 11], [4, 11], [0, 12], [6, 10], [6, 10], [0, 9], [10, 9], [1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 58, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5088050365447998}
+{"idx": 59, "solved": true, "path_length": 11, "nodes_explored": 3285, "time": 0.1660900115966797, "path": [[5, 12], [5, 12], [0, 13], [8, 11], [3, 9], [2, 8], [8, 8], [3, 7], [2, 5], [10, 3], [3, 2]]}
+{"idx": 60, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5142858028411865}
+{"idx": 61, "solved": true, "path_length": 8, "nodes_explored": 1357, "time": 0.06784605979919434, "path": [[5, 12], [5, 12], [0, 9], [8, 7], [3, 5], [9, 5], [1, 3], [2, 2]]}
+{"idx": 62, "solved": true, "path_length": 9, "nodes_explored": 2094, "time": 0.10480213165283203, "path": [[2, 11], [8, 9], [1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 63, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5899999141693115}
+{"idx": 64, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6885960102081299}
+{"idx": 65, "solved": true, "path_length": 6, "nodes_explored": 1103, "time": 0.05446600914001465, "path": [[7, 12], [0, 7], [6, 7], [1, 5], [5, 3], [0, 2]]}
+{"idx": 66, "solved": true, "path_length": 10, "nodes_explored": 2362, "time": 0.11605381965637207, "path": [[5, 12], [5, 12], [3, 11], [2, 9], [5, 9], [0, 7], [9, 7], [1, 4], [2, 3], [2, 2]]}
+{"idx": 67, "solved": true, "path_length": 12, "nodes_explored": 2867, "time": 0.14279794692993164, "path": [[5, 12], [5, 12], [3, 13], [2, 11], [9, 11], [0, 11], [9, 11], [1, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 68, "solved": true, "path_length": 14, "nodes_explored": 4081, "time": 0.20332598686218262, "path": [[6, 12], [4, 12], [2, 11], [5, 11], [8, 9], [10, 9], [9, 9], [1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 69, "solved": true, "path_length": 14, "nodes_explored": 5348, "time": 0.26552796363830566, "path": [[5, 12], [0, 11], [8, 11], [10, 11], [5, 11], [3, 11], [2, 10], [9, 10], [0, 9], [9, 9], [1, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 70, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5154502391815186}
+{"idx": 71, "solved": true, "path_length": 10, "nodes_explored": 4132, "time": 0.2275078296661377, "path": [[1, 15], [7, 13], [5, 13], [8, 13], [0, 7], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 72, "solved": true, "path_length": 16, "nodes_explored": 9579, "time": 0.49031591415405273, "path": [[7, 13], [5, 13], [4, 13], [0, 10], [10, 10], [11, 10], [2, 9], [7, 9], [10, 9], [1, 9], [10, 9], [3, 7], [0, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 73, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6091830730438232}
+{"idx": 74, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.538787841796875}
+{"idx": 75, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5300369262695312}
+{"idx": 76, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5209341049194336}
+{"idx": 77, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5178430080413818}
+{"idx": 78, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5789828300476074}
+{"idx": 79, "solved": true, "path_length": 15, "nodes_explored": 8399, "time": 0.43872714042663574, "path": [[6, 13], [4, 13], [4, 13], [5, 13], [5, 13], [6, 13], [8, 13], [2, 10], [4, 10], [2, 9], [10, 7], [3, 7], [9, 5], [1, 3], [0, 2]]}
+{"idx": 80, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5173189640045166}
+{"idx": 81, "solved": true, "path_length": 12, "nodes_explored": 3737, "time": 0.1873488426208496, "path": [[4, 13], [7, 13], [2, 10], [11, 10], [10, 12], [2, 7], [7, 7], [1, 7], [5, 5], [0, 4], [1, 3], [1, 2]]}
+{"idx": 82, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5383117198944092}
+{"idx": 83, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5224850177764893}
+{"idx": 84, "solved": true, "path_length": 13, "nodes_explored": 3376, "time": 0.1720898151397705, "path": [[7, 13], [5, 13], [0, 12], [10, 12], [0, 9], [10, 9], [1, 9], [10, 9], [3, 7], [0, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 85, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.574260950088501}
+{"idx": 86, "solved": true, "path_length": 16, "nodes_explored": 8002, "time": 0.3997519016265869, "path": [[7, 13], [0, 10], [5, 10], [0, 11], [8, 11], [6, 11], [2, 12], [4, 10], [10, 8], [10, 8], [1, 7], [10, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 87, "solved": true, "path_length": 17, "nodes_explored": 5282, "time": 0.2631821632385254, "path": [[7, 13], [5, 13], [8, 13], [0, 12], [6, 12], [9, 12], [3, 11], [2, 9], [5, 9], [7, 9], [6, 9], [2, 7], [5, 7], [3, 4], [0, 3], [3, 3], [2, 2]]}
+{"idx": 88, "solved": true, "path_length": 9, "nodes_explored": 1881, "time": 0.09254693984985352, "path": [[7, 13], [8, 13], [2, 12], [6, 10], [3, 7], [4, 5], [2, 3], [5, 3], [1, 2]]}
+{"idx": 89, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5132880210876465}
+{"idx": 90, "solved": true, "path_length": 13, "nodes_explored": 5862, "time": 0.29486083984375, "path": [[6, 13], [6, 13], [7, 13], [0, 12], [10, 12], [10, 12], [8, 12], [2, 11], [6, 9], [4, 7], [1, 5], [5, 3], [0, 2]]}
+{"idx": 91, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5187420845031738}
+{"idx": 92, "solved": true, "path_length": 13, "nodes_explored": 7508, "time": 0.3889181613922119, "path": [[4, 13], [4, 13], [5, 13], [6, 13], [8, 13], [2, 10], [4, 10], [10, 10], [2, 7], [8, 7], [3, 5], [9, 3], [2, 2]]}
+{"idx": 93, "solved": true, "path_length": 18, "nodes_explored": 9374, "time": 0.5409941673278809, "path": [[7, 13], [5, 13], [8, 13], [0, 12], [6, 12], [4, 12], [11, 12], [2, 13], [10, 11], [10, 11], [2, 10], [9, 10], [3, 11], [9, 9], [2, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 94, "solved": true, "path_length": 12, "nodes_explored": 5832, "time": 0.29488587379455566, "path": [[8, 13], [6, 13], [7, 13], [5, 13], [2, 10], [4, 8], [6, 8], [9, 8], [1, 5], [5, 5], [0, 3], [3, 2]]}
+{"idx": 95, "solved": true, "path_length": 10, "nodes_explored": 2536, "time": 0.1256561279296875, "path": [[7, 13], [5, 13], [10, 13], [2, 8], [1, 7], [10, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 96, "solved": true, "path_length": 9, "nodes_explored": 2450, "time": 0.1207430362701416, "path": [[6, 13], [6, 13], [4, 13], [2, 8], [1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 97, "solved": true, "path_length": 12, "nodes_explored": 4164, "time": 0.2085270881652832, "path": [[7, 13], [5, 13], [2, 10], [8, 10], [6, 10], [2, 11], [4, 9], [10, 7], [1, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 98, "solved": true, "path_length": 10, "nodes_explored": 2888, "time": 0.14445710182189941, "path": [[6, 13], [4, 13], [6, 13], [2, 8], [10, 8], [1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 99, "solved": true, "path_length": 7, "nodes_explored": 1177, "time": 0.05805015563964844, "path": [[7, 13], [2, 12], [6, 12], [2, 7], [1, 5], [5, 3], [0, 2]]}
+{"idx": 100, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5455288887023926}
+{"idx": 101, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5379712581634521}
+{"idx": 102, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.575516939163208}
+{"idx": 103, "solved": true, "path_length": 14, "nodes_explored": 3973, "time": 0.30634117126464844, "path": [[7, 13], [5, 13], [10, 13], [0, 10], [10, 10], [10, 10], [1, 11], [10, 11], [0, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 104, "solved": true, "path_length": 9, "nodes_explored": 2505, "time": 0.12881112098693848, "path": [[7, 13], [0, 8], [8, 8], [1, 9], [5, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 105, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5196430683135986}
+{"idx": 106, "solved": true, "path_length": 19, "nodes_explored": 9655, "time": 0.5012538433074951, "path": [[7, 13], [8, 13], [2, 12], [6, 10], [4, 10], [5, 10], [0, 11], [8, 11], [6, 11], [2, 12], [4, 10], [10, 8], [10, 8], [1, 7], [10, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 107, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5107040405273438}
+{"idx": 108, "solved": true, "path_length": 15, "nodes_explored": 4920, "time": 0.24725604057312012, "path": [[6, 13], [6, 13], [4, 13], [5, 13], [2, 12], [5, 12], [10, 12], [2, 7], [4, 7], [7, 7], [1, 5], [8, 5], [0, 4], [1, 3], [1, 2]]}
+{"idx": 109, "solved": true, "path_length": 10, "nodes_explored": 2542, "time": 0.12528109550476074, "path": [[7, 13], [10, 13], [2, 8], [10, 8], [1, 9], [5, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 110, "solved": true, "path_length": 11, "nodes_explored": 3148, "time": 0.15749096870422363, "path": [[6, 13], [4, 13], [2, 10], [5, 10], [8, 8], [10, 6], [5, 6], [3, 5], [6, 7], [1, 4], [10, 2]]}
+{"idx": 111, "solved": true, "path_length": 12, "nodes_explored": 4577, "time": 0.22986698150634766, "path": [[4, 13], [6, 13], [2, 10], [10, 10], [10, 12], [2, 7], [7, 7], [1, 7], [5, 5], [0, 4], [1, 3], [1, 2]]}
+{"idx": 112, "solved": true, "path_length": 12, "nodes_explored": 2601, "time": 0.13103508949279785, "path": [[7, 13], [5, 13], [0, 10], [8, 10], [0, 9], [1, 9], [10, 9], [0, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 113, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5920679569244385}
+{"idx": 114, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5160880088806152}
+{"idx": 115, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5155351161956787}
+{"idx": 116, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5037052631378174}
+{"idx": 117, "solved": true, "path_length": 9, "nodes_explored": 2435, "time": 0.12161517143249512, "path": [[7, 13], [2, 8], [8, 8], [1, 9], [5, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 118, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5575370788574219}
+{"idx": 119, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5780091285705566}
+{"idx": 120, "solved": true, "path_length": 14, "nodes_explored": 4378, "time": 0.2443380355834961, "path": [[1, 21], [7, 19], [8, 19], [10, 21], [0, 12], [1, 11], [5, 9], [1, 8], [1, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 121, "solved": true, "path_length": 7, "nodes_explored": 1321, "time": 0.06417989730834961, "path": [[10, 13], [0, 8], [10, 8], [3, 5], [6, 5], [2, 3], [1, 2]]}
+{"idx": 122, "solved": true, "path_length": 9, "nodes_explored": 2134, "time": 0.10483002662658691, "path": [[6, 13], [0, 8], [5, 8], [10, 6], [5, 6], [3, 5], [6, 7], [1, 4], [10, 2]]}
+{"idx": 123, "solved": true, "path_length": 8, "nodes_explored": 1428, "time": 0.0700521469116211, "path": [[5, 13], [5, 13], [0, 8], [3, 9], [9, 7], [2, 5], [9, 3], [1, 2]]}
+{"idx": 124, "solved": true, "path_length": 6, "nodes_explored": 756, "time": 0.03622579574584961, "path": [[2, 12], [8, 10], [3, 7], [6, 5], [2, 3], [3, 2]]}
+{"idx": 125, "solved": true, "path_length": 10, "nodes_explored": 2928, "time": 0.14657926559448242, "path": [[5, 13], [0, 12], [8, 12], [6, 12], [3, 11], [2, 9], [9, 7], [0, 5], [6, 3], [1, 2]]}
+{"idx": 126, "solved": true, "path_length": 15, "nodes_explored": 7018, "time": 0.3510921001434326, "path": [[8, 13], [3, 13], [2, 10], [11, 10], [5, 10], [1, 9], [5, 9], [8, 9], [2, 9], [5, 9], [3, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 127, "solved": true, "path_length": 14, "nodes_explored": 5580, "time": 0.2861769199371338, "path": [[10, 13], [8, 13], [0, 12], [4, 12], [0, 13], [6, 11], [6, 11], [0, 8], [10, 8], [1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 128, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5139079093933105}
+{"idx": 129, "solved": true, "path_length": 11, "nodes_explored": 4518, "time": 0.2286210060119629, "path": [[5, 13], [8, 13], [3, 13], [2, 10], [11, 10], [11, 10], [1, 7], [5, 7], [0, 5], [6, 3], [1, 2]]}
+{"idx": 130, "solved": true, "path_length": 15, "nodes_explored": 6557, "time": 0.33471012115478516, "path": [[5, 13], [8, 13], [3, 13], [2, 10], [9, 10], [10, 10], [11, 10], [1, 9], [9, 9], [0, 11], [6, 9], [2, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 131, "solved": true, "path_length": 10, "nodes_explored": 2852, "time": 0.19789409637451172, "path": [[5, 13], [8, 13], [3, 11], [2, 8], [6, 8], [8, 8], [2, 5], [8, 5], [3, 3], [0, 2]]}
+{"idx": 132, "solved": true, "path_length": 17, "nodes_explored": 8107, "time": 0.41426897048950195, "path": [[6, 13], [2, 12], [8, 12], [6, 12], [7, 12], [0, 11], [10, 11], [0, 12], [4, 10], [10, 10], [8, 10], [1, 9], [5, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 133, "solved": true, "path_length": 9, "nodes_explored": 1558, "time": 0.08013296127319336, "path": [[5, 13], [5, 13], [0, 10], [8, 8], [6, 6], [3, 5], [6, 7], [1, 4], [10, 2]]}
+{"idx": 134, "solved": true, "path_length": 8, "nodes_explored": 1193, "time": 0.05902218818664551, "path": [[2, 12], [8, 10], [6, 8], [1, 7], [7, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 135, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5028259754180908}
+{"idx": 136, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5141279697418213}
+{"idx": 137, "solved": true, "path_length": 11, "nodes_explored": 5099, "time": 0.26035571098327637, "path": [[5, 13], [5, 13], [0, 12], [8, 10], [8, 10], [3, 7], [8, 7], [2, 7], [10, 5], [3, 4], [4, 2]]}
+{"idx": 138, "solved": true, "path_length": 12, "nodes_explored": 3328, "time": 0.16443109512329102, "path": [[2, 12], [8, 10], [6, 10], [0, 9], [10, 9], [1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 139, "solved": true, "path_length": 12, "nodes_explored": 8457, "time": 0.4429659843444824, "path": [[5, 13], [0, 14], [8, 14], [8, 14], [5, 14], [3, 13], [2, 9], [11, 7], [10, 7], [0, 5], [6, 3], [1, 2]]}
+{"idx": 140, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6774179935455322}
+{"idx": 141, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.540046215057373}
+{"idx": 142, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5192739963531494}
+{"idx": 143, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5743401050567627}
+{"idx": 144, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5353968143463135}
+{"idx": 145, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5144369602203369}
+{"idx": 146, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5875997543334961}
+{"idx": 147, "solved": true, "path_length": 10, "nodes_explored": 3342, "time": 0.16834306716918945, "path": [[5, 13], [5, 13], [0, 14], [8, 12], [3, 9], [2, 7], [2, 7], [8, 5], [3, 4], [10, 2]]}
+{"idx": 148, "solved": true, "path_length": 14, "nodes_explored": 3577, "time": 0.17888402938842773, "path": [[6, 13], [6, 13], [2, 12], [10, 12], [10, 12], [2, 11], [8, 9], [1, 9], [7, 7], [9, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 149, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5072166919708252}
+{"idx": 150, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5226962566375732}
+{"idx": 151, "solved": true, "path_length": 16, "nodes_explored": 5875, "time": 0.29294800758361816, "path": [[5, 13], [5, 13], [0, 14], [8, 12], [7, 12], [8, 12], [0, 13], [10, 11], [3, 11], [11, 9], [10, 9], [2, 6], [4, 4], [3, 3], [0, 3], [1, 2]]}
+{"idx": 152, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5268950462341309}
+{"idx": 153, "solved": true, "path_length": 9, "nodes_explored": 1837, "time": 0.09292888641357422, "path": [[5, 13], [5, 13], [0, 10], [8, 8], [3, 7], [9, 7], [1, 4], [2, 3], [2, 2]]}
+{"idx": 154, "solved": true, "path_length": 10, "nodes_explored": 2799, "time": 0.19572710990905762, "path": [[2, 12], [8, 10], [1, 11], [7, 9], [5, 9], [8, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 155, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.5622520446777344}
+{"idx": 156, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5254762172698975}
+{"idx": 157, "solved": true, "path_length": 11, "nodes_explored": 2980, "time": 0.14702820777893066, "path": [[7, 13], [0, 10], [5, 10], [8, 10], [3, 9], [10, 9], [11, 7], [9, 7], [2, 5], [4, 3], [3, 2]]}
+{"idx": 158, "solved": true, "path_length": 9, "nodes_explored": 2286, "time": 0.11335492134094238, "path": [[5, 13], [5, 13], [3, 11], [2, 8], [7, 8], [0, 5], [9, 5], [1, 3], [2, 2]]}
+{"idx": 159, "solved": true, "path_length": 11, "nodes_explored": 2566, "time": 0.14089393615722656, "path": [[5, 13], [5, 13], [3, 13], [2, 10], [5, 10], [0, 9], [9, 9], [1, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 160, "solved": true, "path_length": 18, "nodes_explored": 6350, "time": 0.3330380916595459, "path": [[8, 13], [10, 13], [7, 13], [0, 14], [5, 14], [4, 12], [10, 12], [8, 12], [9, 12], [1, 13], [10, 13], [0, 7], [3, 6], [3, 5], [3, 4], [3, 3], [5, 3], [3, 2]]}
+{"idx": 161, "solved": true, "path_length": 12, "nodes_explored": 3438, "time": 0.17097902297973633, "path": [[6, 13], [6, 13], [7, 13], [2, 10], [6, 10], [6, 10], [1, 9], [5, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 162, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5174620151519775}
+{"idx": 163, "solved": true, "path_length": 10, "nodes_explored": 2920, "time": 0.1433250904083252, "path": [[5, 13], [5, 13], [0, 10], [8, 8], [10, 8], [3, 7], [9, 7], [1, 4], [2, 3], [2, 2]]}
+{"idx": 164, "solved": true, "path_length": 11, "nodes_explored": 4554, "time": 0.2881050109863281, "path": [[2, 12], [8, 10], [10, 10], [1, 11], [7, 9], [5, 9], [8, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 165, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5165989398956299}
+{"idx": 166, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5265748500823975}
+{"idx": 167, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5096950531005859}
+{"idx": 168, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5133378505706787}
+{"idx": 169, "solved": true, "path_length": 12, "nodes_explored": 6553, "time": 0.3936798572540283, "path": [[1, 17], [7, 15], [8, 15], [10, 15], [0, 8], [3, 7], [3, 6], [3, 5], [3, 4], [3, 3], [5, 3], [3, 2]]}
+{"idx": 170, "solved": true, "path_length": 7, "nodes_explored": 1642, "time": 0.08344388008117676, "path": [[7, 9], [5, 9], [1, 7], [5, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 171, "solved": true, "path_length": 5, "nodes_explored": 1164, "time": 0.058326005935668945, "path": [[1, 9], [7, 7], [5, 5], [0, 4], [5, 2]]}
+{"idx": 172, "solved": true, "path_length": 8, "nodes_explored": 2773, "time": 0.14210295677185059, "path": [[7, 10], [5, 10], [5, 10], [1, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 173, "solved": true, "path_length": 6, "nodes_explored": 982, "time": 0.10904407501220703, "path": [[1, 9], [7, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 174, "solved": true, "path_length": 7, "nodes_explored": 1872, "time": 0.0933527946472168, "path": [[8, 11], [3, 7], [7, 7], [2, 4], [11, 4], [1, 3], [1, 2]]}
+{"idx": 175, "solved": true, "path_length": 6, "nodes_explored": 912, "time": 0.04488492012023926, "path": [[1, 9], [7, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 176, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5419929027557373}
+{"idx": 177, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5142819881439209}
+{"idx": 178, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.50211501121521}
+{"idx": 179, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5065710544586182}
+{"idx": 180, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5507230758666992}
+{"idx": 181, "solved": true, "path_length": 8, "nodes_explored": 1479, "time": 0.07185101509094238, "path": [[1, 11], [7, 9], [9, 9], [3, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 182, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.629157304763794}
+{"idx": 183, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5588948726654053}
+{"idx": 184, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.52376389503479}
+{"idx": 185, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5345137119293213}
+{"idx": 186, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5140848159790039}
+{"idx": 187, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.563525915145874}
+{"idx": 188, "solved": true, "path_length": 18, "nodes_explored": 6983, "time": 0.36234378814697266, "path": [[4, 13], [5, 13], [5, 13], [10, 13], [10, 15], [2, 12], [5, 12], [7, 12], [1, 11], [5, 11], [5, 11], [0, 7], [1, 6], [1, 5], [1, 4], [7, 4], [1, 3], [1, 2]]}
+{"idx": 189, "solved": true, "path_length": 11, "nodes_explored": 3108, "time": 0.1553177833557129, "path": [[4, 13], [5, 13], [5, 13], [1, 9], [9, 9], [2, 8], [5, 8], [0, 7], [8, 5], [3, 3], [0, 2]]}
+{"idx": 190, "solved": true, "path_length": 15, "nodes_explored": 5212, "time": 0.2851090431213379, "path": [[7, 13], [5, 13], [5, 13], [8, 13], [0, 12], [1, 11], [5, 11], [5, 11], [0, 7], [1, 6], [1, 5], [1, 4], [7, 4], [1, 3], [1, 2]]}
+{"idx": 191, "solved": true, "path_length": 19, "nodes_explored": 7694, "time": 0.3943512439727783, "path": [[5, 13], [0, 14], [1, 13], [7, 13], [9, 15], [1, 12], [7, 12], [2, 9], [5, 9], [8, 9], [3, 9], [4, 9], [1, 7], [9, 7], [0, 4], [11, 4], [3, 3], [5, 3], [3, 2]]}
+{"idx": 192, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5531971454620361}
+{"idx": 193, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5679638385772705}
+{"idx": 194, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5931038856506348}
+{"idx": 195, "solved": true, "path_length": 10, "nodes_explored": 2212, "time": 0.11020898818969727, "path": [[10, 13], [0, 12], [7, 12], [6, 10], [8, 10], [1, 7], [5, 5], [5, 5], [0, 3], [3, 2]]}
+{"idx": 196, "solved": true, "path_length": 13, "nodes_explored": 6882, "time": 0.35285091400146484, "path": [[6, 13], [0, 12], [7, 12], [10, 12], [8, 12], [1, 9], [4, 9], [9, 9], [3, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 197, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5303289890289307}
+{"idx": 198, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5406320095062256}
+{"idx": 199, "solved": true, "path_length": 10, "nodes_explored": 2795, "time": 0.14426088333129883, "path": [[1, 13], [7, 11], [9, 11], [9, 11], [3, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 200, "solved": true, "path_length": 13, "nodes_explored": 2775, "time": 0.14312005043029785, "path": [[7, 14], [5, 14], [5, 14], [0, 11], [10, 11], [1, 9], [10, 9], [10, 9], [0, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 201, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.552048921585083}
+{"idx": 202, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6028640270233154}
+{"idx": 203, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5579557418823242}
+{"idx": 204, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5255601406097412}
+{"idx": 205, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.541801929473877}
+{"idx": 206, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5345370769500732}
+{"idx": 207, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5194597244262695}
+{"idx": 208, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5799000263214111}
+{"idx": 209, "solved": true, "path_length": 7, "nodes_explored": 1342, "time": 0.06647205352783203, "path": [[7, 14], [2, 9], [6, 9], [1, 7], [5, 5], [5, 3], [0, 2]]}
+{"idx": 210, "solved": true, "path_length": 21, "nodes_explored": 6474, "time": 0.34928107261657715, "path": [[7, 14], [5, 14], [5, 14], [0, 15], [8, 15], [6, 15], [6, 15], [2, 16], [4, 14], [10, 12], [10, 12], [10, 12], [1, 11], [10, 11], [10, 11], [0, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 211, "solved": true, "path_length": 21, "nodes_explored": 8991, "time": 0.5153951644897461, "path": [[7, 14], [5, 14], [5, 14], [8, 14], [6, 14], [6, 14], [2, 15], [4, 13], [6, 13], [8, 13], [0, 12], [1, 11], [5, 11], [5, 11], [0, 7], [1, 6], [1, 5], [1, 4], [7, 4], [1, 3], [1, 2]]}
+{"idx": 212, "solved": true, "path_length": 18, "nodes_explored": 8288, "time": 0.4547908306121826, "path": [[7, 14], [5, 14], [0, 15], [8, 15], [6, 15], [6, 15], [4, 15], [5, 15], [11, 15], [2, 14], [10, 12], [10, 10], [7, 10], [1, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 213, "solved": true, "path_length": 13, "nodes_explored": 5040, "time": 0.2575528621673584, "path": [[10, 14], [4, 14], [5, 14], [10, 16], [2, 11], [5, 11], [3, 11], [6, 11], [9, 9], [1, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 214, "solved": true, "path_length": 12, "nodes_explored": 4801, "time": 0.2474212646484375, "path": [[6, 14], [4, 14], [5, 14], [10, 16], [1, 11], [6, 9], [2, 7], [8, 7], [0, 5], [10, 3], [0, 3], [1, 2]]}
+{"idx": 215, "solved": true, "path_length": 10, "nodes_explored": 3157, "time": 0.15636777877807617, "path": [[4, 14], [5, 14], [1, 9], [6, 9], [7, 9], [2, 7], [5, 7], [10, 5], [0, 3], [3, 2]]}
+{"idx": 216, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5834009647369385}
+{"idx": 217, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6000020503997803}
+{"idx": 218, "solved": true, "path_length": 12, "nodes_explored": 2930, "time": 0.18217706680297852, "path": [[1, 21], [7, 19], [5, 17], [5, 15], [11, 15], [3, 8], [0, 7], [0, 6], [0, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 219, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5611729621887207}
+{"idx": 220, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5142049789428711}
+{"idx": 221, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5189089775085449}
+{"idx": 222, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5342259407043457}
+{"idx": 223, "solved": true, "path_length": 9, "nodes_explored": 1733, "time": 0.08524799346923828, "path": [[10, 14], [0, 11], [7, 11], [0, 10], [1, 7], [5, 5], [5, 5], [0, 3], [3, 2]]}
+{"idx": 224, "solved": true, "path_length": 11, "nodes_explored": 3794, "time": 0.24758100509643555, "path": [[6, 14], [0, 11], [7, 11], [0, 12], [1, 9], [5, 9], [5, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 225, "solved": true, "path_length": 12, "nodes_explored": 2664, "time": 0.1345970630645752, "path": [[7, 14], [5, 14], [5, 14], [8, 14], [0, 9], [9, 9], [1, 7], [8, 7], [5, 5], [0, 4], [1, 3], [1, 2]]}
+{"idx": 226, "solved": true, "path_length": 8, "nodes_explored": 1288, "time": 0.06245279312133789, "path": [[2, 13], [8, 11], [1, 9], [7, 7], [3, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 227, "solved": true, "path_length": 10, "nodes_explored": 2710, "time": 0.13723993301391602, "path": [[5, 14], [5, 14], [0, 9], [5, 9], [3, 7], [6, 7], [9, 5], [1, 3], [4, 3], [2, 2]]}
+{"idx": 228, "solved": true, "path_length": 15, "nodes_explored": 5806, "time": 0.30315184593200684, "path": [[6, 14], [6, 14], [0, 13], [10, 13], [10, 13], [1, 13], [7, 11], [9, 11], [9, 11], [3, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 229, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5643908977508545}
+{"idx": 230, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5494041442871094}
+{"idx": 231, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.52742600440979}
+{"idx": 232, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5899398326873779}
+{"idx": 233, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.548875093460083}
+{"idx": 234, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5455670356750488}
+{"idx": 235, "solved": true, "path_length": 10, "nodes_explored": 2228, "time": 0.11261105537414551, "path": [[10, 14], [0, 13], [7, 13], [6, 11], [8, 11], [1, 7], [7, 7], [0, 4], [3, 3], [3, 2]]}
+{"idx": 236, "solved": true, "path_length": 13, "nodes_explored": 3473, "time": 0.17925000190734863, "path": [[6, 14], [0, 13], [10, 13], [1, 13], [7, 11], [9, 11], [9, 11], [3, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 237, "solved": true, "path_length": 12, "nodes_explored": 4857, "time": 0.26763200759887695, "path": [[1, 15], [7, 13], [5, 13], [5, 13], [11, 13], [3, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 238, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.567899227142334}
+{"idx": 239, "solved": true, "path_length": 15, "nodes_explored": 3348, "time": 0.17657208442687988, "path": [[7, 15], [5, 15], [5, 15], [10, 15], [0, 12], [10, 12], [1, 11], [10, 11], [10, 11], [0, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 240, "solved": true, "path_length": 9, "nodes_explored": 1934, "time": 0.09910702705383301, "path": [[7, 15], [5, 15], [0, 10], [5, 10], [1, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 241, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6964740753173828}
+{"idx": 242, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5340750217437744}
+{"idx": 243, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5759751796722412}
+{"idx": 244, "solved": true, "path_length": 20, "nodes_explored": 9846, "time": 0.5041899681091309, "path": [[7, 15], [8, 15], [1, 15], [5, 13], [5, 13], [6, 13], [11, 13], [4, 13], [2, 10], [6, 10], [7, 10], [2, 9], [8, 9], [0, 10], [10, 8], [11, 8], [3, 7], [11, 5], [2, 3], [1, 2]]}
+{"idx": 245, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5429723262786865}
+{"idx": 246, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5315768718719482}
+{"idx": 247, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5933632850646973}
+{"idx": 248, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5299549102783203}
+{"idx": 249, "solved": true, "path_length": 9, "nodes_explored": 1995, "time": 0.1038668155670166, "path": [[7, 15], [5, 15], [2, 8], [6, 10], [1, 7], [5, 5], [10, 3], [5, 3], [3, 2]]}
+{"idx": 250, "solved": true, "path_length": 16, "nodes_explored": 6011, "time": 0.30849313735961914, "path": [[6, 15], [4, 15], [1, 13], [6, 13], [7, 11], [6, 11], [6, 11], [9, 11], [2, 10], [10, 10], [0, 7], [5, 7], [0, 4], [3, 3], [5, 3], [3, 2]]}
+{"idx": 251, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5160949230194092}
+{"idx": 252, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6077802181243896}
+{"idx": 253, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6414167881011963}
+{"idx": 254, "solved": true, "path_length": 15, "nodes_explored": 3343, "time": 0.1742842197418213, "path": [[7, 15], [5, 15], [5, 15], [0, 12], [10, 12], [10, 12], [1, 11], [10, 11], [10, 11], [0, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 255, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5776822566986084}
+{"idx": 256, "solved": true, "path_length": 20, "nodes_explored": 7789, "time": 0.41826820373535156, "path": [[7, 15], [5, 15], [0, 14], [5, 14], [10, 14], [11, 14], [4, 14], [6, 14], [2, 13], [7, 13], [10, 11], [10, 11], [1, 9], [10, 9], [10, 9], [0, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 257, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.7009627819061279}
+{"idx": 258, "solved": true, "path_length": 15, "nodes_explored": 3771, "time": 0.19835400581359863, "path": [[7, 15], [0, 14], [8, 14], [6, 14], [5, 14], [5, 14], [6, 14], [2, 15], [4, 13], [10, 11], [1, 7], [10, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 259, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6360907554626465}
+{"idx": 260, "solved": true, "path_length": 11, "nodes_explored": 5858, "time": 0.3240509033203125, "path": [[6, 15], [6, 15], [4, 15], [5, 15], [10, 17], [2, 10], [5, 10], [3, 7], [6, 5], [9, 3], [1, 2]]}
+{"idx": 261, "solved": true, "path_length": 12, "nodes_explored": 4842, "time": 0.31354403495788574, "path": [[10, 15], [4, 15], [5, 15], [2, 10], [5, 10], [5, 10], [7, 10], [1, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 262, "solved": true, "path_length": 11, "nodes_explored": 3253, "time": 0.21476030349731445, "path": [[6, 15], [4, 15], [5, 15], [2, 8], [9, 8], [7, 8], [1, 7], [5, 5], [5, 3], [5, 3], [3, 2]]}
+{"idx": 263, "solved": true, "path_length": 9, "nodes_explored": 3026, "time": 0.16729187965393066, "path": [[4, 15], [2, 8], [5, 8], [5, 8], [5, 8], [3, 7], [9, 5], [9, 3], [1, 2]]}
+{"idx": 264, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6359889507293701}
+{"idx": 265, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6883058547973633}
+{"idx": 266, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5996720790863037}
+{"idx": 267, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6445193290710449}
+{"idx": 268, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6527969837188721}
+{"idx": 269, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5899858474731445}
+{"idx": 270, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7605822086334229}
+{"idx": 271, "solved": true, "path_length": 20, "nodes_explored": 8958, "time": 0.5036671161651611, "path": [[4, 15], [5, 15], [5, 15], [2, 14], [5, 14], [10, 14], [10, 14], [2, 13], [7, 13], [10, 13], [1, 13], [10, 13], [10, 13], [0, 8], [1, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 272, "solved": true, "path_length": 17, "nodes_explored": 5021, "time": 0.29753684997558594, "path": [[7, 15], [5, 15], [5, 15], [8, 15], [0, 14], [1, 15], [5, 15], [5, 15], [0, 9], [1, 8], [1, 7], [1, 6], [1, 5], [1, 4], [7, 4], [1, 3], [1, 2]]}
+{"idx": 273, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5371370315551758}
+{"idx": 274, "solved": true, "path_length": 20, "nodes_explored": 8132, "time": 0.4192349910736084, "path": [[8, 15], [3, 13], [2, 12], [8, 12], [6, 12], [7, 12], [0, 11], [10, 11], [0, 12], [4, 10], [4, 10], [0, 9], [8, 9], [1, 9], [5, 7], [7, 7], [0, 6], [3, 5], [3, 4], [6, 2]]}
+{"idx": 275, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6134378910064697}
+{"idx": 276, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5460331439971924}
+{"idx": 277, "solved": true, "path_length": 9, "nodes_explored": 1815, "time": 0.09531307220458984, "path": [[5, 15], [0, 8], [9, 8], [7, 8], [1, 7], [5, 5], [5, 3], [5, 3], [3, 2]]}
+{"idx": 278, "solved": true, "path_length": 9, "nodes_explored": 1728, "time": 0.08683395385742188, "path": [[6, 15], [0, 10], [10, 10], [1, 9], [7, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 279, "solved": true, "path_length": 12, "nodes_explored": 3517, "time": 0.18024587631225586, "path": [[5, 15], [5, 15], [5, 15], [0, 12], [8, 10], [6, 10], [7, 10], [1, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 280, "solved": true, "path_length": 9, "nodes_explored": 1656, "time": 0.08172798156738281, "path": [[2, 14], [8, 12], [6, 10], [1, 9], [7, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 281, "solved": true, "path_length": 8, "nodes_explored": 1328, "time": 0.06927204132080078, "path": [[5, 15], [5, 15], [0, 8], [5, 8], [3, 7], [9, 5], [9, 3], [1, 2]]}
+{"idx": 282, "solved": true, "path_length": 13, "nodes_explored": 4215, "time": 0.21891093254089355, "path": [[6, 15], [6, 15], [0, 12], [7, 12], [0, 13], [1, 11], [5, 11], [5, 11], [0, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 283, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5376529693603516}
+{"idx": 284, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.617067813873291}
+{"idx": 285, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5341980457305908}
+{"idx": 286, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5640101432800293}
+{"idx": 287, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5478000640869141}
+{"idx": 288, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5443270206451416}
+{"idx": 289, "solved": true, "path_length": 8, "nodes_explored": 1464, "time": 0.07766413688659668, "path": [[5, 15], [5, 15], [5, 15], [0, 8], [3, 7], [9, 5], [9, 3], [1, 2]]}
+{"idx": 290, "solved": true, "path_length": 10, "nodes_explored": 1825, "time": 0.09023499488830566, "path": [[2, 14], [8, 12], [1, 11], [7, 9], [9, 9], [3, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 291, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5252242088317871}
+{"idx": 292, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6590819358825684}
+{"idx": 293, "solved": true, "path_length": 17, "nodes_explored": 6867, "time": 0.36263298988342285, "path": [[5, 15], [0, 14], [5, 14], [5, 14], [8, 14], [3, 13], [2, 13], [9, 13], [9, 13], [0, 11], [9, 11], [9, 11], [1, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 294, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5966300964355469}
+{"idx": 295, "solved": true, "path_length": 9, "nodes_explored": 1963, "time": 0.10052108764648438, "path": [[7, 15], [5, 15], [0, 8], [6, 10], [1, 7], [5, 5], [10, 3], [5, 3], [3, 2]]}
+{"idx": 296, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5264840126037598}
+{"idx": 297, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.5480897426605225}
+{"idx": 298, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6774358749389648}
+{"idx": 299, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5632069110870361}
+{"idx": 300, "solved": true, "path_length": 13, "nodes_explored": 3055, "time": 0.15810799598693848, "path": [[6, 15], [7, 15], [2, 12], [11, 12], [10, 12], [1, 11], [7, 9], [9, 9], [3, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 301, "solved": true, "path_length": 11, "nodes_explored": 2574, "time": 0.13047385215759277, "path": [[5, 15], [5, 15], [0, 10], [9, 10], [9, 10], [1, 9], [7, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 302, "solved": true, "path_length": 17, "nodes_explored": 7760, "time": 0.4283621311187744, "path": [[6, 15], [6, 15], [0, 14], [10, 14], [10, 14], [1, 15], [7, 13], [5, 13], [5, 13], [11, 13], [3, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 303, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5603542327880859}
+{"idx": 304, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6311900615692139}
+{"idx": 305, "solved": true, "path_length": 17, "nodes_explored": 5448, "time": 0.28650593757629395, "path": [[7, 15], [0, 14], [5, 14], [5, 14], [11, 14], [3, 13], [2, 13], [9, 13], [9, 13], [0, 11], [9, 11], [9, 11], [1, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 306, "solved": true, "path_length": 18, "nodes_explored": 8465, "time": 0.565824031829834, "path": [[6, 15], [6, 15], [4, 15], [6, 15], [0, 14], [10, 14], [1, 15], [7, 13], [5, 13], [5, 13], [11, 13], [3, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 307, "solved": true, "path_length": 12, "nodes_explored": 4361, "time": 0.2730998992919922, "path": [[1, 17], [7, 15], [5, 15], [5, 15], [8, 15], [0, 8], [3, 7], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 308, "solved": true, "path_length": 9, "nodes_explored": 6110, "time": 0.320051908493042, "path": [[5, 11], [5, 11], [5, 11], [8, 11], [3, 9], [9, 7], [9, 5], [9, 3], [2, 2]]}
+{"idx": 309, "solved": true, "path_length": 6, "nodes_explored": 1669, "time": 0.08394503593444824, "path": [[1, 11], [7, 9], [5, 7], [5, 5], [0, 4], [5, 2]]}
+{"idx": 310, "solved": true, "path_length": 9, "nodes_explored": 3536, "time": 0.1806168556213379, "path": [[7, 12], [5, 12], [5, 12], [1, 9], [5, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 311, "solved": true, "path_length": 7, "nodes_explored": 1571, "time": 0.08033895492553711, "path": [[1, 11], [7, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 312, "solved": true, "path_length": 14, "nodes_explored": 6578, "time": 0.3335092067718506, "path": [[8, 13], [3, 11], [7, 11], [5, 11], [5, 11], [4, 11], [10, 11], [1, 9], [5, 7], [11, 5], [0, 4], [0, 3], [4, 3], [0, 2]]}
+{"idx": 313, "solved": true, "path_length": 7, "nodes_explored": 1408, "time": 0.07029604911804199, "path": [[1, 11], [7, 9], [0, 6], [5, 4], [7, 4], [3, 3], [3, 2]]}
+{"idx": 314, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.5348961353302002}
+{"idx": 315, "solved": true, "path_length": 8, "nodes_explored": 3288, "time": 0.17421603202819824, "path": [[8, 14], [3, 9], [7, 9], [2, 5], [11, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 316, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6108779907226562}
+{"idx": 317, "solved": true, "path_length": 7, "nodes_explored": 1168, "time": 0.061859130859375, "path": [[1, 11], [7, 9], [3, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 318, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7350058555603027}
+{"idx": 319, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5797328948974609}
+{"idx": 320, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.551074743270874}
+{"idx": 321, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.508364200592041}
+{"idx": 322, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.663701057434082}
+{"idx": 323, "solved": true, "path_length": 15, "nodes_explored": 9382, "time": 0.5887300968170166, "path": [[7, 15], [5, 15], [8, 15], [6, 15], [1, 17], [5, 15], [5, 13], [10, 13], [0, 8], [1, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 324, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5453100204467773}
+{"idx": 325, "solved": true, "path_length": 23, "nodes_explored": 7940, "time": 0.4076967239379883, "path": [[8, 15], [8, 15], [7, 15], [5, 15], [3, 13], [10, 13], [11, 13], [3, 11], [2, 12], [8, 12], [6, 12], [2, 9], [7, 9], [5, 9], [3, 9], [8, 9], [1, 7], [5, 7], [0, 4], [7, 4], [3, 3], [0, 3], [1, 2]]}
+{"idx": 326, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5706920623779297}
+{"idx": 327, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5543661117553711}
+{"idx": 328, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5349597930908203}
+{"idx": 329, "solved": true, "path_length": 9, "nodes_explored": 1941, "time": 0.3269538879394531, "path": [[1, 13], [7, 11], [9, 11], [3, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 330, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9741551876068115}
+{"idx": 331, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6098730564117432}
+{"idx": 332, "solved": false, "path_length": 0, "nodes_explored": 10010, "time": 0.5987739562988281}
+{"idx": 333, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5921421051025391}
+{"idx": 334, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5532529354095459}
+{"idx": 335, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6017360687255859}
+{"idx": 336, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5258519649505615}
+{"idx": 337, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6955339908599854}
+{"idx": 338, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6414639949798584}
+{"idx": 339, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5753500461578369}
+{"idx": 340, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5777442455291748}
+{"idx": 341, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7223610877990723}
+{"idx": 342, "solved": true, "path_length": 12, "nodes_explored": 4150, "time": 0.21843481063842773, "path": [[4, 16], [5, 16], [5, 16], [5, 16], [1, 11], [8, 11], [3, 10], [2, 7], [11, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 343, "solved": true, "path_length": 13, "nodes_explored": 3770, "time": 0.23572683334350586, "path": [[1, 23], [7, 21], [5, 19], [5, 17], [5, 15], [11, 15], [3, 8], [0, 7], [0, 6], [0, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 344, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6190109252929688}
+{"idx": 345, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7513749599456787}
+{"idx": 346, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.554760217666626}
+{"idx": 347, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6981301307678223}
+{"idx": 348, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5921640396118164}
+{"idx": 349, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5463969707489014}
+{"idx": 350, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6953949928283691}
+{"idx": 351, "solved": true, "path_length": 14, "nodes_explored": 3840, "time": 0.19582366943359375, "path": [[10, 16], [0, 15], [1, 13], [6, 11], [1, 13], [7, 11], [0, 10], [1, 7], [4, 7], [1, 4], [6, 4], [2, 3], [6, 3], [2, 2]]}
+{"idx": 352, "solved": true, "path_length": 13, "nodes_explored": 6409, "time": 0.3377349376678467, "path": [[6, 16], [0, 15], [5, 15], [1, 15], [9, 13], [7, 11], [3, 7], [2, 6], [2, 5], [2, 4], [2, 3], [4, 3], [2, 2]]}
+{"idx": 353, "solved": true, "path_length": 20, "nodes_explored": 8620, "time": 0.4485960006713867, "path": [[7, 16], [5, 16], [5, 16], [0, 17], [1, 15], [7, 15], [10, 15], [2, 12], [6, 12], [1, 9], [10, 9], [0, 9], [11, 9], [2, 9], [6, 7], [4, 7], [3, 6], [0, 5], [0, 4], [5, 2]]}
+{"idx": 354, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6063127517700195}
+{"idx": 355, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5967049598693848}
+{"idx": 356, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5965187549591064}
+{"idx": 357, "solved": true, "path_length": 11, "nodes_explored": 3567, "time": 0.18677902221679688, "path": [[1, 15], [7, 13], [9, 13], [9, 13], [3, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 358, "solved": true, "path_length": 17, "nodes_explored": 3988, "time": 0.2212989330291748, "path": [[8, 17], [6, 17], [4, 17], [3, 15], [2, 16], [7, 14], [9, 14], [11, 14], [0, 11], [7, 11], [10, 11], [2, 6], [11, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 359, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5826289653778076}
+{"idx": 360, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8790206909179688}
+{"idx": 361, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6164870262145996}
+{"idx": 362, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5895123481750488}
+{"idx": 363, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5505328178405762}
+{"idx": 364, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5717401504516602}
+{"idx": 365, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6348369121551514}
+{"idx": 366, "solved": true, "path_length": 9, "nodes_explored": 1842, "time": 0.09306001663208008, "path": [[7, 17], [2, 12], [8, 12], [1, 9], [5, 7], [5, 5], [5, 5], [0, 3], [3, 2]]}
+{"idx": 367, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.9776220321655273}
+{"idx": 368, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6313650608062744}
+{"idx": 369, "solved": false, "path_length": 0, "nodes_explored": 7276, "time": 135.94166803359985}
+{"idx": 370, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.612415075302124}
+{"idx": 371, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6006128787994385}
+{"idx": 372, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6602962017059326}
+{"idx": 373, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6153199672698975}
+{"idx": 374, "solved": false, "path_length": 0, "nodes_explored": 7119, "time": 137.42634415626526}
+{"idx": 375, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6692800521850586}
+{"idx": 376, "solved": true, "path_length": 19, "nodes_explored": 8050, "time": 0.49297308921813965, "path": [[7, 17], [5, 17], [8, 17], [6, 17], [5, 17], [6, 17], [6, 17], [5, 17], [1, 15], [11, 13], [0, 10], [4, 10], [5, 10], [2, 9], [6, 9], [3, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 377, "solved": true, "path_length": 16, "nodes_explored": 6142, "time": 0.36438488960266113, "path": [[10, 17], [4, 17], [5, 17], [10, 19], [10, 21], [2, 14], [10, 14], [3, 11], [9, 9], [6, 9], [9, 9], [2, 5], [1, 4], [1, 3], [5, 3], [1, 2]]}
+{"idx": 378, "solved": true, "path_length": 14, "nodes_explored": 8047, "time": 0.4869222640991211, "path": [[5, 17], [5, 17], [5, 17], [6, 17], [7, 19], [1, 11], [0, 12], [6, 12], [2, 9], [10, 7], [10, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 379, "solved": true, "path_length": 11, "nodes_explored": 3453, "time": 0.18209099769592285, "path": [[4, 17], [5, 17], [5, 17], [1, 11], [7, 11], [2, 8], [8, 8], [0, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 380, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7845461368560791}
+{"idx": 381, "solved": true, "path_length": 17, "nodes_explored": 7018, "time": 0.4663989543914795, "path": [[7, 17], [5, 17], [8, 17], [6, 17], [1, 21], [5, 19], [5, 17], [10, 17], [0, 10], [1, 9], [1, 8], [1, 7], [1, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 382, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6203949451446533}
+{"idx": 383, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7164640426635742}
+{"idx": 384, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5832309722900391}
+{"idx": 385, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6357839107513428}
+{"idx": 386, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5664198398590088}
+{"idx": 387, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5457022190093994}
+{"idx": 388, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.6308479309082031}
+{"idx": 389, "solved": true, "path_length": 10, "nodes_explored": 2923, "time": 0.14940309524536133, "path": [[5, 17], [0, 12], [9, 12], [1, 11], [7, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 390, "solved": true, "path_length": 13, "nodes_explored": 4858, "time": 0.2564687728881836, "path": [[6, 17], [0, 14], [5, 14], [1, 13], [9, 11], [7, 9], [0, 5], [5, 5], [3, 4], [0, 5], [1, 3], [6, 3], [2, 2]]}
+{"idx": 391, "solved": true, "path_length": 15, "nodes_explored": 4007, "time": 0.21882390975952148, "path": [[5, 17], [5, 17], [5, 17], [5, 17], [0, 14], [8, 12], [7, 12], [9, 12], [1, 9], [8, 9], [5, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 392, "solved": true, "path_length": 9, "nodes_explored": 1876, "time": 0.09755611419677734, "path": [[1, 15], [7, 13], [0, 10], [8, 8], [3, 7], [3, 6], [3, 5], [3, 4], [8, 2]]}
+{"idx": 393, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5519638061523438}
+{"idx": 394, "solved": true, "path_length": 12, "nodes_explored": 4550, "time": 0.3125119209289551, "path": [[5, 17], [5, 17], [0, 12], [9, 12], [9, 12], [1, 11], [7, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 395, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6527731418609619}
+{"idx": 396, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5826427936553955}
+{"idx": 397, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5305290222167969}
+{"idx": 398, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5753152370452881}
+{"idx": 399, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6966872215270996}
+{"idx": 400, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6186280250549316}
+{"idx": 401, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6823620796203613}
+{"idx": 402, "solved": true, "path_length": 11, "nodes_explored": 2556, "time": 0.13742518424987793, "path": [[10, 17], [0, 16], [7, 16], [6, 14], [8, 14], [1, 9], [7, 9], [0, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 403, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6743602752685547}
+{"idx": 404, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6878042221069336}
+{"idx": 405, "solved": true, "path_length": 13, "nodes_explored": 4302, "time": 0.2491469383239746, "path": [[1, 17], [7, 15], [9, 15], [9, 15], [9, 15], [3, 9], [2, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 406, "solved": true, "path_length": 9, "nodes_explored": 4579, "time": 0.2436537742614746, "path": [[1, 15], [7, 13], [5, 11], [5, 9], [5, 7], [5, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 407, "solved": true, "path_length": 7, "nodes_explored": 2185, "time": 0.1154019832611084, "path": [[1, 13], [7, 11], [5, 9], [5, 7], [5, 5], [0, 4], [5, 2]]}
+{"idx": 408, "solved": true, "path_length": 10, "nodes_explored": 3685, "time": 0.2747178077697754, "path": [[7, 14], [5, 14], [5, 14], [1, 11], [5, 9], [5, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 409, "solved": true, "path_length": 8, "nodes_explored": 2222, "time": 0.11468887329101562, "path": [[1, 13], [7, 11], [5, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 410, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5216357707977295}
+{"idx": 411, "solved": true, "path_length": 8, "nodes_explored": 2001, "time": 0.10318398475646973, "path": [[1, 13], [7, 11], [5, 9], [0, 6], [5, 4], [7, 4], [3, 3], [3, 2]]}
+{"idx": 412, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5414819717407227}
+{"idx": 413, "solved": true, "path_length": 13, "nodes_explored": 8918, "time": 0.48076391220092773, "path": [[8, 16], [3, 13], [7, 13], [1, 16], [5, 14], [5, 12], [5, 10], [5, 8], [0, 7], [0, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 414, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5425417423248291}
+{"idx": 415, "solved": true, "path_length": 8, "nodes_explored": 1557, "time": 0.07889485359191895, "path": [[1, 13], [7, 11], [0, 7], [5, 5], [7, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 416, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6400823593139648}
+{"idx": 417, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5664770603179932}
+{"idx": 418, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5467090606689453}
+{"idx": 419, "solved": true, "path_length": 9, "nodes_explored": 4186, "time": 0.2534139156341553, "path": [[8, 17], [3, 11], [7, 11], [2, 6], [11, 6], [1, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 420, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.567864179611206}
+{"idx": 421, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5369589328765869}
+{"idx": 422, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6577091217041016}
+{"idx": 423, "solved": true, "path_length": 8, "nodes_explored": 1375, "time": 0.07135272026062012, "path": [[1, 13], [7, 11], [3, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 424, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5631611347198486}
+{"idx": 425, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7583858966827393}
+{"idx": 426, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6128237247467041}
+{"idx": 427, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6486959457397461}
+{"idx": 428, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5952858924865723}
+{"idx": 429, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.603046178817749}
+{"idx": 430, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6103672981262207}
+{"idx": 431, "solved": false, "path_length": 0, "nodes_explored": 9424, "time": 139.11309003829956}
+{"idx": 432, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5884861946105957}
+{"idx": 433, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6219120025634766}
+{"idx": 434, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6575109958648682}
+{"idx": 435, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6760411262512207}
+{"idx": 436, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5975017547607422}
+{"idx": 437, "solved": true, "path_length": 10, "nodes_explored": 2427, "time": 0.13980507850646973, "path": [[1, 15], [7, 13], [9, 13], [3, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 438, "solved": false, "path_length": 0, "nodes_explored": 9637, "time": 141.77185106277466}
+{"idx": 439, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.8061449527740479}
+{"idx": 440, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7387011051177979}
+{"idx": 441, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6089200973510742}
+{"idx": 442, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6312382221221924}
+{"idx": 443, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.8641500473022461}
+{"idx": 444, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6091020107269287}
+{"idx": 445, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.8660290241241455}
+{"idx": 446, "solved": true, "path_length": 21, "nodes_explored": 6316, "time": 0.5842740535736084, "path": [[3, 27], [2, 30], [8, 30], [6, 30], [6, 30], [6, 30], [6, 30], [11, 30], [5, 30], [4, 30], [3, 19], [3, 18], [9, 16], [2, 13], [8, 11], [3, 7], [10, 5], [8, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 447, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7764620780944824}
+{"idx": 448, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6401970386505127}
+{"idx": 449, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6378581523895264}
+{"idx": 450, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5796689987182617}
+{"idx": 451, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7426619529724121}
+{"idx": 452, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5735092163085938}
+{"idx": 453, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9117021560668945}
+{"idx": 454, "solved": true, "path_length": 16, "nodes_explored": 5261, "time": 0.3368642330169678, "path": [[10, 19], [0, 18], [1, 15], [6, 13], [7, 13], [0, 11], [1, 8], [4, 6], [5, 6], [3, 5], [5, 5], [3, 4], [0, 5], [1, 3], [6, 3], [2, 2]]}
+{"idx": 455, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6398930549621582}
+{"idx": 456, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6147048473358154}
+{"idx": 457, "solved": true, "path_length": 12, "nodes_explored": 3816, "time": 0.23064184188842773, "path": [[1, 17], [7, 15], [9, 15], [9, 15], [3, 9], [2, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 458, "solved": true, "path_length": 10, "nodes_explored": 6374, "time": 0.392838716506958, "path": [[1, 17], [7, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 459, "solved": true, "path_length": 8, "nodes_explored": 2685, "time": 0.21966814994812012, "path": [[1, 15], [7, 13], [5, 11], [5, 9], [5, 7], [5, 5], [0, 4], [5, 2]]}
+{"idx": 460, "solved": true, "path_length": 11, "nodes_explored": 5227, "time": 0.29760313034057617, "path": [[7, 16], [5, 16], [5, 16], [1, 13], [5, 11], [5, 9], [5, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 461, "solved": true, "path_length": 9, "nodes_explored": 2800, "time": 0.16035819053649902, "path": [[1, 15], [7, 13], [5, 11], [5, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 462, "solved": true, "path_length": 13, "nodes_explored": 5250, "time": 0.30161213874816895, "path": [[7, 17], [5, 17], [5, 17], [5, 17], [1, 13], [5, 11], [5, 9], [8, 9], [3, 7], [0, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 463, "solved": true, "path_length": 9, "nodes_explored": 2680, "time": 0.14859914779663086, "path": [[1, 15], [7, 13], [5, 11], [5, 9], [0, 6], [5, 4], [7, 4], [3, 3], [3, 2]]}
+{"idx": 464, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.587399959564209}
+{"idx": 465, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5684208869934082}
+{"idx": 466, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5840182304382324}
+{"idx": 467, "solved": true, "path_length": 9, "nodes_explored": 2254, "time": 0.13194870948791504, "path": [[1, 15], [7, 13], [5, 11], [0, 7], [5, 5], [7, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 468, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6586668491363525}
+{"idx": 469, "solved": true, "path_length": 9, "nodes_explored": 1859, "time": 0.10860419273376465, "path": [[1, 15], [7, 13], [0, 8], [5, 6], [7, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 470, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 1.0590288639068604}
+{"idx": 471, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.59200119972229}
+{"idx": 472, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6303107738494873}
+{"idx": 473, "solved": true, "path_length": 12, "nodes_explored": 3733, "time": 0.21301674842834473, "path": [[8, 20], [3, 13], [4, 13], [2, 9], [9, 9], [8, 7], [1, 6], [1, 5], [1, 4], [1, 3], [5, 3], [1, 2]]}
+{"idx": 474, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6043350696563721}
+{"idx": 475, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6743810176849365}
+{"idx": 476, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5979070663452148}
+{"idx": 477, "solved": true, "path_length": 9, "nodes_explored": 1647, "time": 0.09772324562072754, "path": [[1, 15], [7, 13], [3, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 478, "solved": false, "path_length": 0, "nodes_explored": 4995, "time": 141.0056459903717}
+{"idx": 479, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5969047546386719}
+{"idx": 480, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6857748031616211}
+{"idx": 481, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 1.011315107345581}
+{"idx": 482, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6248252391815186}
+{"idx": 483, "solved": false, "path_length": 0, "nodes_explored": 10010, "time": 0.5584378242492676}
+{"idx": 484, "solved": false, "path_length": 0, "nodes_explored": 6578, "time": 138.3099148273468}
+{"idx": 485, "solved": false, "path_length": 0, "nodes_explored": 8587, "time": 149.22204995155334}
+{"idx": 486, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.658250093460083}
+{"idx": 487, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7999260425567627}
+{"idx": 488, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6326310634613037}
+{"idx": 489, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7334210872650146}
+{"idx": 490, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.840576171875}
+{"idx": 491, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6086888313293457}
+{"idx": 492, "solved": true, "path_length": 11, "nodes_explored": 2657, "time": 0.1482081413269043, "path": [[1, 17], [7, 15], [9, 15], [3, 9], [2, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 493, "solved": true, "path_length": 11, "nodes_explored": 6370, "time": 0.3689701557159424, "path": [[7, 17], [5, 17], [1, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 494, "solved": true, "path_length": 9, "nodes_explored": 3183, "time": 0.249542236328125, "path": [[1, 17], [7, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [0, 4], [5, 2]]}
+{"idx": 495, "solved": true, "path_length": 12, "nodes_explored": 6375, "time": 0.3591499328613281, "path": [[7, 18], [5, 18], [5, 18], [1, 15], [5, 13], [5, 11], [5, 9], [5, 7], [11, 7], [3, 4], [0, 3], [0, 2]]}
+{"idx": 496, "solved": true, "path_length": 10, "nodes_explored": 3913, "time": 0.22373008728027344, "path": [[1, 17], [7, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 497, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5778203010559082}
+{"idx": 498, "solved": true, "path_length": 10, "nodes_explored": 3300, "time": 0.19313502311706543, "path": [[1, 17], [7, 15], [5, 13], [5, 11], [5, 9], [0, 6], [5, 4], [7, 4], [3, 3], [3, 2]]}
+{"idx": 499, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.561028003692627}
+{"idx": 500, "solved": true, "path_length": 10, "nodes_explored": 2881, "time": 0.19811320304870605, "path": [[1, 17], [7, 15], [5, 13], [5, 11], [0, 7], [5, 5], [7, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 501, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5733380317687988}
+{"idx": 502, "solved": true, "path_length": 10, "nodes_explored": 2572, "time": 0.14714288711547852, "path": [[1, 17], [7, 15], [5, 13], [0, 8], [5, 6], [7, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 503, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.7501308917999268}
+{"idx": 504, "solved": true, "path_length": 14, "nodes_explored": 9710, "time": 0.5516209602355957, "path": [[8, 22], [3, 17], [11, 17], [5, 17], [7, 17], [4, 17], [1, 10], [11, 8], [0, 7], [0, 6], [0, 5], [0, 4], [0, 3], [0, 2]]}
+{"idx": 505, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.592444896697998}
+{"idx": 506, "solved": true, "path_length": 10, "nodes_explored": 2137, "time": 0.11823678016662598, "path": [[1, 17], [7, 15], [0, 9], [5, 7], [7, 7], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 507, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8111720085144043}
+{"idx": 508, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6338350772857666}
+{"idx": 509, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9848780632019043}
+{"idx": 510, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8604111671447754}
+{"idx": 511, "solved": true, "path_length": 13, "nodes_explored": 4243, "time": 0.25061702728271484, "path": [[8, 23], [3, 15], [4, 15], [2, 10], [9, 10], [8, 8], [1, 7], [1, 6], [1, 5], [1, 4], [1, 3], [5, 3], [1, 2]]}
+{"idx": 512, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6981101036071777}
+{"idx": 513, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6105899810791016}
+{"idx": 514, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6021530628204346}
+{"idx": 515, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7222080230712891}
+{"idx": 516, "solved": true, "path_length": 10, "nodes_explored": 1927, "time": 0.13704705238342285, "path": [[1, 17], [7, 15], [3, 9], [2, 8], [2, 7], [2, 6], [2, 5], [2, 4], [2, 3], [2, 2]]}
+{"idx": 517, "solved": true, "path_length": 12, "nodes_explored": 6461, "time": 0.37596821784973145, "path": [[7, 19], [5, 19], [1, 17], [5, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [11, 5], [3, 3], [0, 2]]}
+{"idx": 518, "solved": true, "path_length": 10, "nodes_explored": 3660, "time": 0.22702908515930176, "path": [[1, 19], [7, 17], [5, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [0, 4], [5, 2]]}
+{"idx": 519, "solved": true, "path_length": 14, "nodes_explored": 8039, "time": 0.5152640342712402, "path": [[1, 23], [7, 21], [5, 19], [8, 19], [5, 17], [5, 15], [5, 13], [5, 11], [5, 9], [5, 7], [3, 6], [0, 5], [0, 4], [11, 2]]}
+{"idx": 520, "solved": true, "path_length": 11, "nodes_explored": 4572, "time": 0.26639890670776367, "path": [[1, 19], [7, 17], [5, 15], [5, 13], [5, 11], [5, 9], [5, 7], [5, 5], [3, 4], [2, 3], [2, 2]]}
+{"idx": 521, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5701451301574707}
+{"idx": 522, "solved": true, "path_length": 11, "nodes_explored": 4412, "time": 0.25299525260925293, "path": [[1, 19], [7, 17], [5, 15], [5, 13], [5, 11], [5, 9], [0, 6], [5, 4], [7, 4], [3, 3], [3, 2]]}
+{"idx": 523, "solved": true, "path_length": 12, "nodes_explored": 6607, "time": 0.38649773597717285, "path": [[8, 22], [3, 19], [11, 19], [3, 14], [7, 14], [1, 9], [7, 9], [2, 5], [11, 5], [1, 4], [1, 3], [1, 2]]}
+{"idx": 524, "solved": true, "path_length": 11, "nodes_explored": 4037, "time": 0.2328507900238037, "path": [[1, 19], [7, 17], [5, 15], [5, 13], [5, 11], [0, 7], [5, 5], [7, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 525, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6416959762573242}
+{"idx": 526, "solved": true, "path_length": 11, "nodes_explored": 3242, "time": 0.17364192008972168, "path": [[1, 19], [7, 17], [5, 15], [5, 13], [0, 8], [5, 6], [7, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 527, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6125960350036621}
+{"idx": 528, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5814862251281738}
+{"idx": 529, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6180169582366943}
+{"idx": 530, "solved": true, "path_length": 11, "nodes_explored": 2819, "time": 0.15976500511169434, "path": [[1, 19], [7, 17], [5, 15], [0, 9], [5, 7], [7, 7], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 531, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5817420482635498}
+{"idx": 532, "solved": true, "path_length": 11, "nodes_explored": 2431, "time": 0.22466015815734863, "path": [[1, 19], [7, 17], [0, 10], [5, 8], [7, 8], [3, 7], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2]]}
+{"idx": 533, "solved": false, "path_length": 0, "nodes_explored": 7918, "time": 129.551265001297}
+{"idx": 534, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6859719753265381}
+{"idx": 535, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6508378982543945}
+{"idx": 536, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6687910556793213}
+{"idx": 537, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7069740295410156}
+{"idx": 538, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8492317199707031}
+{"idx": 539, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6989080905914307}
+{"idx": 540, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6979339122772217}
+{"idx": 541, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6749820709228516}
+{"idx": 542, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6946916580200195}
+{"idx": 543, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.7649023532867432}
+{"idx": 544, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7026090621948242}
+{"idx": 545, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.70169997215271}
+{"idx": 546, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6807370185852051}
+{"idx": 547, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.697669267654419}
+{"idx": 548, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6892490386962891}
+{"idx": 549, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7047059535980225}
+{"idx": 550, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.689176082611084}
+{"idx": 551, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6870770454406738}
+{"idx": 552, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6821980476379395}
+{"idx": 553, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.674609899520874}
+{"idx": 554, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7573950290679932}
+{"idx": 555, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6851577758789062}
+{"idx": 556, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6713988780975342}
+{"idx": 557, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6489620208740234}
+{"idx": 558, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6594631671905518}
+{"idx": 559, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6689977645874023}
+{"idx": 560, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.782318115234375}
+{"idx": 561, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6602859497070312}
+{"idx": 562, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7140071392059326}
+{"idx": 563, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6879870891571045}
+{"idx": 564, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7077348232269287}
+{"idx": 565, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6514270305633545}
+{"idx": 566, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5784199237823486}
+{"idx": 567, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6780970096588135}
+{"idx": 568, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6094958782196045}
+{"idx": 569, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.5863082408905029}
+{"idx": 570, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5806047916412354}
+{"idx": 571, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.632439136505127}
+{"idx": 572, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6395249366760254}
+{"idx": 573, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7339110374450684}
+{"idx": 574, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.699577808380127}
+{"idx": 575, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7149081230163574}
+{"idx": 576, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6605079174041748}
+{"idx": 577, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5431828498840332}
+{"idx": 578, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6365118026733398}
+{"idx": 579, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.592695951461792}
+{"idx": 580, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6107819080352783}
+{"idx": 581, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5815470218658447}
+{"idx": 582, "solved": false, "path_length": 0, "nodes_explored": 2308, "time": 128.49375700950623}
+{"idx": 583, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7508070468902588}
+{"idx": 584, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5995268821716309}
+{"idx": 585, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6485371589660645}
+{"idx": 586, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5794439315795898}
+{"idx": 587, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8065059185028076}
+{"idx": 588, "solved": false, "path_length": 0, "nodes_explored": 5965, "time": 134.7479031085968}
+{"idx": 589, "solved": false, "path_length": 0, "nodes_explored": 6953, "time": 138.79284524917603}
+{"idx": 590, "solved": false, "path_length": 0, "nodes_explored": 3021, "time": 130.65415787696838}
+{"idx": 591, "solved": false, "path_length": 0, "nodes_explored": 8742, "time": 134.9849488735199}
+{"idx": 592, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7518599033355713}
+{"idx": 593, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7425711154937744}
+{"idx": 594, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.729172945022583}
+{"idx": 595, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.802851676940918}
+{"idx": 596, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6967349052429199}
+{"idx": 597, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.826927900314331}
+{"idx": 598, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7450869083404541}
+{"idx": 599, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6636028289794922}
+{"idx": 600, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.7409510612487793}
+{"idx": 601, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5872631072998047}
+{"idx": 602, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7396118640899658}
+{"idx": 603, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7712869644165039}
+{"idx": 604, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5941269397735596}
+{"idx": 605, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.617563009262085}
+{"idx": 606, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.8924427032470703}
+{"idx": 607, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7530040740966797}
+{"idx": 608, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.9412150382995605}
+{"idx": 609, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7404849529266357}
+{"idx": 610, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.653900146484375}
+{"idx": 611, "solved": false, "path_length": 0, "nodes_explored": 6920, "time": 134.67470407485962}
+{"idx": 612, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.641294002532959}
+{"idx": 613, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6354529857635498}
+{"idx": 614, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.8058757781982422}
+{"idx": 615, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7336158752441406}
+{"idx": 616, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.8630340099334717}
+{"idx": 617, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.7153627872467041}
+{"idx": 618, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6113889217376709}
+{"idx": 619, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.7420949935913086}
+{"idx": 620, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7555639743804932}
+{"idx": 621, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7817111015319824}
+{"idx": 622, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7759759426116943}
+{"idx": 623, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7400479316711426}
+{"idx": 624, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.73642897605896}
+{"idx": 625, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.698976993560791}
+{"idx": 626, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6903440952301025}
+{"idx": 627, "solved": false, "path_length": 0, "nodes_explored": 7857, "time": 133.32754397392273}
+{"idx": 628, "solved": false, "path_length": 0, "nodes_explored": 7117, "time": 138.1683690547943}
+{"idx": 629, "solved": false, "path_length": 0, "nodes_explored": 7420, "time": 131.74076318740845}
+{"idx": 630, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.843815803527832}
+{"idx": 631, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7761211395263672}
+{"idx": 632, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6946187019348145}
+{"idx": 633, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5897212028503418}
+{"idx": 634, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.886937141418457}
+{"idx": 635, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6727938652038574}
+{"idx": 636, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6919751167297363}
+{"idx": 637, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6052529811859131}
+{"idx": 638, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5958330631256104}
+{"idx": 639, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7014691829681396}
+{"idx": 640, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6023008823394775}
+{"idx": 641, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5924880504608154}
+{"idx": 642, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5544929504394531}
+{"idx": 643, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6231889724731445}
+{"idx": 644, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7858881950378418}
+{"idx": 645, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6204478740692139}
+{"idx": 646, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6115310192108154}
+{"idx": 647, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6003220081329346}
+{"idx": 648, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6216650009155273}
+{"idx": 649, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6638081073760986}
+{"idx": 650, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6888000965118408}
+{"idx": 651, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.9678289890289307}
+{"idx": 652, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7738099098205566}
+{"idx": 653, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7122738361358643}
+{"idx": 654, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7855277061462402}
+{"idx": 655, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6614780426025391}
+{"idx": 656, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7749707698822021}
+{"idx": 657, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5850889682769775}
+{"idx": 658, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5699520111083984}
+{"idx": 659, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5644149780273438}
+{"idx": 660, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7847449779510498}
+{"idx": 661, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9705679416656494}
+{"idx": 662, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.8830549716949463}
+{"idx": 663, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6103949546813965}
+{"idx": 664, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5902690887451172}
+{"idx": 665, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5925230979919434}
+{"idx": 666, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6973962783813477}
+{"idx": 667, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6047558784484863}
+{"idx": 668, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5945241451263428}
+{"idx": 669, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6398830413818359}
+{"idx": 670, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5770077705383301}
+{"idx": 671, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6322219371795654}
+{"idx": 672, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6560032367706299}
+{"idx": 673, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6670138835906982}
+{"idx": 674, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6861088275909424}
+{"idx": 675, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.658764123916626}
+{"idx": 676, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.75614333152771}
+{"idx": 677, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7020940780639648}
+{"idx": 678, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6781580448150635}
+{"idx": 679, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.681657075881958}
+{"idx": 680, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6330471038818359}
+{"idx": 681, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6620070934295654}
+{"idx": 682, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6199259757995605}
+{"idx": 683, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.709259033203125}
+{"idx": 684, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6783652305603027}
+{"idx": 685, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6446850299835205}
+{"idx": 686, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.763638973236084}
+{"idx": 687, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6727449893951416}
+{"idx": 688, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7000999450683594}
+{"idx": 689, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 1.056427001953125}
+{"idx": 690, "solved": false, "path_length": 0, "nodes_explored": 4112, "time": 134.71753597259521}
+{"idx": 691, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.918543815612793}
+{"idx": 692, "solved": false, "path_length": 0, "nodes_explored": 6615, "time": 133.53900814056396}
+{"idx": 693, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6007013320922852}
+{"idx": 694, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 1.1868631839752197}
+{"idx": 695, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5781567096710205}
+{"idx": 696, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6289060115814209}
+{"idx": 697, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6379618644714355}
+{"idx": 698, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6748919486999512}
+{"idx": 699, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.6331360340118408}
+{"idx": 700, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6813061237335205}
+{"idx": 701, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6948971748352051}
+{"idx": 702, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5853581428527832}
+{"idx": 703, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7157268524169922}
+{"idx": 704, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6056540012359619}
+{"idx": 705, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7229349613189697}
+{"idx": 706, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6531457901000977}
+{"idx": 707, "solved": false, "path_length": 0, "nodes_explored": 7747, "time": 135.14941430091858}
+{"idx": 708, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.8552472591400146}
+{"idx": 709, "solved": false, "path_length": 0, "nodes_explored": 8369, "time": 138.43012499809265}
+{"idx": 710, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.9391169548034668}
+{"idx": 711, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 1.126711130142212}
+{"idx": 712, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7749440670013428}
+{"idx": 713, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.8454039096832275}
+{"idx": 714, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.617333173751831}
+{"idx": 715, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5703091621398926}
+{"idx": 716, "solved": false, "path_length": 0, "nodes_explored": 8160, "time": 134.78331899642944}
+{"idx": 717, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6025221347808838}
+{"idx": 718, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6661880016326904}
+{"idx": 719, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5990991592407227}
+{"idx": 720, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6721830368041992}
+{"idx": 721, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6388499736785889}
+{"idx": 722, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.8141651153564453}
+{"idx": 723, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6251320838928223}
+{"idx": 724, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.587285041809082}
+{"idx": 725, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6472570896148682}
+{"idx": 726, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.586143970489502}
+{"idx": 727, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6553471088409424}
+{"idx": 728, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.9016401767730713}
+{"idx": 729, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6364889144897461}
+{"idx": 730, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6795122623443604}
+{"idx": 731, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6305630207061768}
+{"idx": 732, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6206028461456299}
+{"idx": 733, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.8055629730224609}
+{"idx": 734, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7169158458709717}
+{"idx": 735, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7048659324645996}
+{"idx": 736, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6520378589630127}
+{"idx": 737, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7541871070861816}
+{"idx": 738, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6513011455535889}
+{"idx": 739, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.7034399509429932}
+{"idx": 740, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6355280876159668}
+{"idx": 741, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6517910957336426}
+{"idx": 742, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.584191083908081}
+{"idx": 743, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.92594313621521}
+{"idx": 744, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6961441040039062}
+{"idx": 745, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6105649471282959}
+{"idx": 746, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6381149291992188}
+{"idx": 747, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7875609397888184}
+{"idx": 748, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7891659736633301}
+{"idx": 749, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.9561557769775391}
+{"idx": 750, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.828808069229126}
+{"idx": 751, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6367771625518799}
+{"idx": 752, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.7847120761871338}
+{"idx": 753, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6935131549835205}
+{"idx": 754, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7976560592651367}
+{"idx": 755, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.663848876953125}
+{"idx": 756, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5715548992156982}
+{"idx": 757, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.853858232498169}
+{"idx": 758, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6624751091003418}
+{"idx": 759, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5953168869018555}
+{"idx": 760, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6610519886016846}
+{"idx": 761, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6050388813018799}
+{"idx": 762, "solved": false, "path_length": 0, "nodes_explored": 10010, "time": 0.5610129833221436}
+{"idx": 763, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7077789306640625}
+{"idx": 764, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6016209125518799}
+{"idx": 765, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5702831745147705}
+{"idx": 766, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.666093111038208}
+{"idx": 767, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5798099040985107}
+{"idx": 768, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5816140174865723}
+{"idx": 769, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5766704082489014}
+{"idx": 770, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5999143123626709}
+{"idx": 771, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6378757953643799}
+{"idx": 772, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6005280017852783}
+{"idx": 773, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5940659046173096}
+{"idx": 774, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6092028617858887}
+{"idx": 775, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9984250068664551}
+{"idx": 776, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9238409996032715}
+{"idx": 777, "solved": false, "path_length": 0, "nodes_explored": 5323, "time": 141.51483917236328}
+{"idx": 778, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6193280220031738}
+{"idx": 779, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6184771060943604}
+{"idx": 780, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5922460556030273}
+{"idx": 781, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.586235761642456}
+{"idx": 782, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6831581592559814}
+{"idx": 783, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.9968099594116211}
+{"idx": 784, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.8359811305999756}
+{"idx": 785, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.88370680809021}
+{"idx": 786, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6577680110931396}
+{"idx": 787, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5957708358764648}
+{"idx": 788, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.1028480529785156}
+{"idx": 789, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.8223590850830078}
+{"idx": 790, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6557209491729736}
+{"idx": 791, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5964639186859131}
+{"idx": 792, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6045479774475098}
+{"idx": 793, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6728498935699463}
+{"idx": 794, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6011960506439209}
+{"idx": 795, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5982489585876465}
+{"idx": 796, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5957498550415039}
+{"idx": 797, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.60502028465271}
+{"idx": 798, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5963551998138428}
+{"idx": 799, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.646028995513916}
+{"idx": 800, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6360652446746826}
+{"idx": 801, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5967700481414795}
+{"idx": 802, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6030452251434326}
+{"idx": 803, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6404039859771729}
+{"idx": 804, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7292327880859375}
+{"idx": 805, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6298260688781738}
+{"idx": 806, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6597707271575928}
+{"idx": 807, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6660428047180176}
+{"idx": 808, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6789262294769287}
+{"idx": 809, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6911699771881104}
+{"idx": 810, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7153940200805664}
+{"idx": 811, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6415979862213135}
+{"idx": 812, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6436221599578857}
+{"idx": 813, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6828141212463379}
+{"idx": 814, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.7267210483551025}
+{"idx": 815, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.7625038623809814}
+{"idx": 816, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6390700340270996}
+{"idx": 817, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.635793924331665}
+{"idx": 818, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6020679473876953}
+{"idx": 819, "solved": false, "path_length": 0, "nodes_explored": 9626, "time": 142.78984332084656}
+{"idx": 820, "solved": false, "path_length": 0, "nodes_explored": 5109, "time": 138.63470005989075}
+{"idx": 821, "solved": false, "path_length": 0, "nodes_explored": 3598, "time": 140.4545910358429}
+{"idx": 822, "solved": false, "path_length": 0, "nodes_explored": 7111, "time": 139.9194619655609}
+{"idx": 823, "solved": false, "path_length": 0, "nodes_explored": 5895, "time": 142.48861384391785}
+{"idx": 824, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6266231536865234}
+{"idx": 825, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6407029628753662}
+{"idx": 826, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6288931369781494}
+{"idx": 827, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 1.067331075668335}
+{"idx": 828, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6887259483337402}
+{"idx": 829, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6532196998596191}
+{"idx": 830, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6767911911010742}
+{"idx": 831, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5884640216827393}
+{"idx": 832, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6340060234069824}
+{"idx": 833, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6790909767150879}
+{"idx": 834, "solved": false, "path_length": 0, "nodes_explored": 4593, "time": 136.85234117507935}
+{"idx": 835, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 1.0966510772705078}
+{"idx": 836, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0138509273529053}
+{"idx": 837, "solved": false, "path_length": 0, "nodes_explored": 3603, "time": 137.50996780395508}
+{"idx": 838, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.868229866027832}
+{"idx": 839, "solved": false, "path_length": 0, "nodes_explored": 3814, "time": 141.06905007362366}
+{"idx": 840, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7234020233154297}
+{"idx": 841, "solved": false, "path_length": 0, "nodes_explored": 6760, "time": 141.0233280658722}
+{"idx": 842, "solved": false, "path_length": 0, "nodes_explored": 8624, "time": 151.65243124961853}
+{"idx": 843, "solved": false, "path_length": 0, "nodes_explored": 7222, "time": 139.16825222969055}
+{"idx": 844, "solved": false, "path_length": 0, "nodes_explored": 6108, "time": 138.65665006637573}
+{"idx": 845, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.8640220165252686}
+{"idx": 846, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.8112177848815918}
+{"idx": 847, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0080668926239014}
+{"idx": 848, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.9907341003417969}
+{"idx": 849, "solved": false, "path_length": 0, "nodes_explored": 8271, "time": 140.42505598068237}
+{"idx": 850, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8569450378417969}
+{"idx": 851, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0895428657531738}
+{"idx": 852, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6011741161346436}
+{"idx": 853, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.8433692455291748}
+{"idx": 854, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6248338222503662}
+{"idx": 855, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6220180988311768}
+{"idx": 856, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6315619945526123}
+{"idx": 857, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7067210674285889}
+{"idx": 858, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.627244234085083}
+{"idx": 859, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6321251392364502}
+{"idx": 860, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5882878303527832}
+{"idx": 861, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7108206748962402}
+{"idx": 862, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6160881519317627}
+{"idx": 863, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6911630630493164}
+{"idx": 864, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6107578277587891}
+{"idx": 865, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6141009330749512}
+{"idx": 866, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6101119518280029}
+{"idx": 867, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6565232276916504}
+{"idx": 868, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.672874927520752}
+{"idx": 869, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6446681022644043}
+{"idx": 870, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6227128505706787}
+{"idx": 871, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6187539100646973}
+{"idx": 872, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0305793285369873}
+{"idx": 873, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7168850898742676}
+{"idx": 874, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6231288909912109}
+{"idx": 875, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6217119693756104}
+{"idx": 876, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.5584409236907959}
+{"idx": 877, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7817180156707764}
+{"idx": 878, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.5958588123321533}
+{"idx": 879, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.7686409950256348}
+{"idx": 880, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6309120655059814}
+{"idx": 881, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.646547794342041}
+{"idx": 882, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.7101330757141113}
+{"idx": 883, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6967418193817139}
+{"idx": 884, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7388138771057129}
+{"idx": 885, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.7691819667816162}
+{"idx": 886, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.672313928604126}
+{"idx": 887, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7307720184326172}
+{"idx": 888, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.642136812210083}
+{"idx": 889, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6963350772857666}
+{"idx": 890, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6562502384185791}
+{"idx": 891, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6020421981811523}
+{"idx": 892, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.573948860168457}
+{"idx": 893, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.5838088989257812}
+{"idx": 894, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5960402488708496}
+{"idx": 895, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6896467208862305}
+{"idx": 896, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6027908325195312}
+{"idx": 897, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6116683483123779}
+{"idx": 898, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.572023868560791}
+{"idx": 899, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6050801277160645}
+{"idx": 900, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.617905855178833}
+{"idx": 901, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6894471645355225}
+{"idx": 902, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5972788333892822}
+{"idx": 903, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5838301181793213}
+{"idx": 904, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5937449932098389}
+{"idx": 905, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5750701427459717}
+{"idx": 906, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6038510799407959}
+{"idx": 907, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6848697662353516}
+{"idx": 908, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6288971900939941}
+{"idx": 909, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5986208915710449}
+{"idx": 910, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6192440986633301}
+{"idx": 911, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5832011699676514}
+{"idx": 912, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0360522270202637}
+{"idx": 913, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.9659268856048584}
+{"idx": 914, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6368520259857178}
+{"idx": 915, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9529130458831787}
+{"idx": 916, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6063969135284424}
+{"idx": 917, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.9626848697662354}
+{"idx": 918, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.60784912109375}
+{"idx": 919, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5948519706726074}
+{"idx": 920, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5844981670379639}
+{"idx": 921, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5916748046875}
+{"idx": 922, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.8720519542694092}
+{"idx": 923, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0077159404754639}
+{"idx": 924, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6101870536804199}
+{"idx": 925, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.7649710178375244}
+{"idx": 926, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6109356880187988}
+{"idx": 927, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.8947887420654297}
+{"idx": 928, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.8459939956665039}
+{"idx": 929, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7831029891967773}
+{"idx": 930, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5960509777069092}
+{"idx": 931, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.7357082366943359}
+{"idx": 932, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6029880046844482}
+{"idx": 933, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6128890514373779}
+{"idx": 934, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6879878044128418}
+{"idx": 935, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5977060794830322}
+{"idx": 936, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6438660621643066}
+{"idx": 937, "solved": false, "path_length": 0, "nodes_explored": 8280, "time": 141.78645086288452}
+{"idx": 938, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5929651260375977}
+{"idx": 939, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6800930500030518}
+{"idx": 940, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6294269561767578}
+{"idx": 941, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6064271926879883}
+{"idx": 942, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5817112922668457}
+{"idx": 943, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6042652130126953}
+{"idx": 944, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5982110500335693}
+{"idx": 945, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6799678802490234}
+{"idx": 946, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6088757514953613}
+{"idx": 947, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5979528427124023}
+{"idx": 948, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6055002212524414}
+{"idx": 949, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6253259181976318}
+{"idx": 950, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6891751289367676}
+{"idx": 951, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.60080885887146}
+{"idx": 952, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6190268993377686}
+{"idx": 953, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.602349042892456}
+{"idx": 954, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6130340099334717}
+{"idx": 955, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6155998706817627}
+{"idx": 956, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.695878267288208}
+{"idx": 957, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.5853397846221924}
+{"idx": 958, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6150119304656982}
+{"idx": 959, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.61173415184021}
+{"idx": 960, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0447869300842285}
+{"idx": 961, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.1244406700134277}
+{"idx": 962, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.9452760219573975}
+{"idx": 963, "solved": false, "path_length": 0, "nodes_explored": 5271, "time": 143.587082862854}
+{"idx": 964, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.675457239151001}
+{"idx": 965, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 1.0959200859069824}
+{"idx": 966, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6330370903015137}
+{"idx": 967, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.697782039642334}
+{"idx": 968, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5886240005493164}
+{"idx": 969, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.9592568874359131}
+{"idx": 970, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6243369579315186}
+{"idx": 971, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7727859020233154}
+{"idx": 972, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6411890983581543}
+{"idx": 973, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.6907162666320801}
+{"idx": 974, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6172630786895752}
+{"idx": 975, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5870931148529053}
+{"idx": 976, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6240801811218262}
+{"idx": 977, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6184709072113037}
+{"idx": 978, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 1.0942518711090088}
+{"idx": 979, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 1.0326879024505615}
+{"idx": 980, "solved": false, "path_length": 0, "nodes_explored": 9247, "time": 142.22028970718384}
+{"idx": 981, "solved": false, "path_length": 0, "nodes_explored": 5295, "time": 143.24118494987488}
+{"idx": 982, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6658711433410645}
+{"idx": 983, "solved": false, "path_length": 0, "nodes_explored": 6396, "time": 143.98736596107483}
+{"idx": 984, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6876258850097656}
+{"idx": 985, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5852980613708496}
+{"idx": 986, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 1.0430071353912354}
+{"idx": 987, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.9904880523681641}
+{"idx": 988, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.9923372268676758}
+{"idx": 989, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.9922559261322021}
+{"idx": 990, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 1.0144412517547607}
+{"idx": 991, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9233188629150391}
+{"idx": 992, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.919802188873291}
+{"idx": 993, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.9190690517425537}
+{"idx": 994, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 1.0931239128112793}
+{"idx": 995, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6163172721862793}
+{"idx": 996, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.8072750568389893}
+{"idx": 997, "solved": false, "path_length": 0, "nodes_explored": 10008, "time": 0.6110489368438721}
+{"idx": 998, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6030511856079102}
+{"idx": 999, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.614630937576294}
+{"idx": 1000, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7058100700378418}
+{"idx": 1001, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6095271110534668}
+{"idx": 1002, "solved": false, "path_length": 0, "nodes_explored": 7169, "time": 139.51548290252686}
+{"idx": 1003, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6208128929138184}
+{"idx": 1004, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6175761222839355}
+{"idx": 1005, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.694831132888794}
+{"idx": 1006, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6190369129180908}
+{"idx": 1007, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6377060413360596}
+{"idx": 1008, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.7335999011993408}
+{"idx": 1009, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5972580909729004}
+{"idx": 1010, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6297929286956787}
+{"idx": 1011, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.7179241180419922}
+{"idx": 1012, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6166021823883057}
+{"idx": 1013, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6273539066314697}
+{"idx": 1014, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5873842239379883}
+{"idx": 1015, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6250448226928711}
+{"idx": 1016, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.9968628883361816}
+{"idx": 1017, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.6557519435882568}
+{"idx": 1018, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.633267879486084}
+{"idx": 1019, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6155462265014648}
+{"idx": 1020, "solved": false, "path_length": 0, "nodes_explored": 6469, "time": 143.88500666618347}
+{"idx": 1021, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6697180271148682}
+{"idx": 1022, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.7020182609558105}
+{"idx": 1023, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6187379360198975}
+{"idx": 1024, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6128191947937012}
+{"idx": 1025, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.9602527618408203}
+{"idx": 1026, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6393332481384277}
+{"idx": 1027, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6280231475830078}
+{"idx": 1028, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.7298519611358643}
+{"idx": 1029, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6352930068969727}
+{"idx": 1030, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.7108631134033203}
+{"idx": 1031, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6171181201934814}
+{"idx": 1032, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6125850677490234}
+{"idx": 1033, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.71173095703125}
+{"idx": 1034, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.6353359222412109}
+{"idx": 1035, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6322710514068604}
+{"idx": 1036, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6095528602600098}
+{"idx": 1037, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.5826919078826904}
+{"idx": 1038, "solved": false, "path_length": 0, "nodes_explored": 10009, "time": 0.601921796798706}
+{"idx": 1039, "solved": false, "path_length": 0, "nodes_explored": 10006, "time": 0.6741259098052979}
+{"idx": 1040, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6054449081420898}
+{"idx": 1041, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6473937034606934}
+{"idx": 1042, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6275167465209961}
+{"idx": 1043, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5816488265991211}
+{"idx": 1044, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.592609167098999}
+{"idx": 1045, "solved": false, "path_length": 0, "nodes_explored": 10004, "time": 0.6772177219390869}
+{"idx": 1046, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.607778787612915}
+{"idx": 1047, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.6320130825042725}
+{"idx": 1048, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.6010658740997314}
+{"idx": 1049, "solved": false, "path_length": 0, "nodes_explored": 10010, "time": 0.6083900928497314}
+{"idx": 1050, "solved": false, "path_length": 0, "nodes_explored": 10001, "time": 0.6559112071990967}
+{"idx": 1051, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5996806621551514}
+{"idx": 1052, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.5963382720947266}
+{"idx": 1053, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.5959000587463379}
+{"idx": 1054, "solved": false, "path_length": 0, "nodes_explored": 10000, "time": 0.5983259677886963}
+{"idx": 1055, "solved": false, "path_length": 0, "nodes_explored": 10002, "time": 0.5913903713226318}
+{"idx": 1056, "solved": false, "path_length": 0, "nodes_explored": 10007, "time": 0.6903090476989746}
+{"idx": 1057, "solved": false, "path_length": 0, "nodes_explored": 10005, "time": 0.5882539749145508}
+{"idx": 1058, "solved": false, "path_length": 0, "nodes_explored": 10003, "time": 0.6007139682769775}

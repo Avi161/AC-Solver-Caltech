@@ -1,0 +1,19 @@
+{
+  "v_guided": {
+    "algorithm": "v_guided",
+    "solved": 279,
+    "total": 1190,
+    "newly_solved": 0,
+    "avg_path_length": 14.35125448028674,
+    "max_path_length": 36,
+    "total_time": 29.38017201423645,
+    "config": {
+      "device": "cpu",
+      "architecture": "mlp",
+      "max_nodes": 1000,
+      "beam_width": 50,
+      "c_explore": 1.41,
+      "cyclically_reduce": false
+    }
+  }
+}
