@@ -160,7 +160,7 @@ def write_jsonl_line(fh, record):
 # Algorithm runners
 # ---------------------------------------------------------------------------
 
-def run_greedy(presentations, max_nodes, progress_fh=None):
+def run_greedy(presentations, max_nodes, progress_fh=None, original_indices=None):
     """Run paper's length-based greedy search."""
     results = []
     solved_count = 0
@@ -171,7 +171,7 @@ def run_greedy(presentations, max_nodes, progress_fh=None):
         elapsed = time.time() - t0
         path_len = len(path) - 1 if solved and path else 0  # remove sentinel
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': path_len, 'time': elapsed,
         }
         if solved and path:
@@ -191,7 +191,7 @@ def run_greedy(presentations, max_nodes, progress_fh=None):
     return results
 
 
-def run_bfs_search(presentations, max_nodes, progress_fh=None):
+def run_bfs_search(presentations, max_nodes, progress_fh=None, original_indices=None):
     """Run paper's BFS search."""
     results = []
     solved_count = 0
@@ -203,7 +203,7 @@ def run_bfs_search(presentations, max_nodes, progress_fh=None):
         # BFS path includes sentinel (-1, initial_length) at index 0 when solved
         path_len = len(path) - 1 if solved and path else 0
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': path_len, 'time': elapsed,
         }
         if solved and path:
@@ -225,7 +225,7 @@ def run_bfs_search(presentations, max_nodes, progress_fh=None):
 
 def run_vguided(presentations, model, architecture, feat_mean, feat_std,
                 max_nodes, device, solution_cache=None, progress_fh=None,
-                cyclically_reduce=False):
+                cyclically_reduce=False, original_indices=None, time_limit=None):
     """Run our V-guided greedy search."""
     results = []
     solved_count = 0
@@ -239,6 +239,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             max_nodes_to_explore=max_nodes, device=device,
             cyclically_reduce_after_moves=cyclically_reduce,
             solution_cache=solution_cache,
+            time_limit=time_limit,
         )
         elapsed = time.time() - t0
 
@@ -249,7 +250,7 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             expanded_path = path
 
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': len(expanded_path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
@@ -269,18 +270,18 @@ def run_vguided(presentations, model, architecture, feat_mean, feat_std,
             write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
-        if (i + 1) % 100 == 0:
-            total_elapsed = time.time() - t_start
-            cache_str = f", cache_hits={cache_hits}" if solution_cache is not None else ""
-            print(f"    V-Greedy: {i+1}/{len(presentations)}, "
-                  f"solved={solved_count}{cache_str}, "
-                  f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
+        orig_idx = original_indices[i] if original_indices is not None else i
+        status = f"SOLVED path={result['path_length']}" if solved else "unsolved"
+        total_elapsed = time.time() - t_start
+        print(f"  [idx={orig_idx}] {status}, nodes={stats['nodes_explored']}, "
+              f"t={elapsed:.1f}s | {i+1}/{len(presentations)} solved={solved_count} "
+              f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
     return results
 
 
 def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
                     beam_width, max_nodes, device, solution_cache=None,
-                    progress_fh=None):
+                    progress_fh=None, original_indices=None, time_limit=None):
     """Run our beam search."""
     results = []
     solved_count = 0
@@ -293,10 +294,11 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             feat_mean=feat_mean, feat_std=feat_std,
             beam_width=beam_width, max_nodes_to_explore=max_nodes, device=device,
             solution_cache=solution_cache,
+            time_limit=time_limit,
         )
         elapsed = time.time() - t0
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
@@ -312,18 +314,18 @@ def run_beam_search(presentations, model, architecture, feat_mean, feat_std,
             write_jsonl_line(progress_fh, result)
         if solved:
             solved_count += 1
-        if (i + 1) % 100 == 0:
-            total_elapsed = time.time() - t_start
-            cache_str = f", cache_hits={cache_hits}" if solution_cache is not None else ""
-            print(f"    Beam(k={beam_width}): {i+1}/{len(presentations)}, "
-                  f"solved={solved_count}{cache_str}, "
-                  f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
+        orig_idx = original_indices[i] if original_indices is not None else i
+        status = f"SOLVED path={result['path_length']}" if solved else "unsolved"
+        total_elapsed = time.time() - t_start
+        print(f"  [idx={orig_idx}] {status}, nodes={stats['nodes_explored']}, "
+              f"t={elapsed:.1f}s | {i+1}/{len(presentations)} solved={solved_count} "
+              f"ETA {eta_str(total_elapsed, i+1, len(presentations))}")
     return results
 
 
 def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
                     max_nodes, c_explore, device, solution_cache=None,
-                    progress_fh=None):
+                    progress_fh=None, original_indices=None, time_limit=None):
     """Run our MCTS search."""
     results = []
     solved_count = 0
@@ -335,10 +337,11 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
             feat_mean=feat_mean, feat_std=feat_std,
             max_nodes_to_explore=max_nodes, c_explore=c_explore, device=device,
             solution_cache=solution_cache,
+            time_limit=time_limit,
         )
         elapsed = time.time() - t0
         result = {
-            'idx': i, 'solved': solved,
+            'idx': original_indices[i] if original_indices is not None else i, 'solved': solved,
             'path_length': len(path) if solved else 0,
             'nodes_explored': stats['nodes_explored'],
             'time': elapsed,
@@ -364,6 +367,31 @@ def run_mcts_search(presentations, model, architecture, feat_mean, feat_std,
 # ---------------------------------------------------------------------------
 # Metrics & display
 # ---------------------------------------------------------------------------
+
+def count_completed_in_jsonl(path):
+    """Count valid completed entries in an existing progress JSONL file."""
+    if not os.path.exists(path):
+        return 0
+    count = 0
+    with open(path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                json.loads(line)
+                count += 1
+            except json.JSONDecodeError:
+                pass  # Partial line from interrupted write
+    return count
+
+
+def remap_indices(results, original_indices):
+    """Remap result idx fields to original presentation indices."""
+    for r in results:
+        r['idx'] = original_indices[r['idx']]
+    return results
+
 
 def compute_metrics(results):
     """Compute aggregate metrics."""
@@ -480,23 +508,42 @@ def main():
                         help='Path to config YAML')
     parser.add_argument('--max-nodes', type=int, default=None,
                         help='Override max_nodes for ALL algorithms (quick test)')
+    parser.add_argument('--only-unsolved', action='store_true',
+                        help='Skip presentations already in solution cache')
+    parser.add_argument('--checkpoint', type=str, default=None,
+                        help='Override model checkpoint path (e.g. for retrained models)')
+    parser.add_argument('--indices', type=str, default=None,
+                        help='Path to file listing presentation indices to run (one per line)')
+    parser.add_argument('--resume-dir', type=str, default=None,
+                        help='Resume from existing results dir (skip already-processed presentations)')
     args = parser.parse_args()
 
     # Load config
     cfg = load_config(args.config)
 
-    # Apply CLI override
+    # Apply CLI overrides
     if args.max_nodes is not None:
         print(f"[CLI override] max_nodes = {args.max_nodes} for all algorithms")
         for algo_cfg in cfg['algorithms'].values():
             algo_cfg['max_nodes'] = args.max_nodes
+    if args.checkpoint is not None:
+        print(f"[CLI override] checkpoint = {args.checkpoint}")
+        cfg['model']['checkpoint'] = args.checkpoint
 
     # Resolve device
     device = get_device(cfg['device'])
 
-    # Create output directory with timestamp
-    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    output_dir = os.path.join(PROJECT_ROOT, cfg['output_dir'], timestamp)
+    # Create output directory (or reuse on resume)
+    # CLI --resume-dir overrides config resume_dir
+    resume_dir = args.resume_dir or cfg.get('resume_dir', '')
+    if resume_dir:
+        output_dir = resume_dir
+        if not os.path.isabs(output_dir):
+            output_dir = os.path.join(PROJECT_ROOT, output_dir)
+        timestamp = os.path.basename(output_dir)
+    else:
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        output_dir = os.path.join(PROJECT_ROOT, cfg['output_dir'], timestamp)
     os.makedirs(output_dir, exist_ok=True)
 
     # Save config copy
@@ -517,6 +564,8 @@ def main():
     print(f"  Device:     {device}")
     print(f"  Config:     {args.config}")
     print(f"  Output:     {output_dir}")
+    if resume_dir:
+        print(f"  Resume:     YES (continuing from existing progress)")
     print(f"  Cache:      {cache_path}")
     print(f"  Started:    {timestamp}")
     print("=" * 60)
@@ -574,7 +623,29 @@ def main():
     # Loaded from disk if available (persists across runs).
     solution_cache = load_solution_cache(cache_path)
     if not cache_path:
-        solution_cache = None  # Disable cache entirely when path 
+        solution_cache = None  # Disable cache entirely when path is empty
+
+    # Filter to unsolved presentations only (if requested)
+    original_indices = list(range(len(presentations)))
+    if args.only_unsolved and solution_cache:
+        unsolved = []
+        unsolved_indices = []
+        for i, pres in enumerate(presentations):
+            if tuple(pres) not in solution_cache:
+                unsolved.append(pres)
+                unsolved_indices.append(i)
+        print(f"\n  --only-unsolved: {len(presentations) - len(unsolved)} already solved, "
+              f"running on {len(unsolved)} unsolved")
+        presentations = unsolved
+        original_indices = unsolved_indices
+
+    if args.indices is not None:
+        with open(args.indices, 'r') as f:
+            selected_indices = [int(line.strip()) for line in f if line.strip()]
+        selected = [presentations[i] for i in selected_indices if i < len(presentations)]
+        print(f"\n  --indices: running on {len(selected)}/{len(presentations)} presentations")
+        original_indices = [original_indices[i] for i in selected_indices if i < len(presentations)]
+        presentations = selected
 
     # Register emergency save on Ctrl+C / SIGTERM so cache is never lost
     def _emergency_save(signum, frame):
@@ -595,17 +666,27 @@ def main():
         print(f"  [1] GREEDY (paper baseline) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'greedy_progress.jsonl')
-        with open(progress_path, 'w') as pfh:
-            results = run_greedy(presentations, max_n, progress_fh=pfh)
-        metrics = compute_metrics(results)
-        name = f"Greedy (paper, {max_n//1000}K)"
-        all_metrics[name] = metrics
-        all_details['greedy'] = results
-        print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
-              f"in {fmt_time(metrics['total_time'])}")
-        if cfg['save_incremental']:
-            save_results(output_dir, all_metrics, all_details, cfg)
-            print(f"  [saved incrementally]")
+        skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
+        if skip >= len(presentations):
+            print(f"  Already complete ({skip} entries). Skipping.")
+        else:
+            if skip > 0:
+                print(f"  Resuming: skipping {skip} already processed")
+            algo_pres = presentations[skip:]
+            algo_idx = original_indices[skip:]
+            with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
+                results = run_greedy(algo_pres, max_n, progress_fh=pfh,
+                                     original_indices=algo_idx)
+            remap_indices(results, algo_idx)
+            metrics = compute_metrics(results)
+            name = f"Greedy (paper, {max_n//1000}K)"
+            all_metrics[name] = metrics
+            all_details['greedy'] = results
+            print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
+                  f"in {fmt_time(metrics['total_time'])}")
+            if cfg['save_incremental']:
+                save_results(output_dir, all_metrics, all_details, cfg)
+                print(f"  [saved incrementally]")
 
     # ---- 2. BFS (paper baseline) ----
     if algos['bfs']['enabled']:
@@ -614,104 +695,154 @@ def main():
         print(f"  [2] BFS (paper baseline) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'bfs_progress.jsonl')
-        with open(progress_path, 'w') as pfh:
-            results = run_bfs_search(presentations, max_n, progress_fh=pfh)
-        metrics = compute_metrics(results)
-        name = f"BFS (paper, {max_n//1000}K)"
-        all_metrics[name] = metrics
-        all_details['bfs'] = results
-        print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
-              f"in {fmt_time(metrics['total_time'])}")
-        if cfg['save_incremental']:
-            save_results(output_dir, all_metrics, all_details, cfg)
-            print(f"  [saved incrementally]")
+        skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
+        if skip >= len(presentations):
+            print(f"  Already complete ({skip} entries). Skipping.")
+        else:
+            if skip > 0:
+                print(f"  Resuming: skipping {skip} already processed")
+            algo_pres = presentations[skip:]
+            algo_idx = original_indices[skip:]
+            with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
+                results = run_bfs_search(algo_pres, max_n, progress_fh=pfh,
+                                         original_indices=algo_idx)
+            remap_indices(results, algo_idx)
+            metrics = compute_metrics(results)
+            name = f"BFS (paper, {max_n//1000}K)"
+            all_metrics[name] = metrics
+            all_details['bfs'] = results
+            print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
+                  f"in {fmt_time(metrics['total_time'])}")
+            if cfg['save_incremental']:
+                save_results(output_dir, all_metrics, all_details, cfg)
+                print(f"  [saved incrementally]")
 
     # ---- 3. V-guided Greedy (ours) ----
     if algos['v_guided_greedy']['enabled']:
         max_n = algos['v_guided_greedy']['max_nodes']
         arch = model_cfg['architecture']
         cyc_reduce = algos['v_guided_greedy'].get('cyclically_reduce', False)
+        time_limit = algos['v_guided_greedy'].get('time_limit_per_pres', None)
         cyc_str = " + cyclic reduce" if cyc_reduce else ""
+        tlim_str = f" + {time_limit}s/pres" if time_limit else ""
         print(f"\n{'='*60}")
-        print(f"  [3] V-GUIDED GREEDY (ours, {arch}{cyc_str}) — {max_n:,} nodes")
+        print(f"  [3] V-GUIDED GREEDY (ours, {arch}{cyc_str}{tlim_str}) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'v_guided_greedy_progress.jsonl')
-        with open(progress_path, 'w') as pfh:
-            results = run_vguided(
-                presentations, model, arch, feat_mean, feat_std, max_n, device,
-                solution_cache=solution_cache, progress_fh=pfh,
-                cyclically_reduce=cyc_reduce,
-            )
-        metrics = compute_metrics(results)
-        name = f"V-Greedy (ours, {max_n//1000}K)"
-        all_metrics[name] = metrics
-        all_details['v_guided_greedy'] = results
-        print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
-              f"in {fmt_time(metrics['total_time'])}")
-        # Save cache to disk after V-guided (typically finds most solutions)
-        save_solution_cache(solution_cache, cache_path)
-        print(f"  [cache saved: {len(solution_cache)} entries]")
-        if cfg['save_incremental']:
-            save_results(output_dir, all_metrics, all_details, cfg)
-            print(f"  [saved incrementally]")
+        skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
+        if skip >= len(presentations):
+            print(f"  Already complete ({skip} entries). Skipping.")
+        else:
+            if skip > 0:
+                print(f"  Resuming: skipping {skip} already processed")
+            algo_pres = presentations[skip:]
+            algo_idx = original_indices[skip:]
+            with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
+                results = run_vguided(
+                    algo_pres, model, arch, feat_mean, feat_std, max_n, device,
+                    solution_cache=solution_cache, progress_fh=pfh,
+                    cyclically_reduce=cyc_reduce, original_indices=algo_idx,
+                    time_limit=time_limit,
+                )
+            # remap_indices not needed: run_vguided already sets global indices
+            metrics = compute_metrics(results)
+            name = f"V-Greedy (ours, {max_n//1000}K)"
+            all_metrics[name] = metrics
+            all_details['v_guided_greedy'] = results
+            print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
+                  f"in {fmt_time(metrics['total_time'])}")
+            # Save cache to disk after V-guided (typically finds most solutions)
+            save_solution_cache(solution_cache, cache_path)
+            if solution_cache is not None:
+                print(f"  [cache saved: {len(solution_cache)} entries]")
+            if cfg['save_incremental']:
+                save_results(output_dir, all_metrics, all_details, cfg)
+                print(f"  [saved incrementally]")
 
     # ---- 4. Beam search (ours) ----
     if algos['beam_search']['enabled']:
         max_n = algos['beam_search']['max_nodes']
         arch = model_cfg['architecture']
         beam_widths = algos['beam_search']['beam_widths']
+        beam_time_limit = algos['beam_search'].get('time_limit_per_pres', None)
         for bi, k in enumerate(beam_widths):
+            tlim_str = f" + {beam_time_limit}s/pres" if beam_time_limit else ""
             print(f"\n{'='*60}")
-            print(f"  [4.{bi+1}] BEAM SEARCH k={k} (ours, {arch}) — {max_n:,} nodes")
+            print(f"  [4.{bi+1}] BEAM SEARCH k={k} (ours, {arch}{tlim_str}) — {max_n:,} nodes")
             print(f"{'='*60}")
             progress_path = os.path.join(output_dir, f'beam_k{k}_progress.jsonl')
-            with open(progress_path, 'w') as pfh:
-                results = run_beam_search(
-                    presentations, model, arch, feat_mean, feat_std, k, max_n, device,
-                    solution_cache=solution_cache, progress_fh=pfh,
-                )
-            metrics = compute_metrics(results)
-            name = f"Beam k={k} (ours, {max_n//1000}K)"
-            all_metrics[name] = metrics
-            all_details[f'beam_k{k}'] = results
-            print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
-                  f"in {fmt_time(metrics['total_time'])}")
-            save_solution_cache(solution_cache, cache_path)
-            print(f"  [cache saved: {len(solution_cache)} entries]")
-            if cfg['save_incremental']:
-                save_results(output_dir, all_metrics, all_details, cfg)
-                print(f"  [saved incrementally]")
+            skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
+            if skip >= len(presentations):
+                print(f"  Already complete ({skip} entries). Skipping.")
+            else:
+                if skip > 0:
+                    print(f"  Resuming: skipping {skip} already processed")
+                algo_pres = presentations[skip:]
+                algo_idx = original_indices[skip:]
+                with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
+                    results = run_beam_search(
+                        algo_pres, model, arch, feat_mean, feat_std, k, max_n, device,
+                        solution_cache=solution_cache, progress_fh=pfh,
+                        original_indices=algo_idx, time_limit=beam_time_limit,
+                    )
+                # remap_indices not needed: run_beam_search already sets global indices
+                metrics = compute_metrics(results)
+                name = f"Beam k={k} (ours, {max_n//1000}K)"
+                all_metrics[name] = metrics
+                all_details[f'beam_k{k}'] = results
+                print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
+                      f"in {fmt_time(metrics['total_time'])}")
+                save_solution_cache(solution_cache, cache_path)
+                if solution_cache is not None:
+                    print(f"  [cache saved: {len(solution_cache)} entries]")
+                if cfg['save_incremental']:
+                    save_results(output_dir, all_metrics, all_details, cfg)
+                    print(f"  [saved incrementally]")
 
     # ---- 5. MCTS (ours) ----
     if algos['mcts']['enabled']:
         max_n = algos['mcts']['max_nodes']
         c_exp = algos['mcts']['c_explore']
         arch = model_cfg['architecture']
+        mcts_time_limit = algos['mcts'].get('time_limit_per_pres', None)
+        tlim_str = f" + {mcts_time_limit}s/pres" if mcts_time_limit else ""
         print(f"\n{'='*60}")
-        print(f"  [5] MCTS c={c_exp} (ours, {arch}) — {max_n:,} nodes")
+        print(f"  [5] MCTS c={c_exp} (ours, {arch}{tlim_str}) — {max_n:,} nodes")
         print(f"{'='*60}")
         progress_path = os.path.join(output_dir, 'mcts_progress.jsonl')
-        with open(progress_path, 'w') as pfh:
-            results = run_mcts_search(
-                presentations, model, arch, feat_mean, feat_std, max_n, c_exp, device,
-                solution_cache=solution_cache, progress_fh=pfh,
-            )
-        metrics = compute_metrics(results)
-        name = f"MCTS c={c_exp} (ours, {max_n//1000}K)"
-        all_metrics[name] = metrics
-        all_details['mcts'] = results
-        print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
-              f"in {fmt_time(metrics['total_time'])}")
-        save_solution_cache(solution_cache, cache_path)
-        print(f"  [cache saved: {len(solution_cache)} entries]")
-        if cfg['save_incremental']:
-            save_results(output_dir, all_metrics, all_details, cfg)
-            print(f"  [saved incrementally]")
+        skip = count_completed_in_jsonl(progress_path) if resume_dir else 0
+        if skip >= len(presentations):
+            print(f"  Already complete ({skip} entries). Skipping.")
+        else:
+            if skip > 0:
+                print(f"  Resuming: skipping {skip} already processed")
+            algo_pres = presentations[skip:]
+            algo_idx = original_indices[skip:]
+            with open(progress_path, 'a' if skip > 0 else 'w') as pfh:
+                results = run_mcts_search(
+                    algo_pres, model, arch, feat_mean, feat_std, max_n, c_exp, device,
+                    solution_cache=solution_cache, progress_fh=pfh,
+                    original_indices=algo_idx, time_limit=mcts_time_limit,
+                )
+            remap_indices(results, algo_idx)
+            metrics = compute_metrics(results)
+            name = f"MCTS c={c_exp} (ours, {max_n//1000}K)"
+            all_metrics[name] = metrics
+            all_details['mcts'] = results
+            print(f"  => Solved: {metrics['solved']}/{metrics['total']} "
+                  f"in {fmt_time(metrics['total_time'])}")
+            save_solution_cache(solution_cache, cache_path)
+            if solution_cache is not None:
+                print(f"  [cache saved: {len(solution_cache)} entries]")
+            if cfg['save_incremental']:
+                save_results(output_dir, all_metrics, all_details, cfg)
+                print(f"  [saved incrementally]")
 
     # ---- Final output ----
     total_time = time.time() - experiment_start
     print(f"\n\nAll experiments completed in {fmt_time(total_time)}.")
-    print(f"  Solution cache: {len(solution_cache)} states memoized")
+    if solution_cache is not None:
+        print(f"  Solution cache: {len(solution_cache)} states memoized")
 
     # Save cache one final time
     save_solution_cache(solution_cache, cache_path)
@@ -729,7 +860,8 @@ def main():
     print(f"  *_details.json      — per-presentation results")
     print(f"  *_progress.jsonl    — per-presentation streaming progress")
     print(f"  config_used.yaml    — config snapshot")
-    print(f"  Solution cache:       {cache_path} ({len(solution_cache)} entries)")
+    if solution_cache is not None:
+        print(f"  Solution cache:       {cache_path} ({len(solution_cache)} entries)")
 
 
 if __name__ == '__main__':
