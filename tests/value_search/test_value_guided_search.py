@@ -258,10 +258,13 @@ class TestBackfillSolutionCache:
         assert tuple(AK2) in cache
         assert cache[tuple(AK2)] == list(path)
 
-        # Cache size should equal number of moves (one entry per intermediate state)
-        # plus the original — but some intermediate states might collide.
-        # We just check it's at most len(path) and at least 1.
+        # Loop iterates len(path) times caching one state per iteration;
+        # some intermediate states might collide, but never exceed len(path).
         assert 1 <= len(cache) <= len(path)
+        # All cached suffixes should be non-empty lists ending at length 2
+        for suffix in cache.values():
+            assert isinstance(suffix, list) and len(suffix) >= 1
+            assert suffix[-1][1] == 2
 
     def test_backfill_with_rotation_expansion_grows_cache(self):
         _, path, _ = value_guided_greedy_search(
@@ -302,6 +305,28 @@ class TestExpandPathWithCyclicReductions:
             assert length >= 2
         # The replayed expanded path should reach trivial
         _verify_path_reaches_trivial(AK2, expanded, cyclical=False)
+
+    def test_inserts_conjugation_moves_for_cyclic_reductions(self):
+        # Search WITH cyclical reduction enabled. The compact path it returns
+        # may rely on implicit cyclic reductions. expand_path_with_cyclic_reductions
+        # must insert explicit conjugation moves so replay under cyclical=False
+        # still reaches trivial.
+        solved, compact_path, _ = value_guided_greedy_search(
+            AK2,
+            use_length_priority=True,
+            cyclically_reduce_after_moves=True,
+            max_nodes_to_explore=20000,
+        )
+        assert solved, "Cyclical-reduction search should solve AK(2)"
+        expanded = expand_path_with_cyclic_reductions(AK2, compact_path)
+        # Expanded path replays correctly under non-cyclical ACMove
+        _verify_path_reaches_trivial(AK2, expanded, cyclical=False)
+        # All action ids in expanded path must be standard 0-11
+        for action, length in expanded:
+            assert 0 <= action <= 11, f"Action {action} out of range"
+            assert length >= 2
+        # Expanded path should be at least as long as the compact one
+        assert len(expanded) >= len(compact_path)
 
 
 class TestLoadModel:
