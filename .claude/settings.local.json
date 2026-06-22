@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash",
+      "Bash(python -c \"import experiments.run_experiments; print\\(''run_experiments: OK''\\)\")",
+      "Bash(python -c \"from experiments.iterative_refinement import load_greedy_paths_as_action_lists, collect_paths_from_jsonl, merge_path_dicts; print\\(''iterative_refinement: OK''\\)\")",
+      "Bash(python -c \":*)"
+    ]
+  }
+}

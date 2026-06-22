@@ -1,0 +1,30 @@
+algorithms:
+  beam_search:
+    beam_widths:
+    - 10
+    - 50
+    enabled: false
+    max_nodes: 100000
+  bfs:
+    enabled: false
+    max_nodes: 100000
+  greedy:
+    enabled: false
+    max_nodes: 100000
+  mcts:
+    c_explore: 1.41
+    enabled: false
+    max_nodes: 100000
+  v_guided_greedy:
+    cyclically_reduce: true
+    enabled: true
+    max_nodes: 100000
+device: auto
+model:
+  architecture: mlp
+  checkpoint: value_search/checkpoints/best_mlp.pt
+  feature_stats: value_search/checkpoints/feature_stats.json
+output_dir: experiments/results
+resume_dir: ''
+save_incremental: true
+solution_cache_path: ''
